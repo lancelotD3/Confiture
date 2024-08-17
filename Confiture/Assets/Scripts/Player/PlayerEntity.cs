@@ -16,13 +16,12 @@ public class PlayerEntity : MonoBehaviour
     [Space]
     [SerializeField] bool winOneOnKill = true;
 
-    [Header("Shield parameters")]
-    [SerializeField] float protectionTime;
-    bool isProtected = false;
+    public PlayerShoot playerShoot;
 
     private void Awake()
     {
         UpdateBlob();
+        playerShoot = GetComponent<PlayerShoot>();
     }
 
     private void Update()

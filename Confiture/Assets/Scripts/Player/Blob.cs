@@ -17,6 +17,8 @@ public class Blob : MonoBehaviour
     [SerializeField] private bool collisionOn = false;
     [HideInInspector] public Rigidbody rb;
 
+    public bool dashable = false;
+
     [SerializeField] float timeForCollisionAfterShooted = .5f;
 
     private void Awake()
@@ -83,6 +85,10 @@ public class Blob : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         rb.velocity = Vector3.zero;
+        if(!collision.collider.TryGetComponent<Enemy>(out Enemy enemy) && !collision.collider.TryGetComponent<Blob>(out Blob blob))
+        {
+            dashable = true;
+        }
     }
 
     public void UpdateBlob()

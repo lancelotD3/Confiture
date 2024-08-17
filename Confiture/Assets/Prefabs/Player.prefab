@@ -137,6 +137,8 @@ MonoBehaviour:
   maxBlob: 6
   minBlobSize: 0.5
   maxBlobSize: 3
+  winOneOnKill: 1
+  playerShoot: {fileID: 282627812155074048}
 --- !u!114 &1007407965283770477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -212,6 +214,7 @@ MonoBehaviour:
     type: 3}
   minForce: 60
   maxForce: 60
+  mouseWorldPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &2167017005889701687
 MonoBehaviour:
   m_ObjectHideFlags: 0
