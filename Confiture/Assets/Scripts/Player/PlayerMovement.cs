@@ -35,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     public float timeTillJumpApex = 0.35f;
     [Range(0.01f, 5f)] public float gravityOnReleaseMultiplier = 2f;
     public float maxFallSpeed = 26f;
-    [Range(1, 5)] int numberOfJumpAllowed = 2;
+    [Range(1, 5)] int numberOfJumpAllowed = 1;
 
     [Header("Jump cut")]
     [Range(0.02f, 0.03f)] public float timeForUpwardCancel = 0.027f;
