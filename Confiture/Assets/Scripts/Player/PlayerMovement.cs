@@ -27,7 +27,6 @@ public class PlayerMovement : MonoBehaviour
     public LayerMask groundLayer;
     public float groundRayLenght;
     public float headRayLenght;
-    private bool grounded = false;
     [Range(0f, 1f)]public float headWidth = .75f;
 
     [Header("Jump parameters")]
@@ -36,7 +35,7 @@ public class PlayerMovement : MonoBehaviour
     public float timeTillJumpApex = 0.35f;
     [Range(0.01f, 5f)] public float gravityOnReleaseMultiplier = 2f;
     public float maxFallSpeed = 26f;
-    [Range(1, 5)] public int numberOfJumpAllowed = 2;
+    [Range(1, 5)] int numberOfJumpAllowed = 2;
 
     [Header("Jump cut")]
     [Range(0.02f, 0.03f)] public float timeForUpwardCancel = 0.027f;
@@ -111,8 +110,8 @@ public class PlayerMovement : MonoBehaviour
         Jump();
 
         float input = moveAction.ReadValue<float>();
-        
-        if(grounded)
+
+        if(isGrounded)
         {
             MovePlayer(groundAcceleration, groundDeceleration, input);
         }
@@ -133,6 +132,7 @@ public class PlayerMovement : MonoBehaviour
             Vector3 targetVelocity = new Vector3(input, 0f, 0f) * maxWalkSpeed;
 
             moveVelocity = Vector3.Lerp(moveVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
+
             rb.velocity = new Vector3(moveVelocity.x, rb.velocity.y, rb.velocity.z);
         }
         else if(input == 0f)
@@ -165,9 +165,11 @@ public class PlayerMovement : MonoBehaviour
 
     private void IsGrounded()
     {
-        Vector3 boxCastOrigin = new Vector3(feetCol.bounds.center.x, feetCol.bounds.min.y, feetCol.bounds.center.z);
+        Vector3 boxCastOrigin = new Vector3(feetCol.bounds.center.x, feetCol.bounds.min.y + 1, feetCol.bounds.center.z);
 
         isGrounded = Physics.Raycast(boxCastOrigin, Vector3.down, out groundHit, groundRayLenght, groundLayer);
+
+        Debug.DrawLine(boxCastOrigin, boxCastOrigin + Vector3.down * groundRayLenght);
     }
 
     private void BumbedHead()
@@ -366,7 +368,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // Normal Gravity while falling
-        if(!grounded && !isJumping)
+        if(!isGrounded && !isJumping)
         {
             if(!isFalling)
             {
