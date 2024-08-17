@@ -8,12 +8,18 @@ using Unity.Mathematics;
 using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.Rendering;
 
 public class PlayerMovement : MonoBehaviour
 {
     PlayerInput input;
     InputAction moveAction;
     InputAction jumpAction;
+    InputAction dashAction;
+
+    private PlayerEntity player;
+
+    [SerializeField] LayerMask blobMask;
 
     [Header("Walk parameters")]
     float speed = 2;
@@ -35,7 +41,7 @@ public class PlayerMovement : MonoBehaviour
     public float timeTillJumpApex = 0.35f;
     [Range(0.01f, 5f)] public float gravityOnReleaseMultiplier = 2f;
     public float maxFallSpeed = 26f;
-    [Range(1, 5)] int numberOfJumpAllowed = 2;
+    [Range(1, 5)] int numberOfJumpAllowed = 1;
 
     [Header("Jump cut")]
     [Range(0.02f, 0.03f)] public float timeForUpwardCancel = 0.027f;
@@ -50,10 +56,23 @@ public class PlayerMovement : MonoBehaviour
     [Header("Jump coyote time")]
     [Range(0f, 1f)] public float jumpCoyoteTime = 0.1f;
 
+    [Header("Dash")]
+    [Range(0f, 1f)] public float dashTime = 0.11f;
+    [Range(1f, 200f)] public float dashSpeed = 40f;
+    //[Range(0f, 1f)] public float dashBtwDashesOnGround = 0.225f;
+    //public bool resetDashOnWall = true;
+    [Range(0, 10)] public float numberOfDashes = 5;
+    //[Range(0.02f, 0.5f)] public float dashDiagonallyBias = 0.4f;
+    [Space]
+    [Range(0.01f, 10f)] public float dashBlobRange = 5f;
+
+    [Header("Dash Cancel Time")]
+    [Range(0.01f, 5f)] public float dashGravityOnReleaseMultiplier = 1f;
+    [Range(0.02f, 0.3f)] public float dashTimeForUpwardsCancel = 0.027f;
+
     private float gravity;
     private float initialJumpVelocity;
     private float adjustedJumpHeight;
-
 
     float verticalVelocity;
     bool isJumping;
@@ -72,12 +91,24 @@ public class PlayerMovement : MonoBehaviour
 
     float coyoteTimer;
     bool waitForJumpRelease = false;
-    
+
+    private bool isDashing;
+    private float dashTimer;
+    private int numberOfDashesUsed;
+    private Vector3 dashDirection;
+    private bool isDashFastFalling;
+    private float dashFastFallTime;
+    private float dashFastFallReleaseSpeed;
+    bool waitForDashRelease = false;
+
+    bool startDashing = false;
+
+
     Rigidbody rb;
     [SerializeField] Collider feetCol;
     [SerializeField] Collider headCol;
 
-    Vector3 moveVelocity;
+    float horizontalVelocity;
     bool isFacingRight;
 
     RaycastHit groundHit;
@@ -96,18 +127,25 @@ public class PlayerMovement : MonoBehaviour
     {
         moveAction = input.actions.FindAction("Move");
         jumpAction = input.actions.FindAction("Jump");
+        dashAction = input.actions.FindAction("Dash");
+
+        player = GetComponent<PlayerEntity>();
     }
 
     private void Update()
     {
         UpdateTimer();
         JumpCheck();
+        LandCheck();
+        DashCheck();
     }
 
     void FixedUpdate()
     {
         CollisionCheck();
         Jump();
+        Fall();
+        Dash();
 
         float input = moveAction.ReadValue<float>();
 
@@ -120,6 +158,16 @@ public class PlayerMovement : MonoBehaviour
             MovePlayer(airAcceleration, airDeceleration, input);
         }
 
+        ApplyVelocity();
+
+    }
+
+    private void ApplyVelocity()
+    {
+        // Clamp Fall Speed
+        verticalVelocity = Mathf.Clamp(verticalVelocity, -maxFallSpeed, 50f);
+
+        rb.velocity = new Vector3(horizontalVelocity, verticalVelocity, rb.velocity.z);
     }
 
     private void MovePlayer(float acceleration, float deceleration, float input)
@@ -129,16 +177,13 @@ public class PlayerMovement : MonoBehaviour
         {
             TurnCheck(input);
 
-            Vector3 targetVelocity = new Vector3(input, 0f, 0f) * maxWalkSpeed;
+            float targetVelocity = input * maxWalkSpeed;
 
-            moveVelocity = Vector3.Lerp(moveVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
-
-            rb.velocity = new Vector3(moveVelocity.x, rb.velocity.y, rb.velocity.z);
+            horizontalVelocity = Mathf.Lerp(horizontalVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
         }
         else if(input == 0f)
         {
-            moveVelocity = Vector3.Lerp(moveVelocity, Vector3.zero, deceleration * Time.fixedDeltaTime);
-            rb.velocity = new Vector3(moveVelocity.x, rb.velocity.y, rb.velocity.z);
+            horizontalVelocity = Mathf.Lerp(horizontalVelocity, 0f, deceleration * Time.fixedDeltaTime);
         }
 
     }
@@ -266,9 +311,11 @@ public class PlayerMovement : MonoBehaviour
             InitiateJump(2);
             isFastFalling = false;
         }
+    }
 
-        // Landed
-        if((isJumping || isFalling) && isGrounded && verticalVelocity <= 0f)
+    private void LandCheck()
+    {
+        if ((isJumping || isFalling) && isGrounded && verticalVelocity <= 0f)
         {
             isJumping = false;
             isFalling = false;
@@ -278,6 +325,25 @@ public class PlayerMovement : MonoBehaviour
             numberOfJumpUsed = 0;
 
             verticalVelocity = Physics.gravity.y;
+        }
+
+        if(startDashing && isGrounded)
+        {
+            startDashing = false;
+        }
+    }
+
+    private void Fall()
+    {
+        // Normal Gravity while falling
+        if (!isGrounded && !isJumping)
+        {
+            if (!isFalling)
+            {
+                isFalling = true;
+            }
+
+            verticalVelocity += gravity * Time.fixedDeltaTime;
         }
     }
 
@@ -367,21 +433,139 @@ public class PlayerMovement : MonoBehaviour
             fastFallTime += Time.fixedDeltaTime;
         }
 
-        // Normal Gravity while falling
-        if(!isGrounded && !isJumping)
+        
+    }
+
+    private void ResetJumpValues()
+    {
+        isJumping = false;
+        isFalling = false;
+        isFastFalling = false;
+        fastFallTime = 0f;
+        isPastApexTreshold = false;
+    }
+
+    private void DashCheck()
+    {
+        if (dashAction.ReadValue<float>() > 0 && !waitForDashRelease)
         {
-            if(!isFalling)
+            waitForDashRelease = true;
+
+            Collider[] colliders = Physics.OverlapSphere(transform.position, dashBlobRange, blobMask);
+
+            Blob closestBlob = null;
+
+            foreach (Collider collider in colliders)
             {
-                isFalling = true;
+                if (collider.gameObject == gameObject)
+                    continue;
+
+                if (collider.gameObject.TryGetComponent<Blob>(out Blob blob))
+                {
+                    if(closestBlob == null)
+                        closestBlob = collider.GetComponent<Blob>();
+                    else if(Vector3.Distance(closestBlob.transform.position, transform.position) < Vector3.Distance(blob.transform.position, transform.position))
+                        closestBlob = blob;
+                }
             }
 
-            verticalVelocity += gravity * Time.fixedDeltaTime;
+            if(closestBlob != null)
+            {
+                if (!startDashing)
+                {
+                    Invoke(nameof(StartDash), .2f);
+                    numberOfDashes = player.blobNumber;
+                }
+
+                if(numberOfDashes > 0)
+                {
+                    closestBlob.rb.velocity = Vector3.zero;
+
+                    dashDirection = (closestBlob.transform.position - transform.position).normalized;
+                    InitiateDash();
+                }
+            }
         }
 
-        // Clamp Fall Speed
-        verticalVelocity = Mathf.Clamp(verticalVelocity, -maxFallSpeed, 50f);
+        if (dashAction.ReadValue<float>() == 0 && waitForDashRelease)
+        {
+            waitForDashRelease = false;
+        }
+    }
 
-        rb.velocity = new Vector3 (rb.velocity.x, verticalVelocity, rb.velocity.z);
+    private void StartDash()
+    {
+        startDashing = true;
+    }
+
+    private void InitiateDash()
+    {
+        numberOfDashes--;
+        isDashing = true;
+        dashTimer = 0f;
+
+        ResetJumpValues();
+    }
+
+    private void Dash()
+    {
+        if(isDashing)
+        {
+            dashTimer += Time.fixedDeltaTime;
+            if(dashTimer > dashTime)
+            {
+                if(isGrounded) ResetDashes();
+                isDashing = false;
+
+                if(!isJumping)
+                {
+                    dashFastFallTime = 0f;
+                    dashFastFallReleaseSpeed = verticalVelocity;
+
+                    //if(!isGrounded)
+                    //{
+                    //    isDashFastFalling = true;
+                    //}
+                }
+
+                return;
+            }
+
+            horizontalVelocity = dashSpeed * dashDirection.x;
+
+            verticalVelocity = dashSpeed * dashDirection.y;
+        }
+
+        //else if (isDashFastFalling)
+        //{
+        //    if(verticalVelocity > 0f)
+        //    {
+        //        if (dashFastFallTime < dashTimeForUpwardsCancel)
+        //        {
+        //            verticalVelocity = Mathf.Lerp(dashFastFallReleaseSpeed, 0f, (dashFastFallTime / dashTimeForUpwardsCancel));
+        //        }
+        //        else if (dashFastFallTime >= dashTimeForUpwardsCancel)
+        //        {
+        //            verticalVelocity += gravity * dashGravityOnReleaseMultiplier * Time.fixedDeltaTime;
+        //        }
+
+        //        dashFastFallTime -= Time.fixedDeltaTime;
+        //    }
+        //    else
+        //    {
+        //        verticalVelocity += gravity * dashGravityOnReleaseMultiplier * Time.fixedDeltaTime;
+        //    }
+        //}
+    }
+
+    private void ResetDashValues()
+    {
+        isDashFastFalling = false;
+    }
+
+    private void ResetDashes()
+    {
+        numberOfDashesUsed = 0;
     }
 
     private void UpdateTimer()

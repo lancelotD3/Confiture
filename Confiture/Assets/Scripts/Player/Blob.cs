@@ -15,7 +15,7 @@ public class Blob : MonoBehaviour
     [HideInInspector] public bool allreadySpawn = false;
 
     [SerializeField] private bool collisionOn = false;
-    private Rigidbody rb;
+    [HideInInspector] public Rigidbody rb;
 
     [SerializeField] float timeForCollisionAfterShooted = .5f;
 

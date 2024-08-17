@@ -55,7 +55,7 @@ public class PlayerEntity : MonoBehaviour
 
     public void UpdateBlob()
     {
-        blobRatio = (float)blobNumber / (float)maxBlob;
+        blobRatio = (float)(blobNumber - 1) / (float)(maxBlob - 1);
 
         gameObject.transform.localScale = Vector3.Lerp(new Vector3(minBlobSize, minBlobSize, minBlobSize), new Vector3(maxBlobSize, maxBlobSize, maxBlobSize), blobRatio);
     }
