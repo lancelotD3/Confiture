@@ -21,13 +21,18 @@ public class PlayerMovement : MonoBehaviour
 
     [SerializeField] LayerMask blobMask;
 
-    [Header("Walk parameters")]
+    [Header("Global parameters")]
+    public bool speedDoubleMetrics = true;
+    public bool jumpDoubleMetrics = true;
+    public bool dashDoubleMetrics = true;
+
     float speed = 2;
-    [Range(1f, 100f)] public float maxWalkSpeed = 12.5f;
-    [Range(0.25f, 50f)] public float groundAcceleration = 5f;
-    [Range(0.25f, 50f)] public float groundDeceleration = 20f;
-    [Range(0.25f, 50f)] public float airAcceleration = 5f;
-    [Range(0.25f, 50f)] public float airDeceleration = 5f;
+    [Header("Walk parameters")]
+    [Range(1f, 100f)] public float minWalkSpeed = 12.5f;
+    [Range(0.25f, 50f)] public float minGroundAcceleration = 5f;
+    [Range(0.25f, 50f)] public float minGroundDeceleration = 20f;
+    [Range(0.25f, 50f)] public float minAirAcceleration = 5f;
+    [Range(0.25f, 50f)] public float minAirDeceleration = 5f;
 
     [Header("Ground parameters")]
     public LayerMask groundLayer;
@@ -36,9 +41,9 @@ public class PlayerMovement : MonoBehaviour
     [Range(0f, 1f)]public float headWidth = .75f;
 
     [Header("Jump parameters")]
-    public float jumpHeight = 6.5f;
+    public float minJumpHeight = 6.5f;
     [Range(1f, 1.1f)] public float jumpHeightCompensationFactor = 1.054f;
-    public float timeTillJumpApex = 0.35f;
+    public float minTimeTillJumpApex = 0.35f;
     [Range(0.01f, 5f)] public float gravityOnReleaseMultiplier = 2f;
     public float maxFallSpeed = 26f;
     [Range(1, 5)] int numberOfJumpAllowed = 1;
@@ -57,18 +62,30 @@ public class PlayerMovement : MonoBehaviour
     [Range(0f, 1f)] public float jumpCoyoteTime = 0.1f;
 
     [Header("Dash")]
-    [Range(0f, 1f)] public float dashTime = 0.11f;
-    [Range(1f, 200f)] public float dashSpeed = 40f;
-    //[Range(0f, 1f)] public float dashBtwDashesOnGround = 0.225f;
-    //public bool resetDashOnWall = true;
-    [Range(0, 10)] public float numberOfDashes = 5;
-    //[Range(0.02f, 0.5f)] public float dashDiagonallyBias = 0.4f;
+    [Range(0f, 1f)] public float minDashTime = 0.11f;
+    [Range(1f, 200f)] public float minDashSpeed = 40f;
+    [Range(0, 10)] float numberOfDashes = 5;
     [Space]
-    [Range(0.01f, 10f)] public float dashBlobRange = 5f;
+    [Range(0.01f, 100f)] public float dashBlobRange = 5f;
 
     [Header("Dash Cancel Time")]
     [Range(0.01f, 5f)] public float dashGravityOnReleaseMultiplier = 1f;
     [Range(0.02f, 0.3f)] public float dashTimeForUpwardsCancel = 0.027f;
+
+    [Header("Walk Max parameters")]
+    [Range(1f, 100f)] public float maxWalkSpeed = 12.5f;
+    [Range(0.25f, 50f)] public float maxGroundAcceleration = 5f;
+    [Range(0.25f, 50f)] public float maxGroundDeceleration = 20f;
+    [Range(0.25f, 50f)] public float maxAirAcceleration = 5f;
+    [Range(0.25f, 50f)] public float maxAirDeceleration = 5f;
+
+    [Header("Jump Max parameters")]
+    public float maxJumpHeight = 6.5f;
+    public float maxTimeTillJumpApex = 0.35f;
+
+    [Header("Dash Max parameters")]
+    public float maxDashTime = 0.11f;
+    public float maxDashSpeed = 40f;
 
     private float gravity;
     private float initialJumpVelocity;
@@ -151,11 +168,31 @@ public class PlayerMovement : MonoBehaviour
 
         if(isGrounded)
         {
-            MovePlayer(groundAcceleration, groundDeceleration, input);
+            if(speedDoubleMetrics)
+            {
+                float groundAcceleration = Mathf.Lerp(minGroundAcceleration, maxGroundAcceleration, player.blobRatio);
+                float groundDeceleration = Mathf.Lerp(minGroundDeceleration, maxGroundDeceleration, player.blobRatio);
+                MovePlayer(groundAcceleration, groundDeceleration, input);
+            }
+            else
+            {
+                MovePlayer(minGroundAcceleration, minGroundDeceleration, input);
+            }
+
         }
         else
         {
-            MovePlayer(airAcceleration, airDeceleration, input);
+
+            if (speedDoubleMetrics)
+            {
+                float airAcceleration = Mathf.Lerp(minAirAcceleration, maxAirAcceleration, player.blobRatio);
+                float airDeceleration = Mathf.Lerp(minAirDeceleration, maxAirDeceleration, player.blobRatio);
+                MovePlayer(airAcceleration, airDeceleration, input);
+            }
+            else
+            {
+                MovePlayer(minAirAcceleration, minAirDeceleration, input);
+            }
         }
 
         ApplyVelocity();
@@ -177,7 +214,9 @@ public class PlayerMovement : MonoBehaviour
         {
             TurnCheck(input);
 
-            float targetVelocity = input * maxWalkSpeed;
+            float actualWalkSpeed = Mathf.Lerp(minWalkSpeed, maxWalkSpeed, player.blobRatio);
+
+            float targetVelocity = input * actualWalkSpeed;
 
             horizontalVelocity = Mathf.Lerp(horizontalVelocity, targetVelocity, acceleration * Time.fixedDeltaTime);
         }
@@ -241,6 +280,15 @@ public class PlayerMovement : MonoBehaviour
 
     private void CalculateValues()
     {
+        float jumpHeight = minJumpHeight;
+        float timeTillJumpApex = minTimeTillJumpApex;
+
+        if (jumpDoubleMetrics)
+        {
+            jumpHeight = Mathf.Lerp(minJumpHeight, maxJumpHeight, player.blobRatio);
+            timeTillJumpApex = Mathf.Lerp(minTimeTillJumpApex, maxTimeTillJumpApex, player.blobRatio);
+        }
+
         adjustedJumpHeight = jumpHeight * jumpHeightCompensationFactor;
 
         gravity = (-2f * adjustedJumpHeight) / Mathf.Pow(timeTillJumpApex, 2f);
@@ -480,6 +528,7 @@ public class PlayerMovement : MonoBehaviour
                 if(numberOfDashes > 0)
                 {
                     closestBlob.rb.velocity = Vector3.zero;
+                    closestBlob.ActiveCollision();
 
                     dashDirection = (closestBlob.transform.position - transform.position).normalized;
                     InitiateDash();
@@ -512,7 +561,17 @@ public class PlayerMovement : MonoBehaviour
         if(isDashing)
         {
             dashTimer += Time.fixedDeltaTime;
-            if(dashTimer > dashTime)
+
+            float dashTime = minDashTime;
+            float dashSpeed = minDashSpeed;
+
+            if (dashDoubleMetrics)
+            {
+                dashTime = Mathf.Lerp(minDashTime, maxDashTime, player.blobRatio);
+                dashSpeed = Mathf.Lerp(minDashSpeed, maxDashSpeed, player.blobRatio);
+            }
+
+            if (dashTimer > dashTime)
             {
                 if(isGrounded) ResetDashes();
                 isDashing = false;

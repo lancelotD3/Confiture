@@ -99,7 +99,7 @@ public class Blob : MonoBehaviour
 
     }
 
-    private void ActiveCollision()
+    public void ActiveCollision()
     {
         collisionOn = true;
     }
