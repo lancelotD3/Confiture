@@ -64,6 +64,7 @@ public class PlayerMovement : MonoBehaviour
     [Header("Dash")]
     [Range(0f, 1f)] public float minDashTime = 0.11f;
     [Range(1f, 200f)] public float minDashSpeed = 40f;
+    [Range(.5f, 1f)] public float dashAimPrecision = .8f;
     [Range(0, 10)] float numberOfDashes = 5;
     [Space]
     [Range(0.01f, 100f)] public float dashBlobRange = 5f;
@@ -508,10 +509,21 @@ public class PlayerMovement : MonoBehaviour
 
                 if (collider.gameObject.TryGetComponent<Blob>(out Blob blob))
                 {
-                    if(closestBlob == null)
+                    float dot = Vector3.Dot((player.playerShoot.mouseWorldPosition - transform.position).normalized, (blob.transform.position - transform.position).normalized);
+
+                    if (closestBlob == null && dot > dashAimPrecision && blob.dashable)
+                    {
                         closestBlob = collider.GetComponent<Blob>();
-                    else if(Vector3.Distance(closestBlob.transform.position, transform.position) < Vector3.Distance(blob.transform.position, transform.position))
+                        continue;
+                    }
+                    else if (closestBlob == null) continue;
+
+                    if(Vector3.Distance(closestBlob.transform.position, transform.position) < Vector3.Distance(blob.transform.position, transform.position)
+                        && dot > dashAimPrecision
+                        && blob.dashable)
+                    {
                         closestBlob = blob;
+                    }
                 }
             }
 

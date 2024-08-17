@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
@@ -20,6 +21,8 @@ public class PlayerShoot : MonoBehaviour
     private bool waitForRelease = false;
     private PlayerEntity player;
 
+    public Vector3 mouseWorldPosition = Vector3.zero;
+
     void Start()
     {
         input = GetComponent<PlayerInput>();
@@ -30,6 +33,8 @@ public class PlayerShoot : MonoBehaviour
 
     void Update()
     {
+        MousePosition();
+
         if (shootAction.ReadValue<float>() > 0 && !waitForRelease)
         {
             waitForRelease = true;
@@ -41,12 +46,7 @@ public class PlayerShoot : MonoBehaviour
         }
     }
 
-    private void TryShoot()
-    {
-        if(player.blobNumber > player.minBlob) Shoot();
-    }
-
-    private void Shoot()
+    private void MousePosition()
     {
         Vector3 mousePos = Input.mousePosition;
 
@@ -54,15 +54,25 @@ public class PlayerShoot : MonoBehaviour
 
         if (Physics.Raycast(Camera.main.transform.position, Camera.main.ScreenPointToRay(mousePos).direction, out hit, 100000f, mouseLayer))
         {
-            GameObject newBlob = Instantiate(blobPrefab, transform.position, Quaternion.identity);
-
-            Blob blob = newBlob.GetComponent<Blob>();
-
-            Vector3 force = (hit.point - transform.position).normalized * Mathf.Lerp(minForce, maxForce, player.blobRatio);
-            
-            blob.SpawnByShoot(force);
-
-            player.TryRemoveBlobs(1);
+            mouseWorldPosition = hit.point;
         }
+    }
+
+    private void TryShoot()
+    {
+        if(player.blobNumber > player.minBlob) Shoot();
+    }
+
+    private void Shoot()
+    {
+        GameObject newBlob = Instantiate(blobPrefab, transform.position, Quaternion.identity);
+
+        Blob blob = newBlob.GetComponent<Blob>();
+
+        Vector3 force = (mouseWorldPosition - transform.position).normalized * Mathf.Lerp(minForce, maxForce, player.blobRatio);
+
+        blob.SpawnByShoot(force);
+
+        player.TryRemoveBlobs(1);
     }
 }
