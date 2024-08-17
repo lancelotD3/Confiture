@@ -359,7 +359,7 @@ Transform:
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 211.30917, y: 1, z: 3.4256}
+  m_LocalScale: {x: 211.30917, y: 1, z: 5.826471}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 1814246383}
@@ -2100,6 +2100,16 @@ PrefabInstance:
         type: 3}
       propertyPath: m_Name
       value: Player
+      objectReference: {fileID: 0}
+    - target: {fileID: 282627812155074048, guid: f7ae6888f0402a34ba4edd95d35bb040,
+        type: 3}
+      propertyPath: maxForce
+      value: 20
+      objectReference: {fileID: 0}
+    - target: {fileID: 282627812155074048, guid: f7ae6888f0402a34ba4edd95d35bb040,
+        type: 3}
+      propertyPath: minForce
+      value: 40
       objectReference: {fileID: 0}
     - target: {fileID: 6508133771672370142, guid: f7ae6888f0402a34ba4edd95d35bb040,
         type: 3}
