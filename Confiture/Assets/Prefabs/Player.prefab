@@ -137,6 +137,8 @@ MonoBehaviour:
   maxBlob: 6
   minBlobSize: 0.5
   maxBlobSize: 3
+  winOneOnKill: 0
+  protectionTime: 0
 --- !u!114 &1007407965283770477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -190,7 +192,7 @@ MonoBehaviour:
   maxJumpHeight: 1
   maxTimeTillJumpApex: 0.45
   maxDashTime: 0.3
-  maxDashSpeed: 60
+  maxDashSpeed: 30
   feetCol: {fileID: 9029786445399621185}
   headCol: {fileID: 1929314414986540531}
 --- !u!114 &282627812155074048
