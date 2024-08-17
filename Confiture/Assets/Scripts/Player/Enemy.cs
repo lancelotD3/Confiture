@@ -6,12 +6,12 @@ using UnityEngine.UI;
 
 public class Enemy : MonoBehaviour
 {
-    int life;
+    [HideInInspector] public int life;
     public int maxLife;
 
     public TextMeshProUGUI lifeText;
 
-    private void Awake()
+    virtual protected void Awake()
     {
         life = 0;
         lifeText.text = life + " / " + maxLife;
