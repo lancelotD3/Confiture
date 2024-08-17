@@ -17,7 +17,7 @@ public class PlayerMovement : MonoBehaviour
     InputAction jumpAction;
     InputAction dashAction;
 
-    private PlayerEntity player;
+    public PlayerEntity player;
 
     [SerializeField] LayerMask blobMask;
 
@@ -80,7 +80,7 @@ public class PlayerMovement : MonoBehaviour
     [Range(0.25f, 50f)] public float maxAirDeceleration = 5f;
 
     [Header("Jump Max parameters")]
-    public float maxJumpHeight = 6.5f;
+    public float maxJumpHeight = 7f;
     public float maxTimeTillJumpApex = 0.35f;
 
     [Header("Dash Max parameters")]
@@ -145,8 +145,6 @@ public class PlayerMovement : MonoBehaviour
         moveAction = input.actions.FindAction("Move");
         jumpAction = input.actions.FindAction("Jump");
         dashAction = input.actions.FindAction("Dash");
-
-        player = GetComponent<PlayerEntity>();
     }
 
     private void Update()
@@ -283,7 +281,7 @@ public class PlayerMovement : MonoBehaviour
         float jumpHeight = minJumpHeight;
         float timeTillJumpApex = minTimeTillJumpApex;
 
-        if (jumpDoubleMetrics)
+        if (jumpDoubleMetrics && player)
         {
             jumpHeight = Mathf.Lerp(minJumpHeight, maxJumpHeight, player.blobRatio);
             timeTillJumpApex = Mathf.Lerp(minTimeTillJumpApex, maxTimeTillJumpApex, player.blobRatio);
