@@ -130,7 +130,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ac19066a8317734d90707b580afe13d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blobNumber: 2
+  blobNumber: 1
   blobRatio: 0
   minBlob: 1
   maxBlob: 10
@@ -148,28 +148,27 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f631c036411e5b54fbbb125e7f79a703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxWalkSpeed: 10
-  groundAcceleration: 20
-  groundDeceleration: 20
-  airAcceleration: 5
-  airDeceleration: 5
+  maxWalkSpeed: 14
+  groundAcceleration: 25
+  groundDeceleration: 18
+  airAcceleration: 25
+  airDeceleration: 18
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
-  groundRayLenght: 0.02
-  headRayLenght: 0.02
+  groundRayLenght: 1.02
+  headRayLenght: 1.02
   headWidth: 0.75
   jumpHeight: 5
   jumpHeightCompensationFactor: 1.1
   timeTillJumpApex: 0.45
   gravityOnReleaseMultiplier: 3
   maxFallSpeed: 25
-  numberOfJumpAllowed: 2
   timeForUpwardCancel: 0.027
   apexTreshold: 0.97
   apexHangTime: 0.02
   jumpBufferTime: 0.125
-  jumpCoyoteTime: 0
+  jumpCoyoteTime: 0.125
   feetCol: {fileID: 9029786445399621185}
   headCol: {fileID: 1929314414986540531}
 --- !u!114 &282627812155074048
