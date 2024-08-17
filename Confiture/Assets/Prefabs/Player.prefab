@@ -134,8 +134,8 @@ MonoBehaviour:
   blobRatio: 0
   minBlob: 1
   maxBlob: 10
-  minBlobSize: 1
-  maxBlobSize: 3
+  minBlobSize: 0.1
+  maxBlobSize: 4
 --- !u!114 &1007407965283770477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -148,8 +148,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f631c036411e5b54fbbb125e7f79a703, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  maxWalkSpeed: 12.5
-  groundAcceleration: 5
+  maxWalkSpeed: 10
+  groundAcceleration: 20
   groundDeceleration: 20
   airAcceleration: 5
   airDeceleration: 5
@@ -159,7 +159,17 @@ MonoBehaviour:
   groundRayLenght: 0.02
   headRayLenght: 0.02
   headWidth: 0.75
-  jumpForce: 5
+  jumpHeight: 5
+  jumpHeightCompensationFactor: 1.1
+  timeTillJumpApex: 0.45
+  gravityOnReleaseMultiplier: 3
+  maxFallSpeed: 25
+  numberOfJumpAllowed: 2
+  timeForUpwardCancel: 0.027
+  apexTreshold: 0.97
+  apexHangTime: 0.02
+  jumpBufferTime: 0.125
+  jumpCoyoteTime: 0
   feetCol: {fileID: 9029786445399621185}
   headCol: {fileID: 1929314414986540531}
 --- !u!114 &282627812155074048
@@ -219,7 +229,7 @@ CapsuleCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 113495963850132779}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 6e08149ef99bce34f8f1a942efa6c092, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
@@ -231,10 +241,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.5
-  m_Height: 2
+  m_Radius: 0.47524846
+  m_Height: 1.846388
   m_Direction: 1
-  m_Center: {x: 0, y: 0, z: 0}
+  m_Center: {x: 0.0071314573, y: -0.008760393, z: 0}
 --- !u!1 &5039664331873445387
 GameObject:
   m_ObjectHideFlags: 0
@@ -329,7 +339,7 @@ BoxCollider:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5435923613537173041}
-  m_Material: {fileID: 0}
+  m_Material: {fileID: 13400000, guid: 6e08149ef99bce34f8f1a942efa6c092, type: 2}
   m_IncludeLayers:
     serializedVersion: 2
     m_Bits: 0
