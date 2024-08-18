@@ -27,6 +27,9 @@ public class PlayerMovement : MonoBehaviour
     public bool jumpDoubleMetrics = true;
     public bool dashDoubleMetrics = true;
 
+    public Vector2 initialDirection = Vector3.zero;
+    public float initialVelocityTime = .5f;
+
     float speed = 2;
     [Header("Walk parameters")]
     [Range(1f, 100f)] public float minWalkSpeed = 12.5f;
@@ -123,6 +126,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool startDashing = false;
 
+    bool addInitialVelocity = false;
 
     Rigidbody rb;
     [SerializeField] Collider feetCol;
@@ -198,7 +202,19 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        ApplyVelocity();
+
+        if(!addInitialVelocity)
+        {
+            if(initialVelocityTime > 0f)
+            {
+                rb.velocity = initialDirection;
+                initialVelocityTime -= Time.fixedTime;
+            }
+            else
+                addInitialVelocity = true;
+        }
+        else
+            ApplyVelocity();
 
     }
 
