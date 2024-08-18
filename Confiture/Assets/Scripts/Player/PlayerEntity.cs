@@ -1,8 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
-using System.Net.Security;
 using UnityEngine;
-using UnityEngine.Events;
 
 public class PlayerEntity : MonoBehaviour
 {
@@ -14,17 +12,10 @@ public class PlayerEntity : MonoBehaviour
     [SerializeField] int maxBlob = 10;
     [SerializeField] float minBlobSize;
     [SerializeField] float maxBlobSize;
-    [Space]
-    [SerializeField] bool winOneOnKill = true;
-
-    public PlayerShoot playerShoot;
-    public PlayerMovement playerMovement;
 
     private void Awake()
     {
         UpdateBlob();
-        playerShoot = GetComponent<PlayerShoot>();
-        playerMovement = GetComponent<PlayerMovement>();
     }
 
     private void Update()
@@ -55,12 +46,9 @@ public class PlayerEntity : MonoBehaviour
         }
     }
 
-    public void RemoveBlobs(int number)
+    private void RemoveBlobs(int number)
     {
         blobNumber -= number;
-
-        if (blobNumber <= 0)
-            Died();
 
         UpdateBlob();
     }
@@ -70,31 +58,5 @@ public class PlayerEntity : MonoBehaviour
         blobRatio = (float)(blobNumber - 1) / (float)(maxBlob - 1);
 
         gameObject.transform.localScale = Vector3.Lerp(new Vector3(minBlobSize, minBlobSize, minBlobSize), new Vector3(maxBlobSize, maxBlobSize, maxBlobSize), blobRatio);
-    }
-
-    private void Died()
-    {
-        Destroy(gameObject);
-    }
-
-    private void OnCollisionEnter(Collision collision)
-    {
-        if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
-        {
-            if(blobNumber > enemy.maxLife - enemy.life)
-            {
-                blobNumber = blobNumber - (enemy.maxLife - enemy.life);
-
-                if (winOneOnKill)
-                    blobNumber++;
-
-                UpdateBlob();
-                Destroy(enemy.gameObject);
-            }
-            else
-            {
-                Died();
-            }
-        }
     }
 }

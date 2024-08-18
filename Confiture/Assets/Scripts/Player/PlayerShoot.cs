@@ -1,6 +1,5 @@
 using System.Collections;
 using System.Collections.Generic;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
@@ -21,8 +20,6 @@ public class PlayerShoot : MonoBehaviour
     private bool waitForRelease = false;
     private PlayerEntity player;
 
-    public Vector3 mouseWorldPosition = Vector3.zero;
-
     void Start()
     {
         input = GetComponent<PlayerInput>();
@@ -33,8 +30,6 @@ public class PlayerShoot : MonoBehaviour
 
     void Update()
     {
-        MousePosition();
-
         if (shootAction.ReadValue<float>() > 0 && !waitForRelease)
         {
             waitForRelease = true;
@@ -46,18 +41,6 @@ public class PlayerShoot : MonoBehaviour
         }
     }
 
-    private void MousePosition()
-    {
-        Vector3 mousePos = Input.mousePosition;
-
-        RaycastHit hit;
-
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.ScreenPointToRay(mousePos).direction, out hit, 100000f, mouseLayer))
-        {
-            mouseWorldPosition = hit.point;
-        }
-    }
-
     private void TryShoot()
     {
         if(player.blobNumber > player.minBlob) Shoot();
@@ -65,14 +48,21 @@ public class PlayerShoot : MonoBehaviour
 
     private void Shoot()
     {
-        GameObject newBlob = Instantiate(blobPrefab, transform.position, Quaternion.identity);
+        Vector3 mousePos = Input.mousePosition;
 
-        Blob blob = newBlob.GetComponent<Blob>();
+        RaycastHit hit;
 
-        Vector3 force = (mouseWorldPosition - transform.position).normalized * Mathf.Lerp(minForce, maxForce, player.blobRatio);
+        if (Physics.Raycast(Camera.main.transform.position, Camera.main.ScreenPointToRay(mousePos).direction, out hit, 100000f, mouseLayer))
+        {
+            GameObject newBlob = Instantiate(blobPrefab, transform.position, Quaternion.identity);
 
-        blob.SpawnByShoot(force);
+            Blob blob = newBlob.GetComponent<Blob>();
 
-        player.TryRemoveBlobs(1);
+            Vector3 force = (hit.point - transform.position).normalized * Mathf.Lerp(minForce, maxForce, player.blobRatio);
+            
+            blob.SpawnByShoot(force);
+
+            player.TryRemoveBlobs(1);
+        }
     }
 }
