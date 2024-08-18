@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Blob : MonoBehaviour
 {
@@ -20,6 +21,10 @@ public class Blob : MonoBehaviour
     public bool dashable = false;
 
     [SerializeField] float timeForCollisionAfterShooted = .5f;
+
+    [Header("Splash parameters")]
+    public List<Material> decalsMats = new List<Material>();
+    public GameObject decalPrefab;
 
     private void Awake()
     {
@@ -104,6 +109,9 @@ public class Blob : MonoBehaviour
         if(!collision.collider.TryGetComponent<Enemy>(out Enemy enemy) && !collision.collider.TryGetComponent<Blob>(out Blob blob))
         {
             dashable = true;
+
+            //GameObject decalGo = Instantiate(decalPrefab, transform.position, Quaternion.identity);
+            //decalGo.GetComponent<DecalProjector>().material = decalsMats[Random.Range(1, (decalsMats.Count - 1))];
         }
     }
 
