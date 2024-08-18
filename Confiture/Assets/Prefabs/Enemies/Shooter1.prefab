@@ -121,7 +121,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   life: 0
-  maxLife: 3
+  maxLife: 2
   lifeText: {fileID: 6929054699958742525}
   projectilePrefab: {fileID: 3123860783291054201, guid: 329e8f9d07b7fac44867b4092d8998d0,
     type: 3}
