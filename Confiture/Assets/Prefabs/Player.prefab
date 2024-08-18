@@ -128,7 +128,7 @@ MonoBehaviour:
   minGroundAcceleration: 25
   minGroundDeceleration: 18
   minAirAcceleration: 25
-  minAirDeceleration: 1
+  minAirDeceleration: 8
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -145,9 +145,9 @@ MonoBehaviour:
   apexHangTime: 0.08
   jumpBufferTime: 0.125
   jumpCoyoteTime: 0.055
-  minDashSpeed: 30
+  minDashSpeed: 70
   dashAimPrecision: 0.8
-  dashBlobRange: 10
+  dashBlobRange: 15
   dashGravityOnReleaseMultiplier: 1
   dashTimeForUpwardsCancel: 0.027
   maxWalkSpeed: 14
@@ -163,7 +163,7 @@ MonoBehaviour:
   isDashing: 0
   isDashFastFalling: 0
   dashFastFallTime: 0
-  dashFastFallReleaseSpeed: 0
+  dashFastFallReleaseSpeed: 50
   feetCol: {fileID: 9029786445399621185}
   headCol: {fileID: 8763508898524701687}
 --- !u!114 &282627812155074048
@@ -183,8 +183,8 @@ MonoBehaviour:
     m_Bits: 128
   blobPrefab: {fileID: 8551917852034994916, guid: 7f00c2a42d4bda44bb4b04a8b9560f37,
     type: 3}
-  minForce: 60
-  maxForce: 60
+  minForce: 50
+  maxForce: 50
   mouseWorldPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &2167017005889701687
 MonoBehaviour:
