@@ -527,9 +527,18 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-
-        lineRenderer.SetPosition(0, transform.position);
-        lineRenderer.SetPosition(1, closestBlob.transform.position);
+        
+        if(closestBlob != null)
+        {
+            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(1, closestBlob.transform.position);
+        }
+        else
+        {
+            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(1, transform.position);
+        }
+       
 
         if (dashAction.ReadValue<float>() > 0 && !waitForDashRelease && !player.lockInput)
         {
