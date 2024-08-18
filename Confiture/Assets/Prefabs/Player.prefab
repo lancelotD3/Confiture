@@ -138,7 +138,15 @@ MonoBehaviour:
   minBlobSize: 0.5
   maxBlobSize: 3
   winOneOnKill: 0
-  protectionTime: 0
+  playerShoot: {fileID: 0}
+  playerMovement: {fileID: 0}
+  splashPrefab: {fileID: 8581612494898097516, guid: e627bc1ef5490264ca0d03dde2a5d11c,
+    type: 3}
+  splashPrefabDash: {fileID: 8581612494898097516, guid: f5684abdd1405f946b4de86c87201c09,
+    type: 3}
+  splashPrefabDamage: {fileID: 8581612494898097516, guid: ba2f37c46be27584db82c24bf8e50f73,
+    type: 3}
+  feetPos: {fileID: 4610460384787968099}
 --- !u!114 &1007407965283770477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,8 +187,8 @@ MonoBehaviour:
   apexHangTime: 0.02
   jumpBufferTime: 0.125
   jumpCoyoteTime: 0.055
-  minDashTime: 0.3
   minDashSpeed: 30
+  dashAimPrecision: 0.8
   dashBlobRange: 10
   dashGravityOnReleaseMultiplier: 1
   dashTimeForUpwardsCancel: 0.027
@@ -191,8 +199,13 @@ MonoBehaviour:
   maxAirDeceleration: 0.25
   maxJumpHeight: 1
   maxTimeTillJumpApex: 0.45
-  maxDashTime: 0.3
   maxDashSpeed: 30
+  verticalVelocity: 0
+  isJumping: 0
+  isDashing: 0
+  isDashFastFalling: 0
+  dashFastFallTime: 0
+  dashFastFallReleaseSpeed: 0
   feetCol: {fileID: 9029786445399621185}
   headCol: {fileID: 1929314414986540531}
 --- !u!114 &282627812155074048
@@ -214,6 +227,7 @@ MonoBehaviour:
     type: 3}
   minForce: 60
   maxForce: 60
+  mouseWorldPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &2167017005889701687
 MonoBehaviour:
   m_ObjectHideFlags: 0

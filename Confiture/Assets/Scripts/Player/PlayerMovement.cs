@@ -541,6 +541,8 @@ public class PlayerMovement : MonoBehaviour
                     closestBlob.ActiveCollision();
 
                     dashDirection = (closestBlob.transform.position - transform.position).normalized;
+                    Debug.Log(dashDirection);
+
                     InitiateDash();
                 }
             }
@@ -562,6 +564,11 @@ public class PlayerMovement : MonoBehaviour
         numberOfDashes--;
         isDashing = true;
         dashTimer = 0f;
+        
+        GameObject splashGo = Instantiate(player.splashPrefabDash, player.feetPos.position, Quaternion.identity);
+        splashGo.transform.forward = dashDirection;
+
+        Destroy(splashGo, 2f);
 
         ResetJumpValues();
     }

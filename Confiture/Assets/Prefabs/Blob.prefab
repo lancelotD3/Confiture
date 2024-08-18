@@ -107,7 +107,12 @@ MonoBehaviour:
   allreadySpawn: 0
   collisionOn: 0
   rb: {fileID: 0}
+  dashable: 0
   timeForCollisionAfterShooted: 0.2
+  decalsMats: []
+  decalPrefab: {fileID: 0}
+  splashPrefab: {fileID: 8581612494898097516, guid: e627bc1ef5490264ca0d03dde2a5d11c,
+    type: 3}
 --- !u!135 &3059715227029399693
 SphereCollider:
   m_ObjectHideFlags: 0
