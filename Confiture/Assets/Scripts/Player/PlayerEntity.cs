@@ -101,7 +101,7 @@ public class PlayerEntity : MonoBehaviour
                     blobNumber++;
 
                 UpdateBlob();
-                Destroy(enemy.gameObject);
+                enemy.AddDamage(99);
             }
             else
             {
