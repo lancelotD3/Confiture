@@ -12,6 +12,8 @@ public class Blob : MonoBehaviour
 
     [SerializeField] int blobNumber = 1;
     [SerializeField] float sizePerBlob = .5f;
+    [SerializeField] float minSize = 0.5f;
+
 
     [HideInInspector] public bool allreadySpawn = false;
 
@@ -125,7 +127,7 @@ public class Blob : MonoBehaviour
 
     public void UpdateBlob()
     {
-        gameObject.transform.localScale = new Vector3(sizePerBlob * blobNumber, sizePerBlob * blobNumber, sizePerBlob * blobNumber);
+        gameObject.transform.localScale = new Vector3(minSize + sizePerBlob * blobNumber, minSize + sizePerBlob * blobNumber, minSize +sizePerBlob * blobNumber);
     }
 
     public void SpawnByShoot(Vector3 force)

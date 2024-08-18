@@ -7,17 +7,25 @@ public class SwitchLevel : MonoBehaviour
 {
     public string nextScene = string.Empty;
     public UnityEvent startLevel;
+    public bool quitGame = false;
 
     private void Start()
     {
+        if (quitGame)
+            return;
+
         GameManager.instance.FadeOut();
+        GameManager.instance.StartLevel();
     }
 
-    private void OnCollisionEnter(Collision collision)
+    private void OnTriggerEnter(Collider other)
     {
-        if (collision.gameObject.CompareTag("Player"))
+        if (other.gameObject.CompareTag("Player"))
         {
-            GameManager.instance.SwitchScene(nextScene);
+            if (quitGame)
+                Application.Quit();
+            else
+                GameManager.instance.SwitchScene(nextScene);
         }
     }
 }

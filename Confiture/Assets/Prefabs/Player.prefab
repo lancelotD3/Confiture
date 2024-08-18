@@ -92,15 +92,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ac19066a8317734d90707b580afe13d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blobNumber: 1
-  blobRatio: 0
+  blobNumber: 6
+  blobRatio: 1
   minBlob: 1
   maxBlob: 6
   minBlobSize: 0.5
-  maxBlobSize: 3
+  maxBlobSize: 2
   winOneOnKill: 0
-  playerShoot: {fileID: 0}
-  playerMovement: {fileID: 0}
+  playerShoot: {fileID: 282627812155074048}
+  playerMovement: {fileID: 1007407965283770477}
   splashPrefab: {fileID: 4689075979304761340}
   splashPrefabDash: {fileID: 3373745123281874520}
   splashPrefabDamage: {fileID: 4899340694063312901}
@@ -122,14 +122,14 @@ MonoBehaviour:
   blobMask:
     serializedVersion: 2
     m_Bits: 64
-  speedDoubleMetrics: 0
+  speedDoubleMetrics: 1
   jumpDoubleMetrics: 0
   dashDoubleMetrics: 0
   minWalkSpeed: 14
   minGroundAcceleration: 25
   minGroundDeceleration: 18
   minAirAcceleration: 25
-  minAirDeceleration: 1
+  minAirDeceleration: 8
   groundLayer:
     serializedVersion: 2
     m_Bits: 8
@@ -146,16 +146,16 @@ MonoBehaviour:
   apexHangTime: 0.08
   jumpBufferTime: 0.125
   jumpCoyoteTime: 0.055
-  minDashSpeed: 30
+  minDashSpeed: 70
   dashAimPrecision: 0.8
-  dashBlobRange: 10
+  dashBlobRange: 15
   dashGravityOnReleaseMultiplier: 1
   dashTimeForUpwardsCancel: 0.027
   maxWalkSpeed: 14
   maxGroundAcceleration: 6.25
   maxGroundDeceleration: 4.5
   maxAirAcceleration: 6.25
-  maxAirDeceleration: 0.25
+  maxAirDeceleration: 8
   maxJumpHeight: 1
   maxTimeTillJumpApex: 0.45
   maxDashSpeed: 30
@@ -164,7 +164,7 @@ MonoBehaviour:
   isDashing: 0
   isDashFastFalling: 0
   dashFastFallTime: 0
-  dashFastFallReleaseSpeed: 0
+  dashFastFallReleaseSpeed: 50
   feetCol: {fileID: 9029786445399621185}
   headCol: {fileID: 8763508898524701687}
 --- !u!114 &282627812155074048
@@ -184,8 +184,8 @@ MonoBehaviour:
     m_Bits: 128
   blobPrefab: {fileID: 8551917852034994916, guid: 7f00c2a42d4bda44bb4b04a8b9560f37,
     type: 3}
-  minForce: 60
-  maxForce: 60
+  minForce: 50
+  maxForce: 50
   mouseWorldPosition: {x: 0, y: 0, z: 0}
 --- !u!114 &2167017005889701687
 MonoBehaviour:
@@ -684,8 +684,8 @@ TrailRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 1, g: 1, b: 1, a: 1}
-      key1: {r: 0.4811321, g: 0.4811321, b: 0.4811321, a: 1}
+      key0: {r: 0.37647063, g: 0.98039216, b: 0.46603382, a: 1}
+      key1: {r: 0.9019608, g: 0.98039216, b: 0.91367453, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}

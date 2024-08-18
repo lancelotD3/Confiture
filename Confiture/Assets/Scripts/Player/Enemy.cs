@@ -24,6 +24,7 @@ public class Enemy : MonoBehaviour
 
         if (life == maxLife)
         {
+            GameManager.instance.RemoveEnemy();
             Destroy(gameObject);
         }
     }

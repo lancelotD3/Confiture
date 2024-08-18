@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &4164989342712050697
+--- !u!1 &75460983203222403
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,38 +8,38 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 4561175868381926251}
-  - component: {fileID: 1259917328122633720}
-  - component: {fileID: 3343413475604437051}
+  - component: {fileID: 7063788936370455411}
+  - component: {fileID: 5865196100786269091}
+  - component: {fileID: 1437404651505557372}
   m_Layer: 0
-  m_Name: SwitchLevel
+  m_Name: TriggerEvent
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &4561175868381926251
+--- !u!4 &7063788936370455411
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4164989342712050697}
+  m_GameObject: {fileID: 75460983203222403}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 19.2, y: -13.55, z: 0}
+  m_LocalPosition: {x: 9.32, y: -6.18, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!65 &1259917328122633720
+--- !u!65 &5865196100786269091
 BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4164989342712050697}
+  m_GameObject: {fileID: 75460983203222403}
   m_Material: {fileID: 0}
   m_IncludeLayers:
     serializedVersion: 2
@@ -54,20 +54,19 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 8.149515, y: 6.4968767, z: 9.757095}
   m_Center: {x: 1.7334127, y: -2.7484384, z: -0.6659889}
---- !u!114 &3343413475604437051
+--- !u!114 &1437404651505557372
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4164989342712050697}
+  m_GameObject: {fileID: 75460983203222403}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: cbf444eded3fbe0499edc599ba2f0138, type: 3}
+  m_Script: {fileID: 11500000, guid: 438ede149de12fc439e6712cf8c5e866, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  nextScene: TestLevel
-  startLevel:
+  onTrigger:
     m_PersistentCalls:
       m_Calls: []
-  quitGame: 0
+  destroyAfterUse: 1
