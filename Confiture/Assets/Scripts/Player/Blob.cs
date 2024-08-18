@@ -64,6 +64,8 @@ public class Blob : MonoBehaviour
                         //    isDashFastFalling = true;
                         //}
                     }
+
+                    player.LockInput(false);
                 }
 
                 player.AddBlobs(blobNumber);

@@ -25,6 +25,8 @@ public class PlayerEntity : MonoBehaviour
     public GameObject splashPrefabDamage;
     public Transform feetPos;
 
+    [SerializeField] public bool lockInput = false;
+
     private void Awake()
     {
         UpdateBlob();
@@ -105,5 +107,11 @@ public class PlayerEntity : MonoBehaviour
                 Died();
             }
         }
+    }
+
+    public void LockInput(bool locked)
+    {
+        lockInput = locked;
+        playerShoot.enabled = !locked;
     }
 }
