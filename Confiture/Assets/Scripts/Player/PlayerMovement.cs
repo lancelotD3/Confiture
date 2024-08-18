@@ -12,6 +12,7 @@ using UnityEngine.Rendering;
 
 public class PlayerMovement : MonoBehaviour
 {
+
     PlayerInput input;
     InputAction moveAction;
     InputAction jumpAction;
@@ -25,6 +26,9 @@ public class PlayerMovement : MonoBehaviour
     public bool speedDoubleMetrics = true;
     public bool jumpDoubleMetrics = true;
     public bool dashDoubleMetrics = true;
+
+    public Vector2 initialDirection = Vector3.zero;
+    public float initialVelocityTime = .5f;
 
     float speed = 2;
     [Header("Walk parameters")]
@@ -68,7 +72,7 @@ public class PlayerMovement : MonoBehaviour
     [Range(0, 10)] float numberOfDashes = 5;
     [Space]
     [Range(0.01f, 100f)] public float dashBlobRange = 5f;
-
+    
     [Header("Dash Cancel Time")]
     [Range(0.01f, 5f)] public float dashGravityOnReleaseMultiplier = 1f;
     [Range(0.02f, 0.3f)] public float dashTimeForUpwardsCancel = 0.027f;
@@ -122,6 +126,7 @@ public class PlayerMovement : MonoBehaviour
 
     bool startDashing = false;
 
+    bool addInitialVelocity = false;
 
     Rigidbody rb;
     [SerializeField] Collider feetCol;
@@ -136,10 +141,13 @@ public class PlayerMovement : MonoBehaviour
     bool isGrounded = false;
     bool bumpedHead = false;
 
+    LineRenderer lineRenderer;
+
     private void Awake()
     {
         input = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
+        lineRenderer = GetComponent<LineRenderer>();
     }
 
     void Start()
@@ -164,7 +172,7 @@ public class PlayerMovement : MonoBehaviour
         Fall();
         Dash();
 
-        float input = moveAction.ReadValue<float>();
+        float input = player.lockInput ? 0 : moveAction.ReadValue<float>();
 
         if(isGrounded)
         {
@@ -194,7 +202,19 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        ApplyVelocity();
+
+        if(!addInitialVelocity)
+        {
+            if(initialVelocityTime > 0f)
+            {
+                rb.velocity = initialDirection;
+                initialVelocityTime -= Time.fixedTime;
+            }
+            else
+                addInitialVelocity = true;
+        }
+        else
+            ApplyVelocity();
 
     }
 
@@ -297,7 +317,7 @@ public class PlayerMovement : MonoBehaviour
     private void JumpCheck()
     {
         // When Pressed
-        if (jumpAction.ReadValue<float>() > 0 && !waitForJumpRelease)
+        if (jumpAction.ReadValue<float>() > 0 && !waitForJumpRelease && !player.lockInput)
         {
             waitForJumpRelease = true;
              
@@ -306,7 +326,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // When Release
-        if (jumpAction.ReadValue<float>() == 0 && waitForJumpRelease)
+        if (jumpAction.ReadValue<float>() == 0 && waitForJumpRelease && !player.lockInput)
         {
             waitForJumpRelease = false;
 
@@ -396,7 +416,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void InitiateJump(int numberOfJumpUsed)
     {
-        if(!isJumping)
+        CalculateValues();
+
+        if (!isJumping)
         {
             isJumping = true;
         }
@@ -494,40 +516,55 @@ public class PlayerMovement : MonoBehaviour
 
     private void DashCheck()
     {
-        if (dashAction.ReadValue<float>() > 0 && !waitForDashRelease)
+        Collider[] colliders = Physics.OverlapSphere(transform.position, dashBlobRange, blobMask);
+
+        Blob closestBlob = null;
+
+        foreach (Collider collider in colliders)
+        {
+            if (collider.gameObject == gameObject)
+                continue;
+
+            if (collider.gameObject.TryGetComponent<Blob>(out Blob blob))
+            {
+                float dot = Vector3.Dot((player.playerShoot.mouseWorldPosition - transform.position).normalized, (blob.transform.position - transform.position).normalized);
+
+                if (closestBlob == null && dot > dashAimPrecision && blob.dashable)
+                {
+                    closestBlob = collider.GetComponent<Blob>();
+                    continue;
+                }
+                else if (closestBlob == null) continue;
+
+                if (Vector3.Distance(closestBlob.transform.position, transform.position) < Vector3.Distance(blob.transform.position, transform.position)
+                    && dot > dashAimPrecision
+                    && blob.dashable)
+                {
+                    closestBlob = blob;
+                }
+            }
+        }
+
+        if (closestBlob != null)
+        {
+            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(1, closestBlob.transform.position);
+
+
+        }
+        else
+        {
+            lineRenderer.SetPosition(0, transform.position);
+            lineRenderer.SetPosition(1, transform.position);
+        }
+
+        if (dashAction.ReadValue<float>() > 0 && !waitForDashRelease && !player.lockInput)
         {
             waitForDashRelease = true;
 
-            Collider[] colliders = Physics.OverlapSphere(transform.position, dashBlobRange, blobMask);
+            
 
-            Blob closestBlob = null;
-
-            foreach (Collider collider in colliders)
-            {
-                if (collider.gameObject == gameObject)
-                    continue;
-
-                if (collider.gameObject.TryGetComponent<Blob>(out Blob blob))
-                {
-                    float dot = Vector3.Dot((player.playerShoot.mouseWorldPosition - transform.position).normalized, (blob.transform.position - transform.position).normalized);
-
-                    if (closestBlob == null && dot > dashAimPrecision && blob.dashable)
-                    {
-                        closestBlob = collider.GetComponent<Blob>();
-                        continue;
-                    }
-                    else if (closestBlob == null) continue;
-
-                    if(Vector3.Distance(closestBlob.transform.position, transform.position) < Vector3.Distance(blob.transform.position, transform.position)
-                        && dot > dashAimPrecision
-                        && blob.dashable)
-                    {
-                        closestBlob = blob;
-                    }
-                }
-            }
-
-            if(closestBlob != null)
+            if (closestBlob != null)
             {
                 if (!startDashing)
                 {
@@ -541,12 +578,14 @@ public class PlayerMovement : MonoBehaviour
                     closestBlob.ActiveCollision();
 
                     dashDirection = (closestBlob.transform.position - transform.position).normalized;
+
                     InitiateDash();
                 }
             }
+            
         }
 
-        if (dashAction.ReadValue<float>() == 0 && waitForDashRelease)
+        if (dashAction.ReadValue<float>() == 0 && waitForDashRelease && !player.lockInput)
         {
             waitForDashRelease = false;
         }
@@ -562,6 +601,13 @@ public class PlayerMovement : MonoBehaviour
         numberOfDashes--;
         isDashing = true;
         dashTimer = 0f;
+        
+        GameObject splashGo = Instantiate(player.splashPrefabDash, player.feetPos.position, Quaternion.identity);
+        splashGo.transform.forward = dashDirection;
+
+        Destroy(splashGo, 2f);
+
+        player.LockInput(true);
 
         ResetJumpValues();
     }
@@ -585,8 +631,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 if(isGrounded) ResetDashes();
                 isDashing = false;
-
-                if(!isJumping)
+                player.LockInput(false);
+                if (!isJumping)
                 {
                     dashFastFallTime = 0f;
                     dashFastFallReleaseSpeed = verticalVelocity;

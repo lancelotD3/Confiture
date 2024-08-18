@@ -20,6 +20,13 @@ public class PlayerEntity : MonoBehaviour
     public PlayerShoot playerShoot;
     public PlayerMovement playerMovement;
 
+    public GameObject splashPrefab;
+    public GameObject splashPrefabDash;
+    public GameObject splashPrefabDamage;
+    public Transform feetPos;
+
+    [SerializeField] public bool lockInput = false;
+
     private void Awake()
     {
         UpdateBlob();
@@ -70,10 +77,15 @@ public class PlayerEntity : MonoBehaviour
         blobRatio = (float)(blobNumber - 1) / (float)(maxBlob - 1);
 
         gameObject.transform.localScale = Vector3.Lerp(new Vector3(minBlobSize, minBlobSize, minBlobSize), new Vector3(maxBlobSize, maxBlobSize, maxBlobSize), blobRatio);
+
+        GameObject splashGo = Instantiate(splashPrefabDamage, transform.position, Quaternion.identity);
+
+        Destroy(splashGo, 2f);
     }
 
     private void Died()
     {
+        GameManager.instance.PlayerDied();
         Destroy(gameObject);
     }
 
@@ -89,12 +101,18 @@ public class PlayerEntity : MonoBehaviour
                     blobNumber++;
 
                 UpdateBlob();
-                Destroy(enemy.gameObject);
+                enemy.AddDamage(99);
             }
             else
             {
                 Died();
             }
         }
+    }
+
+    public void LockInput(bool locked)
+    {
+        lockInput = locked;
+        playerShoot.enabled = !locked;
     }
 }

@@ -12,6 +12,8 @@ public class Blob : MonoBehaviour
 
     [SerializeField] int blobNumber = 1;
     [SerializeField] float sizePerBlob = .5f;
+    [SerializeField] float minSize = 0.5f;
+
 
     [HideInInspector] public bool allreadySpawn = false;
 
@@ -25,6 +27,7 @@ public class Blob : MonoBehaviour
     [Header("Splash parameters")]
     public List<Material> decalsMats = new List<Material>();
     public GameObject decalPrefab;
+    public GameObject splashPrefab;
 
     private void Awake()
     {
@@ -63,6 +66,8 @@ public class Blob : MonoBehaviour
                         //    isDashFastFalling = true;
                         //}
                     }
+
+                    player.LockInput(false);
                 }
 
                 player.AddBlobs(blobNumber);
@@ -110,6 +115,11 @@ public class Blob : MonoBehaviour
         {
             dashable = true;
 
+            GameObject splashGo = Instantiate(splashPrefab, transform.position, Quaternion.identity);
+
+            splashGo.transform.forward = collision.contacts[0].normal;
+            Destroy(splashGo, 2f);
+
             //GameObject decalGo = Instantiate(decalPrefab, transform.position, Quaternion.identity);
             //decalGo.GetComponent<DecalProjector>().material = decalsMats[Random.Range(1, (decalsMats.Count - 1))];
         }
@@ -117,7 +127,7 @@ public class Blob : MonoBehaviour
 
     public void UpdateBlob()
     {
-        gameObject.transform.localScale = new Vector3(sizePerBlob * blobNumber, sizePerBlob * blobNumber, sizePerBlob * blobNumber);
+        gameObject.transform.localScale = new Vector3(minSize + sizePerBlob * blobNumber, minSize + sizePerBlob * blobNumber, minSize +sizePerBlob * blobNumber);
     }
 
     public void SpawnByShoot(Vector3 force)
