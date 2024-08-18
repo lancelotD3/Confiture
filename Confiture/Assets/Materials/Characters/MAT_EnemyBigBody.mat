@@ -20,7 +20,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: MAT_EnemyBody
+  m_Name: MAT_EnemyBigBody
   m_Shader: {fileID: -6465566751694194690, guid: b81e9201082432448b913d55812ecf8d,
     type: 3}
   m_Parent: {fileID: 0}
@@ -97,7 +97,7 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _AlphaToMask: 0
-    - _Amount: 1023.24
+    - _Amount: 137.7
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BorderSize: 0.38
@@ -123,8 +123,8 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Scale: 0.009
-    - _Size: 1
+    - _Scale: 0.015
+    - _Size: 0.53
     - _Smoothness: 0.59999996
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
