@@ -527,7 +527,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   life: 0
-  maxLife: 3
+  maxLife: 2
   lifeText: {fileID: 6608900664726239892}
   timeBeforeDamage: 3
   canon: {fileID: 3614197102451706938}
