@@ -62,7 +62,7 @@ public class PlayerMovement : MonoBehaviour
     [Range(0f, 1f)] public float jumpCoyoteTime = 0.1f;
 
     [Header("Dash")]
-    [Range(0f, 1f)] public float minDashTime = 0.11f;
+    //[Range(0f, 1f)] public float minDashTime = 0.11f;
     [Range(1f, 200f)] public float minDashSpeed = 40f;
     [Range(.5f, 1f)] public float dashAimPrecision = .8f;
     [Range(0, 10)] float numberOfDashes = 5;
@@ -85,15 +85,16 @@ public class PlayerMovement : MonoBehaviour
     public float maxTimeTillJumpApex = 0.35f;
 
     [Header("Dash Max parameters")]
-    public float maxDashTime = 0.11f;
+    //public float maxDashTime = 0.11f;
     public float maxDashSpeed = 40f;
+    private float dashTime = 1f;
 
     private float gravity;
     private float initialJumpVelocity;
     private float adjustedJumpHeight;
 
-    float verticalVelocity;
-    bool isJumping;
+    [HideInInspector] public float verticalVelocity;
+    [HideInInspector] public bool isJumping;
     bool isFastFalling;
     bool isFalling;
     float fastFallTime;
@@ -110,13 +111,13 @@ public class PlayerMovement : MonoBehaviour
     float coyoteTimer;
     bool waitForJumpRelease = false;
 
-    private bool isDashing;
+    [HideInInspector] public bool isDashing;
     private float dashTimer;
     private int numberOfDashesUsed;
     private Vector3 dashDirection;
-    private bool isDashFastFalling;
-    private float dashFastFallTime;
-    private float dashFastFallReleaseSpeed;
+    [HideInInspector] public bool isDashFastFalling;
+    [HideInInspector] public float dashFastFallTime;
+    [HideInInspector] public float dashFastFallReleaseSpeed;
     bool waitForDashRelease = false;
 
     bool startDashing = false;
@@ -181,7 +182,6 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-
             if (speedDoubleMetrics)
             {
                 float airAcceleration = Mathf.Lerp(minAirAcceleration, maxAirAcceleration, player.blobRatio);
@@ -572,12 +572,12 @@ public class PlayerMovement : MonoBehaviour
         {
             dashTimer += Time.fixedDeltaTime;
 
-            float dashTime = minDashTime;
+            //float dashTime = minDashTime;
             float dashSpeed = minDashSpeed;
 
             if (dashDoubleMetrics)
             {
-                dashTime = Mathf.Lerp(minDashTime, maxDashTime, player.blobRatio);
+                //dashTime = Mathf.Lerp(minDashTime, maxDashTime, player.blobRatio);
                 dashSpeed = Mathf.Lerp(minDashSpeed, maxDashSpeed, player.blobRatio);
             }
 
