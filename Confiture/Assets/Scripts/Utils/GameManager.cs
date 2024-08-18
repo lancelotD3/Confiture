@@ -20,6 +20,12 @@ public class GameManager : MonoBehaviour
         DontDestroyOnLoad(gameObject);
     }
 
+    private void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.R))
+            SwitchScene(SceneManager.GetActiveScene().name);
+    }
+
     public void SwitchScene(string sceneName)
     {
         nextScene = sceneName;

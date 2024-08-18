@@ -164,7 +164,7 @@ public class PlayerMovement : MonoBehaviour
         Fall();
         Dash();
 
-        float input = moveAction.ReadValue<float>();
+        float input = player.lockInput ? 0 : moveAction.ReadValue<float>();
 
         if(isGrounded)
         {
@@ -297,7 +297,7 @@ public class PlayerMovement : MonoBehaviour
     private void JumpCheck()
     {
         // When Pressed
-        if (jumpAction.ReadValue<float>() > 0 && !waitForJumpRelease)
+        if (jumpAction.ReadValue<float>() > 0 && !waitForJumpRelease && !player.lockInput)
         {
             waitForJumpRelease = true;
              
@@ -306,7 +306,7 @@ public class PlayerMovement : MonoBehaviour
         }
 
         // When Release
-        if (jumpAction.ReadValue<float>() == 0 && waitForJumpRelease)
+        if (jumpAction.ReadValue<float>() == 0 && waitForJumpRelease && !player.lockInput)
         {
             waitForJumpRelease = false;
 
@@ -396,7 +396,9 @@ public class PlayerMovement : MonoBehaviour
 
     private void InitiateJump(int numberOfJumpUsed)
     {
-        if(!isJumping)
+        CalculateValues();
+
+        if (!isJumping)
         {
             isJumping = true;
         }
@@ -494,7 +496,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void DashCheck()
     {
-        if (dashAction.ReadValue<float>() > 0 && !waitForDashRelease)
+        if (dashAction.ReadValue<float>() > 0 && !waitForDashRelease && !player.lockInput)
         {
             waitForDashRelease = true;
 
@@ -541,12 +543,13 @@ public class PlayerMovement : MonoBehaviour
                     closestBlob.ActiveCollision();
 
                     dashDirection = (closestBlob.transform.position - transform.position).normalized;
+
                     InitiateDash();
                 }
             }
         }
 
-        if (dashAction.ReadValue<float>() == 0 && waitForDashRelease)
+        if (dashAction.ReadValue<float>() == 0 && waitForDashRelease && !player.lockInput)
         {
             waitForDashRelease = false;
         }
@@ -562,6 +565,13 @@ public class PlayerMovement : MonoBehaviour
         numberOfDashes--;
         isDashing = true;
         dashTimer = 0f;
+        
+        GameObject splashGo = Instantiate(player.splashPrefabDash, player.feetPos.position, Quaternion.identity);
+        splashGo.transform.forward = dashDirection;
+
+        Destroy(splashGo, 2f);
+
+        player.LockInput(true);
 
         ResetJumpValues();
     }
@@ -585,8 +595,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 if(isGrounded) ResetDashes();
                 isDashing = false;
-
-                if(!isJumping)
+                player.LockInput(false);
+                if (!isJumping)
                 {
                     dashFastFallTime = 0f;
                     dashFastFallReleaseSpeed = verticalVelocity;
