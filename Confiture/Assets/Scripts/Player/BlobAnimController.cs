@@ -23,5 +23,9 @@ public class BlobAnimController : MonoBehaviour
         {
             animator.SetTrigger("Shoot");
         }
+        if (Input.GetKeyDown(KeyCode.T))
+        {
+            animator.SetTrigger("Dash");
+        }
     }
 }
