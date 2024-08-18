@@ -10,7 +10,7 @@ public class ButtonBehavior : MonoBehaviour
     [SerializeField]
     [Range(1, 6)] private int blobNumberRequiered;
     private PlayerEntity playerEntity;
-
+    private Animator ButtonAnimator;
     public UnityEvent ButtonActivated;
 
     public TextMeshProUGUI blobNumberText;
@@ -18,7 +18,7 @@ public class ButtonBehavior : MonoBehaviour
     private void Awake()
     {
         blobNumberText.text = blobNumberRequiered.ToString();
-
+        ButtonAnimator = GetComponent<Animator>();
         playerEntity = GameObject.FindObjectOfType<PlayerEntity>();
     }
     private void Update()
@@ -42,6 +42,13 @@ public class ButtonBehavior : MonoBehaviour
             if(playerEntityScript.blobNumber >= blobNumberRequiered)
             {
                 ButtonActivated?.Invoke();
+
+                // Animation
+                ButtonAnimator.SetTrigger("ButtonActivated");
+
+                // SFX
+
+                // VFX
             }
         }
     }
