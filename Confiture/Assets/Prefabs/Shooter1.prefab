@@ -131,7 +131,7 @@ MonoBehaviour:
     m_Bits: 9
   spawnTransform: {fileID: 3298100985978850746}
   cooldown: 0.4
-  projectileForce: 2
+  projectileForce: 12
 --- !u!1 &1215928725019130883
 GameObject:
   m_ObjectHideFlags: 0

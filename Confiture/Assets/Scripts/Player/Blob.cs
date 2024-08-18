@@ -25,6 +25,7 @@ public class Blob : MonoBehaviour
     [Header("Splash parameters")]
     public List<Material> decalsMats = new List<Material>();
     public GameObject decalPrefab;
+    public GameObject splashPrefab;
 
     private void Awake()
     {
@@ -63,6 +64,8 @@ public class Blob : MonoBehaviour
                         //    isDashFastFalling = true;
                         //}
                     }
+
+                    player.LockInput(false);
                 }
 
                 player.AddBlobs(blobNumber);
@@ -109,6 +112,11 @@ public class Blob : MonoBehaviour
         if(!collision.collider.TryGetComponent<Enemy>(out Enemy enemy) && !collision.collider.TryGetComponent<Blob>(out Blob blob))
         {
             dashable = true;
+
+            GameObject splashGo = Instantiate(splashPrefab, transform.position, Quaternion.identity);
+
+            splashGo.transform.forward = collision.contacts[0].normal;
+            Destroy(splashGo, 2f);
 
             //GameObject decalGo = Instantiate(decalPrefab, transform.position, Quaternion.identity);
             //decalGo.GetComponent<DecalProjector>().material = decalsMats[Random.Range(1, (decalsMats.Count - 1))];
