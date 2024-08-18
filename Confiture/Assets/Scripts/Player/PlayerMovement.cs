@@ -136,10 +136,13 @@ public class PlayerMovement : MonoBehaviour
     bool isGrounded = false;
     bool bumpedHead = false;
 
+    LineRenderer lineRenderer;
+
     private void Awake()
     {
         input = GetComponent<PlayerInput>();
         rb = GetComponent<Rigidbody>();
+        lineRenderer = GetComponent<LineRenderer>();
     }
 
     void Start()
@@ -496,38 +499,43 @@ public class PlayerMovement : MonoBehaviour
 
     private void DashCheck()
     {
+        Collider[] colliders = Physics.OverlapSphere(transform.position, dashBlobRange, blobMask);
+
+        Blob closestBlob = null;
+
+        foreach (Collider collider in colliders)
+        {
+            if (collider.gameObject == gameObject)
+                continue;
+
+            if (collider.gameObject.TryGetComponent<Blob>(out Blob blob))
+            {
+                float dot = Vector3.Dot((player.playerShoot.mouseWorldPosition - transform.position).normalized, (blob.transform.position - transform.position).normalized);
+
+                if (closestBlob == null && dot > dashAimPrecision && blob.dashable)
+                {
+                    closestBlob = collider.GetComponent<Blob>();
+                    continue;
+                }
+                else if (closestBlob == null) continue;
+
+                if (Vector3.Distance(closestBlob.transform.position, transform.position) < Vector3.Distance(blob.transform.position, transform.position)
+                    && dot > dashAimPrecision
+                    && blob.dashable)
+                {
+                    closestBlob = blob;
+                }
+            }
+        }
+
+        lineRenderer.SetPosition(0, transform.position);
+        lineRenderer.SetPosition(1, closestBlob.transform.position);
+
         if (dashAction.ReadValue<float>() > 0 && !waitForDashRelease && !player.lockInput)
         {
             waitForDashRelease = true;
 
-            Collider[] colliders = Physics.OverlapSphere(transform.position, dashBlobRange, blobMask);
-
-            Blob closestBlob = null;
-
-            foreach (Collider collider in colliders)
-            {
-                if (collider.gameObject == gameObject)
-                    continue;
-
-                if (collider.gameObject.TryGetComponent<Blob>(out Blob blob))
-                {
-                    float dot = Vector3.Dot((player.playerShoot.mouseWorldPosition - transform.position).normalized, (blob.transform.position - transform.position).normalized);
-
-                    if (closestBlob == null && dot > dashAimPrecision && blob.dashable)
-                    {
-                        closestBlob = collider.GetComponent<Blob>();
-                        continue;
-                    }
-                    else if (closestBlob == null) continue;
-
-                    if(Vector3.Distance(closestBlob.transform.position, transform.position) < Vector3.Distance(blob.transform.position, transform.position)
-                        && dot > dashAimPrecision
-                        && blob.dashable)
-                    {
-                        closestBlob = blob;
-                    }
-                }
-            }
+            
 
             if(closestBlob != null)
             {
@@ -547,6 +555,7 @@ public class PlayerMovement : MonoBehaviour
                     InitiateDash();
                 }
             }
+            
         }
 
         if (dashAction.ReadValue<float>() == 0 && waitForDashRelease && !player.lockInput)
