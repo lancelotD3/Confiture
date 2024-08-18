@@ -12,6 +12,7 @@ using UnityEngine.Rendering;
 
 public class PlayerMovement : MonoBehaviour
 {
+
     PlayerInput input;
     InputAction moveAction;
     InputAction jumpAction;
@@ -68,7 +69,7 @@ public class PlayerMovement : MonoBehaviour
     [Range(0, 10)] float numberOfDashes = 5;
     [Space]
     [Range(0.01f, 100f)] public float dashBlobRange = 5f;
-
+    
     [Header("Dash Cancel Time")]
     [Range(0.01f, 5f)] public float dashGravityOnReleaseMultiplier = 1f;
     [Range(0.02f, 0.3f)] public float dashTimeForUpwardsCancel = 0.027f;
@@ -527,18 +528,19 @@ public class PlayerMovement : MonoBehaviour
                 }
             }
         }
-        
-        if(closestBlob != null)
+
+        if (closestBlob != null)
         {
             lineRenderer.SetPosition(0, transform.position);
             lineRenderer.SetPosition(1, closestBlob.transform.position);
+
+
         }
         else
         {
             lineRenderer.SetPosition(0, transform.position);
             lineRenderer.SetPosition(1, transform.position);
         }
-       
 
         if (dashAction.ReadValue<float>() > 0 && !waitForDashRelease && !player.lockInput)
         {
@@ -546,7 +548,7 @@ public class PlayerMovement : MonoBehaviour
 
             
 
-            if(closestBlob != null)
+            if (closestBlob != null)
             {
                 if (!startDashing)
                 {
