@@ -93,12 +93,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9ac19066a8317734d90707b580afe13d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blobNumber: 6
-  blobRatio: 1
+  blobNumber: 1
+  blobRatio: 0
   minBlob: 1
-  maxBlob: 6
+  maxBlob: 3
   minBlobSize: 0.5
-  maxBlobSize: 2
+  maxBlobSize: 2.5
   winOneOnKill: 0
   playerShoot: {fileID: 282627812155074048}
   playerMovement: {fileID: 1007407965283770477}

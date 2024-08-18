@@ -2885,6 +2885,31 @@ PrefabInstance:
       propertyPath: numberOfDashes
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 1007407965283770477, guid: f7ae6888f0402a34ba4edd95d35bb040,
+        type: 3}
+      propertyPath: initialVelocity.x
+      value: 14.17
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007407965283770477, guid: f7ae6888f0402a34ba4edd95d35bb040,
+        type: 3}
+      propertyPath: initialVelocity.y
+      value: 17.66
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007407965283770477, guid: f7ae6888f0402a34ba4edd95d35bb040,
+        type: 3}
+      propertyPath: initialDirection.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007407965283770477, guid: f7ae6888f0402a34ba4edd95d35bb040,
+        type: 3}
+      propertyPath: initialDirection.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 1007407965283770477, guid: f7ae6888f0402a34ba4edd95d35bb040,
+        type: 3}
+      propertyPath: initialVelocityTime
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 5039664331873445387, guid: f7ae6888f0402a34ba4edd95d35bb040,
         type: 3}
       propertyPath: m_TagString
