@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Rendering.Universal;
 
 public class Blob : MonoBehaviour
 {
@@ -17,7 +18,13 @@ public class Blob : MonoBehaviour
     [SerializeField] private bool collisionOn = false;
     [HideInInspector] public Rigidbody rb;
 
+    public bool dashable = false;
+
     [SerializeField] float timeForCollisionAfterShooted = .5f;
+
+    [Header("Splash parameters")]
+    public List<Material> decalsMats = new List<Material>();
+    public GameObject decalPrefab;
 
     private void Awake()
     {
@@ -42,6 +49,22 @@ public class Blob : MonoBehaviour
 
             if (collider.gameObject.TryGetComponent<PlayerEntity>(out PlayerEntity player))
             {
+                if(player.playerMovement.isDashing)
+                {
+                    player.playerMovement.isDashing = false;
+
+                    if (!player.playerMovement.isJumping)
+                    {
+                        player.playerMovement.dashFastFallTime = 0f;
+                        player.playerMovement.dashFastFallReleaseSpeed = player.playerMovement.verticalVelocity;
+
+                        //if(!isGrounded)
+                        //{
+                        //    isDashFastFalling = true;
+                        //}
+                    }
+                }
+
                 player.AddBlobs(blobNumber);
                 Destroy(gameObject);
 
@@ -83,6 +106,13 @@ public class Blob : MonoBehaviour
     private void OnCollisionEnter(Collision collision)
     {
         rb.velocity = Vector3.zero;
+        if(!collision.collider.TryGetComponent<Enemy>(out Enemy enemy) && !collision.collider.TryGetComponent<Blob>(out Blob blob))
+        {
+            dashable = true;
+
+            //GameObject decalGo = Instantiate(decalPrefab, transform.position, Quaternion.identity);
+            //decalGo.GetComponent<DecalProjector>().material = decalsMats[Random.Range(1, (decalsMats.Count - 1))];
+        }
     }
 
     public void UpdateBlob()
@@ -99,7 +129,7 @@ public class Blob : MonoBehaviour
 
     }
 
-    private void ActiveCollision()
+    public void ActiveCollision()
     {
         collisionOn = true;
     }
