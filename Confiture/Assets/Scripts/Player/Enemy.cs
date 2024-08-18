@@ -22,7 +22,7 @@ public class Enemy : MonoBehaviour
         life += damage;
         lifeText.text = life + " / " + maxLife;
 
-        if (life == maxLife)
+        if (life >= maxLife)
         {
             GameManager.instance.RemoveEnemy();
             Destroy(gameObject);
