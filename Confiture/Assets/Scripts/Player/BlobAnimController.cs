@@ -15,5 +15,13 @@ public class BlobAnimController : MonoBehaviour
         {
             animator.SetTrigger("Jump");
         }
+        if (Input.GetKeyDown(KeyCode.E))
+        {
+            animator.SetTrigger("Hit");
+        }
+        if (Input.GetKeyDown(KeyCode.R))
+        {
+            animator.SetTrigger("Shoot");
+        }
     }
 }

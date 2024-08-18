@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 8ad6dade89e31ca45bfc60ef11ef9a4e
+guid: afd4448e9b5488a498d7e1ef0dad23a7
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -48,35 +48,6 @@ ModelImporter:
     extraUserProperties: []
     clipAnimations:
     - serializedVersion: 16
-      name: A_Slime_Jump
-      takeName: A_Slime_Jump
-      internalID: 1435178833581010887
-      firstFrame: 0
-      lastFrame: 12
-      wrapMode: 0
-      orientationOffsetY: 0
-      level: 0
-      cycleOffset: 0
-      loop: 0
-      hasAdditiveReferencePose: 0
-      loopTime: 0
-      loopBlend: 0
-      loopBlendOrientation: 0
-      loopBlendPositionY: 0
-      loopBlendPositionXZ: 0
-      keepOriginalOrientation: 0
-      keepOriginalPositionY: 1
-      keepOriginalPositionXZ: 0
-      heightFromFeet: 0
-      mirror: 0
-      bodyMask: 01000000010000000100000001000000010000000100000001000000010000000100000001000000010000000100000001000000
-      curves: []
-      events: []
-      transformMask: []
-      maskType: 3
-      maskSource: {instanceID: 0}
-      additiveReferencePoseFrame: 0
-    - serializedVersion: 16
       name: A_Slime_Idle
       takeName: A_Slime_Idle
       internalID: 3433590640156168704
@@ -106,9 +77,9 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: SlimeBody|A_Slime_Jump
-      takeName: SlimeBody|A_Slime_Jump
-      internalID: -7940224150539616308
+      name: A_Slime_Jump
+      takeName: A_Slime_Jump
+      internalID: 1435178833581010887
       firstFrame: 0
       lastFrame: 12
       wrapMode: 0
@@ -135,18 +106,18 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: SK_Slime|A_Slime_Idle
-      takeName: SK_Slime|A_Slime_Idle
-      internalID: -5168419126853069496
+      name: A_Slime_Shoot
+      takeName: A_Slime_Shoot
+      internalID: -218739631743004010
       firstFrame: 0
-      lastFrame: 12
+      lastFrame: 13
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
       cycleOffset: 0
       loop: 0
       hasAdditiveReferencePose: 0
-      loopTime: 1
+      loopTime: 0
       loopBlend: 0
       loopBlendOrientation: 0
       loopBlendPositionY: 0
@@ -164,11 +135,11 @@ ModelImporter:
       maskSource: {instanceID: 0}
       additiveReferencePoseFrame: 0
     - serializedVersion: 16
-      name: SK_Slime|A_Slime_Jump
-      takeName: SK_Slime|A_Slime_Jump
-      internalID: 2106887754723707125
+      name: A_Slime_Hit
+      takeName: A_Slime_Hit
+      internalID: 6532741759838693536
       firstFrame: 0
-      lastFrame: 12
+      lastFrame: 10
       wrapMode: 0
       orientationOffsetY: 0
       level: 0
