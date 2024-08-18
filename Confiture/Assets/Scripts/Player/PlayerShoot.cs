@@ -52,10 +52,13 @@ public class PlayerShoot : MonoBehaviour
 
         RaycastHit hit;
 
-        if (Physics.Raycast(Camera.main.transform.position, Camera.main.ScreenPointToRay(mousePos).direction, out hit, 100000f, mouseLayer))
-        {
-            mouseWorldPosition = hit.point;
-        }
+        //if (Physics.Raycast(Camera.main.transform.position, Camera.main.ScreenPointToRay(mousePos).direction, out hit, 100000f, mouseLayer))
+        //{
+        //    mouseWorldPosition = hit.point;
+        //}
+        
+        mouseWorldPosition = Camera.main.ScreenToWorldPoint(Input.mousePosition);
+        mouseWorldPosition.z = 0;
     }
 
     private void TryShoot()
