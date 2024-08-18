@@ -471,7 +471,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 11410ec68ab9c02469ece29248428d9e, type: 2}
+  - {fileID: 2100000, guid: 73aee4047ee039c41ab60a5a8a8ecabd, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -529,14 +529,14 @@ MonoBehaviour:
   life: 0
   maxLife: 3
   lifeText: {fileID: 6608900664726239892}
-  timeBeforeDamage: 2
+  timeBeforeDamage: 3
   canon: {fileID: 3614197102451706938}
   obstruction:
     serializedVersion: 2
     m_Bits: 9
   spawnTransform: {fileID: 3653382491397457880}
   cooldownAfterShoot: 1
-  damage: 1
+  damage: 100
 --- !u!120 &4548230259241623281
 LineRenderer:
   serializedVersion: 2
