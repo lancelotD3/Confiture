@@ -69,10 +69,12 @@ public class PlayerMovement : MonoBehaviour
     //[Range(0f, 1f)] public float minDashTime = 0.11f;
     [Range(1f, 200f)] public float minDashSpeed = 40f;
     [Range(.5f, 1f)] public float dashAimPrecision = .8f;
-    [Range(0, 10)] float numberOfDashes = 5;
+    public bool manualDashNumber = false;
+    [Range(0, 10)] public int numberOfDashes = 5;
     [Space]
     [Range(0.01f, 100f)] public float dashBlobRange = 5f;
-    
+    [Range(0f, 1f)] public float dashBufferTime = 0.125f;
+
     [Header("Dash Cancel Time")]
     [Range(0.01f, 5f)] public float dashGravityOnReleaseMultiplier = 1f;
     [Range(0.02f, 0.3f)] public float dashTimeForUpwardsCancel = 0.027f;
@@ -111,6 +113,9 @@ public class PlayerMovement : MonoBehaviour
 
     float jumpBufferTimer;
     bool jumpReleaseDuringBuffer;
+
+    float dashBufferTimer;
+    bool dashBuffered;
 
     float coyoteTimer;
     bool waitForJumpRelease = false;
@@ -271,8 +276,6 @@ public class PlayerMovement : MonoBehaviour
         Vector3 boxCastOrigin = new Vector3(feetCol.bounds.center.x, feetCol.bounds.min.y + 1, feetCol.bounds.center.z);
 
         isGrounded = Physics.Raycast(boxCastOrigin, Vector3.down, out groundHit, groundRayLenght, groundLayer);
-
-        Debug.DrawLine(boxCastOrigin, boxCastOrigin + Vector3.down * groundRayLenght);
     }
 
     private void BumbedHead()
@@ -527,16 +530,25 @@ public class PlayerMovement : MonoBehaviour
 
             if (collider.gameObject.TryGetComponent<Blob>(out Blob blob))
             {
-                float dot = Vector3.Dot((player.playerShoot.mouseWorldPosition - transform.position).normalized, (blob.transform.position - transform.position).normalized);
 
-                if (closestBlob == null && dot > dashAimPrecision && blob.dashable)
+                Vector3 direction = (blob.transform.position - transform.position).normalized;
+                float dot = Vector3.Dot((player.playerShoot.mouseWorldPosition - transform.position).normalized, direction);
+
+                float distancePlayerToBlob = Vector3.Distance(blob.transform.position, transform.position);
+
+                bool wallBetween = Physics.Raycast(transform.position, direction, distancePlayerToBlob, groundLayer);
+
+                if (closestBlob == null && dot > dashAimPrecision && blob.dashable && !wallBetween)
                 {
                     closestBlob = collider.GetComponent<Blob>();
                     continue;
                 }
                 else if (closestBlob == null) continue;
 
-                if (Vector3.Distance(closestBlob.transform.position, transform.position) < Vector3.Distance(blob.transform.position, transform.position)
+
+                float distancePlayerToClosestBlob = Vector3.Distance(closestBlob.transform.position, transform.position);
+
+                if (distancePlayerToClosestBlob < distancePlayerToBlob
                     && dot > dashAimPrecision
                     && blob.dashable)
                 {
@@ -569,10 +581,15 @@ public class PlayerMovement : MonoBehaviour
                 if (!startDashing)
                 {
                     Invoke(nameof(StartDash), .2f);
-                    numberOfDashes = player.blobNumber;
+
+                    if(!manualDashNumber)
+                    {
+                        numberOfDashes = player.blobNumber;
+                    }
+                    numberOfDashesUsed = numberOfDashes;
                 }
 
-                if(numberOfDashes > 0)
+                if (numberOfDashesUsed > 0)
                 {
                     closestBlob.rb.velocity = Vector3.zero;
                     closestBlob.ActiveCollision();
@@ -598,7 +615,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void InitiateDash()
     {
-        numberOfDashes--;
+        numberOfDashesUsed--;
         isDashing = true;
         dashTimer = 0f;
         
