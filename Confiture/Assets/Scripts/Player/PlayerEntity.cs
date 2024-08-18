@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Net.Security;
 using UnityEngine;
+using UnityEngine.Events;
 
 public class PlayerEntity : MonoBehaviour
 {
@@ -17,11 +18,13 @@ public class PlayerEntity : MonoBehaviour
     [SerializeField] bool winOneOnKill = true;
 
     public PlayerShoot playerShoot;
+    public PlayerMovement playerMovement;
 
     private void Awake()
     {
         UpdateBlob();
         playerShoot = GetComponent<PlayerShoot>();
+        playerMovement = GetComponent<PlayerMovement>();
     }
 
     private void Update()

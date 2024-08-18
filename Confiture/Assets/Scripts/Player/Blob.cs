@@ -44,6 +44,22 @@ public class Blob : MonoBehaviour
 
             if (collider.gameObject.TryGetComponent<PlayerEntity>(out PlayerEntity player))
             {
+                if(player.playerMovement.isDashing)
+                {
+                    player.playerMovement.isDashing = false;
+
+                    if (!player.playerMovement.isJumping)
+                    {
+                        player.playerMovement.dashFastFallTime = 0f;
+                        player.playerMovement.dashFastFallReleaseSpeed = player.playerMovement.verticalVelocity;
+
+                        //if(!isGrounded)
+                        //{
+                        //    isDashFastFalling = true;
+                        //}
+                    }
+                }
+
                 player.AddBlobs(blobNumber);
                 Destroy(gameObject);
 
