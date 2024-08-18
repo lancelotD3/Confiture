@@ -97,7 +97,7 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _AlphaToMask: 0
-    - _Amount: 137.7
+    - _Amount: 44.63
     - _Blend: 0
     - _BlendModePreserveSpecular: 1
     - _BorderSize: 0.38
@@ -123,12 +123,12 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Scale: 0.005
+    - _Scale: 0.3
     - _Size: 0.53
     - _Smoothness: 0.59999996
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
-    - _Speed: 0.01
+    - _Speed: 0.3
     - _SrcBlend: 1
     - _SrcBlendAlpha: 1
     - _Surface: 1
