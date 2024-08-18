@@ -85,6 +85,7 @@ public class PlayerEntity : MonoBehaviour
 
     private void Died()
     {
+        GameManager.instance.PlayerDied();
         Destroy(gameObject);
     }
 

@@ -122,7 +122,6 @@ public class PlayerMovement : MonoBehaviour
 
     bool startDashing = false;
 
-
     Rigidbody rb;
     [SerializeField] Collider feetCol;
     [SerializeField] Collider headCol;
@@ -528,8 +527,8 @@ public class PlayerMovement : MonoBehaviour
             }
         }
 
-        lineRenderer.SetPosition(0, transform.position);
-        lineRenderer.SetPosition(1, closestBlob.transform.position);
+        //lineRenderer.SetPosition(0, transform.position);
+        //lineRenderer.SetPosition(1, closestBlob.transform.position);
 
         if (dashAction.ReadValue<float>() > 0 && !waitForDashRelease && !player.lockInput)
         {
