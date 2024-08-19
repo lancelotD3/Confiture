@@ -25,11 +25,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _DiffuseTexture:
-        m_Texture: {fileID: 2800000, guid: e0ea76126d08b004e9cd5609ada8d2d7, type: 3}
+        m_Texture: {fileID: 2800000, guid: 7765a569ab3a7ee4584f021cd8802b08, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTexture:
-        m_Texture: {fileID: 2800000, guid: de204bf4216de9f4e9200ca4c0e3b81c, type: 3}
+        m_Texture: {fileID: 2800000, guid: 24b28b220d129b440b63eee9a998d2e5, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -51,10 +51,10 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Smoothness: 0
-    - _Tiling: 1
+    - _Tiling: 0.13
     m_Colors:
     - _BlendingEdges: {r: 0.45, g: 1, b: 0, a: 0}
-    - _Color: {r: 1, g: 1, b: 1, a: 0}
+    - _Color: {r: 1, g: 1, b: 1, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &7179651960288207189
 MonoBehaviour:

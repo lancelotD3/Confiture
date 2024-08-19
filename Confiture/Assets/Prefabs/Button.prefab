@@ -397,7 +397,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3127357b6634dc2459f5f977471ee331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blobNumberRequiered: 3
+  blobNumberRequiered: 1
   ButtonActivated:
     m_PersistentCalls:
       m_Calls:
