@@ -85,8 +85,10 @@ public class GameManager : MonoBehaviour
             }
         }
 
+        if(player)
+            blobNumberText.text = player.blobNumber.ToString();
+
         timerText.text = gameTimer.ToString();
-        blobNumberText.text = player.blobNumber.ToString();
         enemyRemainsText.text = enemyRemaining.ToString();
     }
 
