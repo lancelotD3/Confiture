@@ -153,8 +153,8 @@ MonoBehaviour:
   jumpCoyoteTime: 0.055
   minDashSpeed: 70
   dashAimPrecision: 0.8
-  manualDashNumber: 0
-  numberOfDashes: 2
+  manualDashNumber: 1
+  numberOfDashes: 10
   dashBlobRange: 15
   dashBufferTime: 0.124
   dashGravityOnReleaseMultiplier: 1
