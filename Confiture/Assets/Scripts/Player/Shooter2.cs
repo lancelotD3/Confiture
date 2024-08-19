@@ -21,6 +21,10 @@ public class Shooter2 : Enemy
     bool canShoot = true;
     bool startShoot = false;
 
+    [Header("Enemy laser")]
+    public Color colorStartCharge = Color.white;
+    public Color colorEndCharge = Color.red;
+
     PlayerEntity player;
 
     LineRenderer lineRenderer;
@@ -43,6 +47,11 @@ public class Shooter2 : Enemy
         Vector3 direction = (player.transform.position - spawnTransform.position).normalized;
         float distance = Vector3.Distance(player.transform.position, spawnTransform.position);
 
+
+        Color color = Color.Lerp(colorStartCharge, colorEndCharge, 1 - timerTriggered / timeBeforeDamage);
+
+        lineRenderer.startColor = color;
+        lineRenderer.endColor = color;
 
         if (!Physics.Raycast(spawnTransform.position, direction, out RaycastHit hit, distance, obstruction))
         {

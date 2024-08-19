@@ -16,6 +16,7 @@ public class Blob : MonoBehaviour
 
 
     [HideInInspector] public bool allreadySpawn = false;
+    public bool staticBlob = false;
 
     [SerializeField] private bool collisionOn = false;
     [HideInInspector] public Rigidbody rb;
@@ -43,7 +44,10 @@ public class Blob : MonoBehaviour
     {
         if (!collisionOn) return;
 
-        Collider[] colliders = Physics.OverlapSphere(transform.position, transform.localScale.x / 2, blobMask);
+        if (!gameObject.GetComponent<Collider>().enabled) return;
+
+        Collider[] colliders = Physics.OverlapSphere(transform.position, transform.localScale.x, blobMask);
+        //Collider[] colliders = Physics.OverlapSphere(transform.position, transform.localScale.x / 2, blobMask);
 
         foreach (Collider collider in colliders)
         {
@@ -77,6 +81,9 @@ public class Blob : MonoBehaviour
             }
             else if (collider.gameObject.TryGetComponent<Blob>(out Blob blob))
             {
+                if (blob.staticBlob || staticBlob)
+                    return;
+
                 if (allreadySpawn)
                     return;
 
@@ -93,36 +100,59 @@ public class Blob : MonoBehaviour
                 Destroy(blob.gameObject);
                 return;
             }
-            else if (collider.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
-            {
-                enemy.AddDamage(1);
-                gameObject.transform.parent = enemy.transform;
-                rb.velocity = Vector3.zero;
-                rb.isKinematic = true;
-                rb.useGravity = false;
+            //else if (collider.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
+            //{
+            //    enemy.AddDamage(1);
+            //    gameObject.transform.parent = enemy.transform;
+            //    rb.velocity = Vector3.zero;
+            //    rb.isKinematic = true;
+            //    rb.useGravity = false;
 
-                collisionOn = false;
+            //    collisionOn = false;
 
-                return;
-            }
+            //    return;
+            //}
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
         rb.velocity = Vector3.zero;
-        if(!collision.collider.TryGetComponent<Enemy>(out Enemy enemy) && !collision.collider.TryGetComponent<Blob>(out Blob blob))
+
+        GameObject splashGo = Instantiate(splashPrefab, transform.position, Quaternion.identity);
+
+        splashGo.transform.forward = collision.contacts[0].normal;
+        Destroy(splashGo, 2f);
+
+        if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
+        {
+            enemy.AddDamage(1);
+            gameObject.GetComponent<Collider>().enabled = false;
+
+            gameObject.transform.parent = enemy.transform;
+            rb.velocity = Vector3.zero;
+            rb.isKinematic = true;
+            rb.useGravity = false;
+
+            collisionOn = false;
+
+            return;
+        }
+
+        if (!collision.collider.TryGetComponent<Blob>(out Blob blob))
         {
             dashable = true;
 
-            GameObject splashGo = Instantiate(splashPrefab, transform.position, Quaternion.identity);
-
-            splashGo.transform.forward = collision.contacts[0].normal;
-            Destroy(splashGo, 2f);
-
             //GameObject decalGo = Instantiate(decalPrefab, transform.position, Quaternion.identity);
             //decalGo.GetComponent<DecalProjector>().material = decalsMats[Random.Range(1, (decalsMats.Count - 1))];
+            return;
         }
+
+        if (!collision.gameObject.CompareTag("Adhesive"))
+        {
+            Destroy(gameObject);
+        }
+
     }
 
     public void UpdateBlob()
