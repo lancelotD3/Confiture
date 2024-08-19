@@ -13,7 +13,7 @@ GameObject:
   - component: {fileID: 3478842471091410433}
   - component: {fileID: 3951504391087817320}
   - component: {fileID: 5603735000020169453}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -29,8 +29,8 @@ Transform:
   m_GameObject: {fileID: 6937674295860012659}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.15, y: 0, z: 0.38}
-  m_LocalScale: {x: 8.9722, y: 1, z: 5.5317287}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 3, y: 1, z: 3}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 5112923695872379819}
@@ -63,7 +63,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 31321ba15b8f8eb4c954353edc038b1d, type: 2}
+  - {fileID: 2100000, guid: 0ce3e80912283ea43941c7b5aaa8fbd2, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -137,9 +137,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5112923695872379819}
   - component: {fileID: 2003637013506140098}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Door 1
-  m_TagString: Untagged
+  m_TagString: ExitDoor
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0

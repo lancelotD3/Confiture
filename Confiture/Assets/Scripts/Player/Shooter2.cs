@@ -21,19 +21,28 @@ public class Shooter2 : Enemy
     bool canShoot = true;
     bool startShoot = false;
 
+    [Header("Enemy laser")]
+    public Color colorStartCharge = Color.white;
+    public Color colorEndCharge = Color.red;
+
     PlayerEntity player;
 
-    LineRenderer lineRenderer;
+    public LineRenderer lineRendererBeforeShoot;
+    public LineRenderer lineRendererShoot;
+    public GameObject particleStart;
+    public GameObject particleEnd;
 
     protected override void Awake()
     {
         base.Awake();
 
         player = FindAnyObjectByType<PlayerEntity>();
-        lineRenderer = GetComponent<LineRenderer>();
 
         timerTriggered = timeBeforeDamage;
         timer = cooldownAfterShoot;
+
+        lineRendererShoot.SetPosition(0, spawnTransform.position);
+        lineRendererShoot.SetPosition(1, spawnTransform.position);
     }
 
     private void Update()
@@ -44,12 +53,17 @@ public class Shooter2 : Enemy
         float distance = Vector3.Distance(player.transform.position, spawnTransform.position);
 
 
+        Color color = Color.Lerp(colorStartCharge, colorEndCharge, 1 - timerTriggered / timeBeforeDamage);
+
+        lineRendererBeforeShoot.startColor = color;
+        lineRendererBeforeShoot.endColor = color;
+
         if (!Physics.Raycast(spawnTransform.position, direction, out RaycastHit hit, distance, obstruction))
         {
             canon.transform.LookAt(player.transform.position);
 
-            lineRenderer.SetPosition(0, spawnTransform.position);
-            lineRenderer.SetPosition(1, player.transform.position);
+            lineRendererBeforeShoot.SetPosition(0, spawnTransform.position);
+            lineRendererBeforeShoot.SetPosition(1, player.mesh.transform.position);
 
             if (!startShoot && canShoot)
             {
@@ -58,8 +72,8 @@ public class Shooter2 : Enemy
         }
         else
         {
-            lineRenderer.SetPosition(0, spawnTransform.position);
-            lineRenderer.SetPosition(1, spawnTransform.position);
+            lineRendererBeforeShoot.SetPosition(0, spawnTransform.position);
+            lineRendererBeforeShoot.SetPosition(1, spawnTransform.position);
             startShoot = false;
         }
 
@@ -93,27 +107,43 @@ public class Shooter2 : Enemy
         startShoot = false;
         timer = cooldownAfterShoot;
 
-        player.RemoveBlobs(damage);
         SetHitColor();
 
+        particleStart.SetActive(true);
+        particleEnd.SetActive(true);
+
+        particleEnd.transform.parent = null;
+        particleEnd.transform.position = player.mesh.transform.position;
+
+        player.RemoveBlobs(damage);
+        
         Invoke(nameof(ResetColor), .2f);
     }
 
     private void SetHitColor()
     {
-        lineRenderer.startColor = Color.red;
-        lineRenderer.endColor= Color.red;
+        //lineRendererBeforeShoot.startColor = Color.red;
+        //lineRendererBeforeShoot.endColor = Color.red;
+
+        lineRendererBeforeShoot.gameObject.SetActive(false);
+        lineRendererShoot.gameObject.SetActive(true);
+
+        lineRendererShoot.SetPosition(0, spawnTransform.position);
+        lineRendererShoot.SetPosition(1, player.mesh.transform.position);
     }
 
     private void SetChargeColor()
     {
-        lineRenderer.startColor = Color.red;
-        lineRenderer.endColor = Color.red;
+        lineRendererBeforeShoot.startColor = Color.red;
+        lineRendererBeforeShoot.endColor = Color.red;
     }
 
     private void ResetColor()
     {
-        lineRenderer.startColor = Color.white;
-        lineRenderer.endColor = Color.white;
+        lineRendererBeforeShoot.gameObject.SetActive(true);
+        lineRendererShoot.gameObject.SetActive(false);
+
+        lineRendererShoot.SetPosition(0, spawnTransform.position);
+        lineRendererShoot.SetPosition(1, spawnTransform.position);
     }
 }

@@ -16,6 +16,7 @@ public class PlayerEntity : MonoBehaviour
     [SerializeField] float maxBlobSize;
     [Space]
     [SerializeField] bool winOneOnKill = true;
+    public GameObject mesh;
 
     public PlayerShoot playerShoot;
     public PlayerMovement playerMovement;

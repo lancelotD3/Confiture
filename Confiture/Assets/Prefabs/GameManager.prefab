@@ -437,7 +437,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -50.00006, y: -50.00003}
+  m_AnchoredPosition: {x: -50, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4164390231717351076
@@ -451,7 +451,6 @@ GameObject:
   - component: {fileID: 3037170951928651523}
   - component: {fileID: 8207073723638425895}
   - component: {fileID: 991812484640737551}
-  - component: {fileID: 8385723593029299351}
   m_Layer: 5
   m_Name: BN cursor
   m_TagString: Untagged
@@ -575,22 +574,6 @@ MonoBehaviour:
   m_hasFontAssetChanged: 0
   m_baseMaterial: {fileID: 0}
   m_maskOffset: {x: 0, y: 0, z: 0, w: 0}
---- !u!114 &8385723593029299351
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4164390231717351076}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 43d97d2d628a4394782c29f22f33f3bc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  Offset: {x: 50, y: -50, z: 0}
-  BN_Text: {fileID: 991812484640737551}
-  BN_number: 0
-  PE: {fileID: 0}
 --- !u!1 &4586161992479353368
 GameObject:
   m_ObjectHideFlags: 0
@@ -625,8 +608,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 5.4, y: 12}
-  m_SizeDelta: {x: 25.5146, y: 25.5143}
+  m_AnchoredPosition: {x: 5.5468, y: 11.0533}
+  m_SizeDelta: {x: 35.3468, y: 35.3463}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &2063242324968113040
 CanvasRenderer:
@@ -649,14 +632,14 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0, g: 0, b: 0, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_Sprite: {fileID: 0}
+  m_Sprite: {fileID: 21300000, guid: c44cc0eb06519a24d83ae09e471baa91, type: 3}
   m_Type: 0
   m_PreserveAspect: 0
   m_FillCenter: 1
@@ -712,9 +695,15 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeAnimator: {fileID: 8578954269906445337}
+  timeForGold: 10
+  timeForSilver: 20
+  timeForBronze: 30
   timerText: {fileID: 1931937378583592510}
   enemyRemainsText: {fileID: 7229497093430946935}
+  blobNumberText: {fileID: 991812484640737551}
+  canva: {fileID: 6140992522813490878}
   gameTimer: 0
+  offset: {x: 0, y: 0, z: 0}
   enemyRemaining: 0
 --- !u!1 &6140992522813490878
 GameObject:
