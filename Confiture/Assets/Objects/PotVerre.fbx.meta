@@ -1,5 +1,5 @@
 fileFormatVersion: 2
-guid: 229e54740628f414ab2e641198726022
+guid: ca6b64b60d165b4428aa283b20ab74fd
 ModelImporter:
   serializedVersion: 22200
   internalIDToNameTable: []
@@ -7,8 +7,13 @@ ModelImporter:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: lambert1
-    second: {fileID: 2100000, guid: 432bfb131a555a74481dfc8a4f4dbcb6, type: 2}
+      name: M_PotVerre
+    second: {fileID: 2100000, guid: a325ebabdb03b4541bb61435227180e2, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: M_PotVerre_Bouchon
+    second: {fileID: 2100000, guid: 0a28c74c1e001fd43b5aac5dae4e1697, type: 2}
   materials:
     materialImportMode: 2
     materialName: 0
