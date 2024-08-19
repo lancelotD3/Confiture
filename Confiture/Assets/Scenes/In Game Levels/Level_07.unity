@@ -8456,10 +8456,20 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2912244782690808704, guid: 8630844ebeb02e147955b799f91b8e35,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 6291162435109667846, guid: 8630844ebeb02e147955b799f91b8e35,
         type: 3}
       propertyPath: m_Name
       value: Door (1)
+      objectReference: {fileID: 0}
+    - target: {fileID: 6291162435109667846, guid: 8630844ebeb02e147955b799f91b8e35,
+        type: 3}
+      propertyPath: m_Layer
+      value: 3
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -8920,7 +8930,7 @@ PrefabInstance:
     - target: {fileID: 3343413475604437051, guid: 504973dd121c3a14ba33ccf4c0bc6dfe,
         type: 3}
       propertyPath: nextScene
-      value: Level_06
+      value: Level_08
       objectReference: {fileID: 0}
     - target: {fileID: 4164989342712050697, guid: 504973dd121c3a14ba33ccf4c0bc6dfe,
         type: 3}
@@ -8930,7 +8940,7 @@ PrefabInstance:
     - target: {fileID: 4561175868381926251, guid: 504973dd121c3a14ba33ccf4c0bc6dfe,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 23
+      value: 24
       objectReference: {fileID: 0}
     - target: {fileID: 4561175868381926251, guid: 504973dd121c3a14ba33ccf4c0bc6dfe,
         type: 3}
