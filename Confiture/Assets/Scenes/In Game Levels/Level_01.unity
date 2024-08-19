@@ -2303,36 +2303,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 3275973381212528565, guid: 725c494e947e157418baf74c7ef30785,
-        type: 3}
-      propertyPath: m_LocalScale.x
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3275973381212528565, guid: 725c494e947e157418baf74c7ef30785,
-        type: 3}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 3275973381212528565, guid: 725c494e947e157418baf74c7ef30785,
-        type: 3}
-      propertyPath: m_LocalScale.z
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 3275973381212528565, guid: 725c494e947e157418baf74c7ef30785,
-        type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3275973381212528565, guid: 725c494e947e157418baf74c7ef30785,
-        type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3478842471091410433, guid: 725c494e947e157418baf74c7ef30785,
-        type: 3}
-      propertyPath: m_Materials.Array.data[0]
-      value: 
-      objectReference: {fileID: 2100000, guid: 0ce3e80912283ea43941c7b5aaa8fbd2, type: 2}
     - target: {fileID: 5112923695872379819, guid: 725c494e947e157418baf74c7ef30785,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -2383,25 +2353,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 90
       objectReference: {fileID: 0}
-    - target: {fileID: 6937674295860012659, guid: 725c494e947e157418baf74c7ef30785,
-        type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 8844554697647967223, guid: 725c494e947e157418baf74c7ef30785,
         type: 3}
       propertyPath: m_Name
       value: Door
-      objectReference: {fileID: 0}
-    - target: {fileID: 8844554697647967223, guid: 725c494e947e157418baf74c7ef30785,
-        type: 3}
-      propertyPath: m_Layer
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 8844554697647967223, guid: 725c494e947e157418baf74c7ef30785,
-        type: 3}
-      propertyPath: m_TagString
-      value: ExitDoor
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -5862,17 +5817,9 @@ MonoBehaviour:
   m_Mesh: {fileID: 1294128189}
   m_VersionIndex: 1478
   m_IsSelectable: 1
-  m_SelectedFaces: 03000000
-  m_SelectedEdges:
-  - a: 12
-    b: 13
-  - a: 14
-    b: 12
-  - a: 13
-    b: 15
-  - a: 15
-    b: 14
-  m_SelectedVertices: 0c0000000d0000000e0000000f000000
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
 --- !u!1 &1135555414
 GameObject:
   m_ObjectHideFlags: 0
