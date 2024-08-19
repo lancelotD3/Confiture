@@ -283,12 +283,14 @@ public class PlayerMovement : MonoBehaviour
         if(right)
         {
             isFacingRight = true;
-            transform.Rotate(0f, 180f, 0f);
+            //transform.localScale = new Vector3 (-transform.localScale.x, transform.localScale.y, transform.localScale.z);
+            //transform.Rotate(0f, 180f, 0f);
         }
         else
         {
             isFacingRight = false;
-            transform.Rotate(0f, -180f, 0f);
+            //transform.Rotate(0f, -180f, 0f);
+            //transform.localScale = new Vector3(-transform.localScale.x, transform.localScale.y, transform.localScale.z);
         }
     }
 
