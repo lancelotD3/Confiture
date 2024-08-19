@@ -44,6 +44,8 @@ public class Blob : MonoBehaviour
     {
         if (!collisionOn) return;
 
+        if (!gameObject.GetComponent<Collider>().enabled) return;
+
         Collider[] colliders = Physics.OverlapSphere(transform.position, transform.localScale.x, blobMask);
         //Collider[] colliders = Physics.OverlapSphere(transform.position, transform.localScale.x / 2, blobMask);
 
@@ -117,6 +119,11 @@ public class Blob : MonoBehaviour
     {
         rb.velocity = Vector3.zero;
 
+        GameObject splashGo = Instantiate(splashPrefab, transform.position, Quaternion.identity);
+
+        splashGo.transform.forward = collision.contacts[0].normal;
+        Destroy(splashGo, 2f);
+
         if (collision.gameObject.TryGetComponent<Enemy>(out Enemy enemy))
         {
             enemy.AddDamage(1);
@@ -129,11 +136,6 @@ public class Blob : MonoBehaviour
 
             collisionOn = false;
 
-            GameObject splashGo = Instantiate(splashPrefab, transform.position, Quaternion.identity);
-
-            splashGo.transform.forward = collision.contacts[0].normal;
-            Destroy(splashGo, 2f);
-
             return;
         }
 
@@ -141,15 +143,16 @@ public class Blob : MonoBehaviour
         {
             dashable = true;
 
-            GameObject splashGo = Instantiate(splashPrefab, transform.position, Quaternion.identity);
-
-            splashGo.transform.forward = collision.contacts[0].normal;
-            Destroy(splashGo, 2f);
-
             //GameObject decalGo = Instantiate(decalPrefab, transform.position, Quaternion.identity);
             //decalGo.GetComponent<DecalProjector>().material = decalsMats[Random.Range(1, (decalsMats.Count - 1))];
+            return;
         }
-        
+
+        if (!collision.gameObject.CompareTag("Adhesive"))
+        {
+            Destroy(gameObject);
+        }
+
     }
 
     public void UpdateBlob()

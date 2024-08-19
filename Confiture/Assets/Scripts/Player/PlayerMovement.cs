@@ -116,6 +116,7 @@ public class PlayerMovement : MonoBehaviour
 
     float dashBufferTimer;
     bool dashBuffered;
+    Blob blobInBuffer;
 
     float coyoteTimer;
     bool waitForJumpRelease = false;
@@ -176,6 +177,15 @@ public class PlayerMovement : MonoBehaviour
         Jump();
         Fall();
         Dash();
+
+        if(dashBuffered && blobInBuffer && blobInBuffer.dashable)
+        {
+            dashDirection = (blobInBuffer.transform.position - transform.position).normalized;
+            InitiateDash();
+
+            dashBuffered = false;
+            blobInBuffer = null;
+        }
 
         float input = player.lockInput ? 0 : moveAction.ReadValue<float>();
 
@@ -543,6 +553,11 @@ public class PlayerMovement : MonoBehaviour
                     closestBlob = collider.GetComponent<Blob>();
                     continue;
                 }
+                else if(closestBlob == null && dot > dashAimPrecision && !wallBetween)
+                {
+                    blobInBuffer = blob;
+                    continue;
+                }
                 else if (closestBlob == null) continue;
 
 
@@ -554,6 +569,11 @@ public class PlayerMovement : MonoBehaviour
                 {
                     closestBlob = blob;
                 }
+                else if (distancePlayerToClosestBlob < distancePlayerToBlob
+                    && dot > dashAimPrecision)
+                {
+                    blobInBuffer = blob;
+                }
             }
         }
 
@@ -561,7 +581,6 @@ public class PlayerMovement : MonoBehaviour
         {
             lineRenderer.SetPosition(0, transform.position);
             lineRenderer.SetPosition(1, closestBlob.transform.position);
-
 
         }
         else
@@ -573,8 +592,6 @@ public class PlayerMovement : MonoBehaviour
         if (dashAction.ReadValue<float>() > 0 && !waitForDashRelease && !player.lockInput)
         {
             waitForDashRelease = true;
-
-            
 
             if (closestBlob != null)
             {
@@ -599,7 +616,12 @@ public class PlayerMovement : MonoBehaviour
                     InitiateDash();
                 }
             }
-            
+            else if (blobInBuffer != null)
+            {
+                dashBuffered = true;
+                dashBufferTimer = dashBufferTime;
+            }
+
         }
 
         if (dashAction.ReadValue<float>() == 0 && waitForDashRelease && !player.lockInput)
@@ -711,6 +733,17 @@ public class PlayerMovement : MonoBehaviour
         else
         {
             coyoteTimer = jumpCoyoteTime;
+        }
+
+        if(dashBuffered)
+        {
+            dashBufferTimer -= Time.deltaTime;
+
+            if(dashBufferTimer < 0f)
+            {
+                dashBuffered = false;
+                blobInBuffer = null;
+            }
         }
         
     }
