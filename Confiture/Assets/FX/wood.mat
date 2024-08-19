@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Plank
+  m_Name: wood
   m_Shader: {fileID: -6465566751694194690, guid: 520db6da859939f48b4f906bcfc18ccc,
     type: 3}
   m_Parent: {fileID: 0}
@@ -25,11 +25,11 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _DiffuseTexture:
-        m_Texture: {fileID: 2800000, guid: 7765a569ab3a7ee4584f021cd8802b08, type: 3}
+        m_Texture: {fileID: 2800000, guid: 3c6892cdf851cc84dae389d129157b58, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTexture:
-        m_Texture: {fileID: 2800000, guid: 24b28b220d129b440b63eee9a998d2e5, type: 3}
+        m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
@@ -51,12 +51,12 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Smoothness: 0
-    - _Tiling: 0.13
+    - _Tiling: 0.15
     m_Colors:
     - _BlendingEdges: {r: 0.45, g: 1, b: 0, a: 0}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 1, g: 1, b: 1, a: 0}
   m_BuildTextureStacks: []
---- !u!114 &7179651960288207189
+--- !u!114 &8218554085728233241
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
