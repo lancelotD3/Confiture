@@ -527,12 +527,14 @@ public class PlayerMovement : MonoBehaviour
         isPastApexTreshold = false;
     }
 
+    Blob closestBlob;
+
     private void DashCheck()
     {
         Collider[] colliders = Physics.OverlapSphere(transform.position, dashBlobRange, blobMask);
 
-        Blob closestBlob = null;
-
+        closestBlob = null;
+        
         foreach (Collider collider in colliders)
         {
             if (collider.gameObject == gameObject)
@@ -540,7 +542,6 @@ public class PlayerMovement : MonoBehaviour
 
             if (collider.gameObject.TryGetComponent<Blob>(out Blob blob))
             {
-
                 Vector3 direction = (blob.transform.position - transform.position).normalized;
                 float dot = Vector3.Dot((player.playerShoot.mouseWorldPosition - transform.position).normalized, direction);
 
@@ -551,6 +552,7 @@ public class PlayerMovement : MonoBehaviour
                 if (closestBlob == null && dot > dashAimPrecision && blob.dashable && !wallBetween)
                 {
                     closestBlob = collider.GetComponent<Blob>();
+                    blobInBuffer = null;
                     continue;
                 }
                 else if(closestBlob == null && dot > dashAimPrecision && !wallBetween)
@@ -563,16 +565,20 @@ public class PlayerMovement : MonoBehaviour
 
                 float distancePlayerToClosestBlob = Vector3.Distance(closestBlob.transform.position, transform.position);
 
-                if (distancePlayerToClosestBlob < distancePlayerToBlob
+                if (distancePlayerToClosestBlob > distancePlayerToBlob
                     && dot > dashAimPrecision
                     && blob.dashable)
                 {
                     closestBlob = blob;
                 }
-                else if (distancePlayerToClosestBlob < distancePlayerToBlob
+                else if (distancePlayerToClosestBlob > distancePlayerToBlob
                     && dot > dashAimPrecision)
                 {
                     blobInBuffer = blob;
+                }
+                else
+                {
+                    blobInBuffer = null;
                 }
             }
         }
@@ -581,7 +587,6 @@ public class PlayerMovement : MonoBehaviour
         {
             lineRenderer.SetPosition(0, transform.position);
             lineRenderer.SetPosition(1, closestBlob.transform.position);
-
         }
         else
         {
@@ -657,12 +662,10 @@ public class PlayerMovement : MonoBehaviour
         {
             dashTimer += Time.fixedDeltaTime;
 
-            //float dashTime = minDashTime;
             float dashSpeed = minDashSpeed;
 
             if (dashDoubleMetrics)
             {
-                //dashTime = Mathf.Lerp(minDashTime, maxDashTime, player.blobRatio);
                 dashSpeed = Mathf.Lerp(minDashSpeed, maxDashSpeed, player.blobRatio);
             }
 
@@ -675,41 +678,18 @@ public class PlayerMovement : MonoBehaviour
                 {
                     dashFastFallTime = 0f;
                     dashFastFallReleaseSpeed = verticalVelocity;
-
-                    //if(!isGrounded)
-                    //{
-                    //    isDashFastFalling = true;
-                    //}
                 }
 
                 return;
             }
 
+            if(closestBlob)
+                dashDirection = (closestBlob.transform.position - transform.position).normalized;
+
             horizontalVelocity = dashSpeed * dashDirection.x;
 
             verticalVelocity = dashSpeed * dashDirection.y;
         }
-
-        //else if (isDashFastFalling)
-        //{
-        //    if(verticalVelocity > 0f)
-        //    {
-        //        if (dashFastFallTime < dashTimeForUpwardsCancel)
-        //        {
-        //            verticalVelocity = Mathf.Lerp(dashFastFallReleaseSpeed, 0f, (dashFastFallTime / dashTimeForUpwardsCancel));
-        //        }
-        //        else if (dashFastFallTime >= dashTimeForUpwardsCancel)
-        //        {
-        //            verticalVelocity += gravity * dashGravityOnReleaseMultiplier * Time.fixedDeltaTime;
-        //        }
-
-        //        dashFastFallTime -= Time.fixedDeltaTime;
-        //    }
-        //    else
-        //    {
-        //        verticalVelocity += gravity * dashGravityOnReleaseMultiplier * Time.fixedDeltaTime;
-        //    }
-        //}
     }
 
     private void ResetDashValues()
