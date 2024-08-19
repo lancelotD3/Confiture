@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-6391523584053900434
+--- !u!114 &-8553685703679696147
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Mat_Laser
-  m_Shader: {fileID: -6465566751694194690, guid: 17010d7cfa536104485b546f510db873,
+  m_Name: Mat_LaserBefore
+  m_Shader: {fileID: -6465566751694194690, guid: cee39dece94e2384abe09fdb473b5017,
     type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -58,12 +58,7 @@ Material:
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     m_Ints: []
-    m_Floats:
-    - _LaserEdgeSmoothness: 10
-    - _LaserScale: 8.73
-    - _LaserThickness: 30
-    - _Light: 1
+    m_Floats: []
     m_Colors:
-    - _Color: {r: 31.393324, g: 0.7386665, b: 0.7386665, a: 1}
-    - _LaserSpeed: {r: -0.3, g: 0, b: 0, a: 0}
+    - _Color: {r: 3.031433, g: 3.031433, b: 3.031433, a: 1}
   m_BuildTextureStacks: []
