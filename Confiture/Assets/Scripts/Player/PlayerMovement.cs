@@ -147,6 +147,9 @@ public class PlayerMovement : MonoBehaviour
     bool isGrounded = false;
     bool bumpedHead = false;
 
+    bool willDashWillBuffered = false;
+    Blob blobSavedForDashBuffered;
+
     LineRenderer lineRenderer;
 
     private void Awake()
@@ -168,6 +171,12 @@ public class PlayerMovement : MonoBehaviour
         UpdateTimer();
         JumpCheck();
         LandCheck();
+        
+        if(dashBuffered && blobInBuffer && blobInBuffer.dashable)
+        {
+            willDashWillBuffered = true;
+            blobSavedForDashBuffered = blobInBuffer;
+        }
         DashCheck();
     }
 
@@ -178,13 +187,15 @@ public class PlayerMovement : MonoBehaviour
         Fall();
         Dash();
 
-        if(dashBuffered && blobInBuffer && blobInBuffer.dashable)
+        if(willDashWillBuffered )
         {
-            dashDirection = (blobInBuffer.transform.position - transform.position).normalized;
+            dashDirection = (blobSavedForDashBuffered.transform.position - transform.position).normalized;
             InitiateDash();
 
             dashBuffered = false;
             blobInBuffer = null;
+            blobSavedForDashBuffered = null;
+            willDashWillBuffered = false;
         }
 
         float input = player.lockInput ? 0 : moveAction.ReadValue<float>();
@@ -534,7 +545,8 @@ public class PlayerMovement : MonoBehaviour
         Collider[] colliders = Physics.OverlapSphere(transform.position, dashBlobRange, blobMask);
 
         closestBlob = null;
-        
+        blobInBuffer = null;
+
         foreach (Collider collider in colliders)
         {
             if (collider.gameObject == gameObject)
@@ -570,6 +582,7 @@ public class PlayerMovement : MonoBehaviour
                     && blob.dashable)
                 {
                     closestBlob = blob;
+                    blobInBuffer = blob;
                 }
                 else if (distancePlayerToClosestBlob > distancePlayerToBlob
                     && dot > dashAimPrecision)
