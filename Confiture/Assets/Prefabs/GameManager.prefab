@@ -437,7 +437,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 1}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -50.00006, y: -50.00003}
+  m_AnchoredPosition: {x: -50, y: -50}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &4164390231717351076
@@ -695,9 +695,13 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeAnimator: {fileID: 8578954269906445337}
+  timeForGold: 10
+  timeForSilver: 20
+  timeForBronze: 30
   timerText: {fileID: 1931937378583592510}
   enemyRemainsText: {fileID: 7229497093430946935}
   blobNumberText: {fileID: 991812484640737551}
+  canva: {fileID: 6140992522813490878}
   gameTimer: 0
   offset: {x: 0, y: 0, z: 0}
   enemyRemaining: 0

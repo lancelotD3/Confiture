@@ -14,10 +14,17 @@ public class GameManager : MonoBehaviour
 
     private string nextScene;
 
+    [Header("Timer")]
+    public float timeForGold = 10f;
+    public float timeForSilver = 20f;
+    public float timeForBronze = 30f;
+
     [Header("UI")]
     public TMP_Text timerText;
     public TMP_Text enemyRemainsText;
     public TMP_Text blobNumberText;
+
+    public List<GameObject> canvas;
 
     public float gameTimer = 0f;
     private bool lockTimer = true;
@@ -132,11 +139,16 @@ public class GameManager : MonoBehaviour
         }
     }
 
-    private void ResetManagerStats()
+    public void ResetManagerStats()
     {
         enemyRemaining = 0;
         nextScene = string.Empty;
         gameTimer = 0;
         Timer(false);
+
+        foreach (GameObject go in canvas)
+        {
+            go.SetActive(true);
+        }
     }
 }
