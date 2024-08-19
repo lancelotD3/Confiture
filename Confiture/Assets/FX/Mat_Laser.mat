@@ -41,6 +41,10 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
+    - _SampleTexture2D_4e38f09a0f544063808f55069de50094_Texture_1_Texture2D:
+        m_Texture: {fileID: 2800000, guid: 6bd3ae7a12bb4104f9099f891b3a38bd, type: 3}
+        m_Scale: {x: 1, y: 1}
+        m_Offset: {x: 0, y: 0}
     - unity_Lightmaps:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -56,8 +60,10 @@ Material:
     m_Ints: []
     m_Floats:
     - _LaserEdgeSmoothness: 10
+    - _LaserScale: 8.73
     - _LaserThickness: 30
     - _Light: 1
     m_Colors:
-    - _Color: {r: 4.867144, g: 4.867144, b: 4.867144, a: 0}
+    - _Color: {r: 31.393324, g: 0.7386665, b: 0.7386665, a: 1}
+    - _LaserSpeed: {r: -0.3, g: 0, b: 0, a: 0}
   m_BuildTextureStacks: []

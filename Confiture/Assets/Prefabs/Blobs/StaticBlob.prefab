@@ -18,6 +18,11 @@ PrefabInstance:
       propertyPath: staticBlob
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 5208181924707815804, guid: 7f00c2a42d4bda44bb4b04a8b9560f37,
+        type: 3}
+      propertyPath: collisionOn
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 6607345326027123195, guid: 7f00c2a42d4bda44bb4b04a8b9560f37,
         type: 3}
       propertyPath: m_LocalScale.x
