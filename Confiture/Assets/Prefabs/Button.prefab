@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 5502135542221364115}
   - component: {fileID: 6597238306003863973}
   - component: {fileID: 1091826314046298891}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Mesh
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -95,7 +95,7 @@ GameObject:
   - component: {fileID: 2569085745202833646}
   - component: {fileID: 579566876691978627}
   - component: {fileID: 7691426355365984485}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Canvas
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -196,7 +196,7 @@ GameObject:
   - component: {fileID: 4106634425363220522}
   - component: {fileID: 8258403597397203957}
   - component: {fileID: 8579852423226109826}
-  m_Layer: 5
+  m_Layer: 3
   m_Name: Text (TMP)
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -331,7 +331,8 @@ GameObject:
   - component: {fileID: 1348487195362847758}
   - component: {fileID: 3881683627055973935}
   - component: {fileID: 9025941084434970018}
-  m_Layer: 0
+  - component: {fileID: 4894815982871701972}
+  m_Layer: 3
   m_Name: Button
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -396,20 +397,41 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3127357b6634dc2459f5f977471ee331, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  blobNumberRequiered: 0
+  blobNumberRequiered: 3
   ButtonActivated:
     m_PersistentCalls:
       m_Calls:
       - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: UnityEngine.GameObject, UnityEngine
-        m_MethodName: 
-        m_Mode: 6
+        m_TargetAssemblyTypeName: UnityEngine.Animator, UnityEngine
+        m_MethodName: SetTrigger
+        m_Mode: 5
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
           m_IntArgument: 0
           m_FloatArgument: 0
-          m_StringArgument: 
+          m_StringArgument: DoorActivated
           m_BoolArgument: 0
         m_CallState: 2
   blobNumberText: {fileID: 8579852423226109826}
+--- !u!95 &4894815982871701972
+Animator:
+  serializedVersion: 5
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5411022989094991690}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 26a2705b1d62c4749ace90810d995f97, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
