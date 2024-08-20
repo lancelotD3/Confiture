@@ -82,7 +82,14 @@ public class GameManager : MonoBehaviour
         }
 
 
-        levelNameText.text = SceneManager.GetActiveScene().name.Replace("_", " ");
+        if((SceneManager.GetActiveScene().name == "MainMenu"))
+        {
+            levelNameText.text = "";
+        }
+        else
+        {
+            levelNameText.text = SceneManager.GetActiveScene().name.Replace("_", " ");
+        }
         enemyRemaining = FindObjectsByType<Enemy>(FindObjectsSortMode.None).Count();
 
         enemyRemainsText.text = enemyRemaining.ToString();
@@ -111,12 +118,12 @@ public class GameManager : MonoBehaviour
             gameTimer += Time.deltaTime;
         }
 
-        if (Input.GetKeyDown(KeyCode.R))
+        if (player && Input.GetKeyDown(KeyCode.R))
         {
             player.RemoveBlobs(1000);
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.K))
+        if (Input.GetKeyDown(KeyCode.Escape))
         {
             if(!(SceneManager.GetActiveScene().name == "MainMenu"))
             {
