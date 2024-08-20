@@ -5153,7 +5153,7 @@ MeshCollider:
   serializedVersion: 5
   m_Convex: 0
   m_CookingOptions: 30
-  m_Mesh: {fileID: 540411648}
+  m_Mesh: {fileID: 2013414654}
 --- !u!33 &1457138558
 MeshFilter:
   m_ObjectHideFlags: 10
@@ -9430,7 +9430,7 @@ PrefabInstance:
     - target: {fileID: 2677079033162854298, guid: 1c881cb917dd1a94a806dc3d50baea02,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 6
+      value: 6.46
       objectReference: {fileID: 0}
     - target: {fileID: 2677079033162854298, guid: 1c881cb917dd1a94a806dc3d50baea02,
         type: 3}
