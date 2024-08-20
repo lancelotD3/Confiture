@@ -75,6 +75,12 @@ public class Blob : MonoBehaviour
                 }
 
                 player.AddBlobs(blobNumber);
+
+                if(player.playerMovement.isGrounded)
+                {
+                    player.transform.position += new Vector3(0f, player.transform.localScale.y / 2, 0f);
+                }
+
                 Destroy(gameObject);
 
                 return;
