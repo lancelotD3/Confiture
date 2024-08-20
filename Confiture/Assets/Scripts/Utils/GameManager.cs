@@ -60,7 +60,7 @@ public class GameManager : MonoBehaviour
         }
 
 
-        levelNameText.text = SceneManager.GetActiveScene().name;
+        levelNameText.text = SceneManager.GetActiveScene().name.Replace("_", " ");
         enemyRemaining = FindObjectsByType<Enemy>(FindObjectsSortMode.None).Count();
 
         enemyRemainsText.text = enemyRemaining.ToString();
