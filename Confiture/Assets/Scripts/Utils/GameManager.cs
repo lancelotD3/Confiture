@@ -173,7 +173,10 @@ public class GameManager : MonoBehaviour
         SceneManager.LoadScene(nextScene);
 
         if (resetStats)
+        {
             ResetManagerStats();
+            resetStats = false;
+        }
 
         nextScene = string.Empty;
     }
