@@ -5380,7 +5380,7 @@ Camera:
   m_Depth: -1
   m_CullingMask:
     serializedVersion: 2
-    m_Bits: 4094
+    m_Bits: 4198398
   m_RenderingPath: -1
   m_TargetTexture: {fileID: 0}
   m_TargetDisplay: 0
@@ -9883,6 +9883,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 347758702957964409, guid: 1c881cb917dd1a94a806dc3d50baea02,
+        type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2677079033162854298, guid: 1c881cb917dd1a94a806dc3d50baea02,
         type: 3}
       propertyPath: m_LocalPosition.x
@@ -9891,7 +9896,7 @@ PrefabInstance:
     - target: {fileID: 2677079033162854298, guid: 1c881cb917dd1a94a806dc3d50baea02,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 8
+      value: 8.445
       objectReference: {fileID: 0}
     - target: {fileID: 2677079033162854298, guid: 1c881cb917dd1a94a806dc3d50baea02,
         type: 3}
@@ -9933,11 +9938,21 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4811281708745984369, guid: 1c881cb917dd1a94a806dc3d50baea02,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 7382d3be17f09d345aafe630b288eab5, type: 2}
     - target: {fileID: 5411022989094991690, guid: 1c881cb917dd1a94a806dc3d50baea02,
         type: 3}
       propertyPath: m_Name
       value: Button
       objectReference: {fileID: 0}
+    - target: {fileID: 5700760701112426414, guid: 1c881cb917dd1a94a806dc3d50baea02,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: d5a9bdfd2cd2caf4794e04428a755d19, type: 2}
     - target: {fileID: 9025941084434970018, guid: 1c881cb917dd1a94a806dc3d50baea02,
         type: 3}
       propertyPath: ButtonActivated.m_PersistentCalls.m_Calls.Array.data[0].m_Target

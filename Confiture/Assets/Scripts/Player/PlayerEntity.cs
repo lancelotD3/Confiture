@@ -87,6 +87,9 @@ public class PlayerEntity : MonoBehaviour
     private void Died()
     {
         GameManager.instance.PlayerDied();
+
+        CameraShake.instance.TriggerShake(.15f, .3f, 1f);
+
         Destroy(gameObject);
     }
 

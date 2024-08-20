@@ -58,6 +58,8 @@ public class Blob : MonoBehaviour
             {
                 if(player.playerMovement.isDashing)
                 {
+                    CameraShake.instance.TriggerShake(.15f, .2f, 1f);
+
                     player.playerMovement.isDashing = false;
 
                     if (!player.playerMovement.isJumping)
