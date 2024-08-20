@@ -25,22 +25,22 @@ public class EndMenu : MonoBehaviour
 
         if (chrono > GameManager.instance.timeForBronze)
         {
-            chronoForNext.text = GameManager.instance.timeForBronze.ToString() + "seconds for bronze medal";
+            chronoForNext.text = GameManager.instance.timeForBronze.ToString() + " seconds for bronze medal";
             animator.Play("NoMedal");
         }
         else if (chrono > GameManager.instance.timeForSilver)
         {
-            chronoForNext.text = GameManager.instance.timeForSilver.ToString() + "seconds for silver medal";
+            chronoForNext.text = GameManager.instance.timeForSilver.ToString() + " seconds for silver medal";
             animator.Play("Bronze");
         }
         else if (chrono > GameManager.instance.timeForGold)
         {
-            chronoForNext.text = GameManager.instance.timeForGold.ToString() + "seconds for gold medal";
+            chronoForNext.text = GameManager.instance.timeForGold.ToString() + " seconds for gold medal";
             animator.Play("Silver");
         }
         else
         {
-            chronoForNext.text = "Try to beat your hight score";
+            chronoForNext.text = "Excellent time! Well played!";
             animator.Play("Gold");
         }
 
@@ -51,6 +51,7 @@ public class EndMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            GameManager.instance.lastScene = "EndGame";
             SceneManager.LoadScene("MainMenu");
             GameManager.instance.ResetManagerStats();
         }

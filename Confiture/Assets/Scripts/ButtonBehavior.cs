@@ -15,6 +15,8 @@ public class ButtonBehavior : MonoBehaviour
 
     public TextMeshProUGUI blobNumberText;
 
+    AudioClip openDoorClip;
+
     private void Awake()
     {
         blobNumberText.text = blobNumberRequiered.ToString();
@@ -47,6 +49,7 @@ public class ButtonBehavior : MonoBehaviour
                 ButtonAnimator.SetTrigger("ButtonActivated");
 
                 // SFX
+                GameManager.instance.PlaySound(openDoorClip);
 
                 // VFX
             }
