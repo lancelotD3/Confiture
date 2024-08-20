@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
 
     public AudioClip menuMusic;
     public AudioClip gameMusic;
+    public AudioClip killAllEnemiesClip;
 
     private void Awake()
     {
@@ -184,6 +185,7 @@ public class GameManager : MonoBehaviour
 
         if(enemyRemaining == 0)
         {
+            audioSource.PlayOneShot(killAllEnemiesClip);
             GameObject.FindGameObjectWithTag("ExitDoor").GetComponent<Door>().UseDoor(true);
         }
     }
