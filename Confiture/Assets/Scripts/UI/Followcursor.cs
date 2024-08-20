@@ -23,12 +23,12 @@ public class Followcursor : MonoBehaviour
         Vector2 cursorPos = Input.mousePosition + Offset;
         transform.position = new Vector2(cursorPos.x, cursorPos.y);
 
-        if(PE ==  null)
+        if(PE == null)
         {
             PE = GameObject.FindObjectOfType<PlayerEntity>();
         }
-
-        BN_number = PE.blobNumber;
+        else 
+            BN_number = PE.blobNumber;
 
         switch (BN_number)
         {

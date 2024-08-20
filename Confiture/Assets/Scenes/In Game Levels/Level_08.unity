@@ -203,7 +203,7 @@ PrefabInstance:
     - target: {fileID: 337754952075632699, guid: 8630844ebeb02e147955b799f91b8e35,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -0.5
+      value: -2
       objectReference: {fileID: 0}
     - target: {fileID: 337754952075632699, guid: 8630844ebeb02e147955b799f91b8e35,
         type: 3}
@@ -7519,7 +7519,7 @@ MonoBehaviour:
   m_PreserveMeshAssetOnDestroy: 0
   assetGuid: 
   m_Mesh: {fileID: 1123918739}
-  m_VersionIndex: 2778
+  m_VersionIndex: 3290
   m_IsSelectable: 1
   m_SelectedFaces: 
   m_SelectedEdges: []
@@ -9702,7 +9702,7 @@ PrefabInstance:
     - target: {fileID: 4561175868381926251, guid: 504973dd121c3a14ba33ccf4c0bc6dfe,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -12
+      value: -12.99
       objectReference: {fileID: 0}
     - target: {fileID: 4561175868381926251, guid: 504973dd121c3a14ba33ccf4c0bc6dfe,
         type: 3}
