@@ -1827,17 +1827,18 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeAnimator: {fileID: 8578954269906445337}
-  timeForGold: 10
-  timeForSilver: 20
-  timeForBronze: 30
+  timeForGold: 5
+  timeForSilver: 10
+  timeForBronze: 15
   timerText: {fileID: 1931937378583592510}
   enemyRemainsText: {fileID: 7229497093430946935}
   blobNumberText: {fileID: 0}
-  levelNameText: {fileID: 0}
+  levelNameText: {fileID: 3057721322166803760}
   canvas:
   - {fileID: 2996720367495101583}
   - {fileID: 245716994552299287}
   - {fileID: 3242102095287845225}
+  - {fileID: 0}
   gameTimer: 0
   offset: {x: 0, y: 0, z: 0}
   enemyRemaining: 0
