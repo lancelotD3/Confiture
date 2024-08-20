@@ -2038,9 +2038,9 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeAnimator: {fileID: 8578954269906445337}
-  timeForGold: 5
-  timeForSilver: 10
-  timeForBronze: 15
+  timeForGold: 96
+  timeForSilver: 248
+  timeForBronze: 400
   timerText: {fileID: 1931937378583592510}
   enemyRemainsText: {fileID: 7229497093430946935}
   blobNumberText: {fileID: 0}
