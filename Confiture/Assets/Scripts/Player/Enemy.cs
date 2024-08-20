@@ -30,8 +30,14 @@ public class Enemy : MonoBehaviour
             GameObject particleGo = Instantiate(diedParticle, diedParticleSpawnPos.position, Quaternion.identity);
             Destroy(particleGo, 5f);
 
+            CameraShake.instance.TriggerShake(.2f, .3f, 1f);
+
             GameManager.instance.RemoveEnemy();
             Destroy(gameObject);
+        }
+        else
+        {
+            CameraShake.instance.TriggerShake(.15f, .15f, 1f);
         }
     }
 }
