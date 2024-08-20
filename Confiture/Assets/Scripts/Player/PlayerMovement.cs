@@ -628,10 +628,6 @@ public class PlayerMovement : MonoBehaviour
         {
             waitForDashRelease = true;
 
-
-            Debug.Log(closestBlob);
-            Debug.Log(blobInBuffer);
-
             if (closestBlob != null)
             {
                 if (!startDashing)
