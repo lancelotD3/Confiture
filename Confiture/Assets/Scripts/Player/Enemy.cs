@@ -11,6 +11,9 @@ public class Enemy : MonoBehaviour
 
     public TextMeshProUGUI lifeText;
 
+    public GameObject diedParticle;
+    public Transform diedParticleSpawnPos;
+
     virtual protected void Awake()
     {
         life = 0;
@@ -24,6 +27,9 @@ public class Enemy : MonoBehaviour
 
         if (life >= maxLife)
         {
+            GameObject particleGo = Instantiate(diedParticle, diedParticleSpawnPos.position, Quaternion.identity);
+            Destroy(particleGo, 5f);
+
             GameManager.instance.RemoveEnemy();
             Destroy(gameObject);
         }
