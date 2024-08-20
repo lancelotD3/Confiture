@@ -51,6 +51,7 @@ public class EndMenu : MonoBehaviour
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
+            GameManager.instance.lastScene = "EndGame";
             SceneManager.LoadScene("MainMenu");
             GameManager.instance.ResetManagerStats();
         }
