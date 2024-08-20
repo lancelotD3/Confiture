@@ -25,7 +25,7 @@ Material:
     serializedVersion: 3
     m_TexEnvs:
     - _DiffuseTexture:
-        m_Texture: {fileID: 2800000, guid: e6eb080da036e3d458a9af2cafc6808e, type: 3}
+        m_Texture: {fileID: 2800000, guid: 00734c2ea9c47a646a31b12286a64a64, type: 3}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
     - _NormalTexture:
@@ -51,7 +51,7 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _Smoothness: 0
-    - _Tiling: 0.15
+    - _Tiling: 0.13
     m_Colors:
     - _BlendingEdges: {r: 0.45, g: 1, b: 0, a: 0}
     - _Color: {r: 1, g: 1, b: 1, a: 0}

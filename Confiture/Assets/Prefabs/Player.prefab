@@ -153,6 +153,10 @@ MonoBehaviour:
   splashPrefabDamage: {fileID: 4899340694063312901}
   feetPos: {fileID: 4610460384787968099}
   lockInput: 0
+  diedClip: {fileID: 8300000, guid: b34be18f90a66424c950fbf17797497a, type: 3}
+  growthClip: {fileID: 8300000, guid: b34be18f90a66424c950fbf17797497a, type: 3}
+  eatEnemyClip: {fileID: 8300000, guid: b34be18f90a66424c950fbf17797497a, type: 3}
+  hitWallClip: {fileID: 8300000, guid: b34be18f90a66424c950fbf17797497a, type: 3}
 --- !u!114 &1007407965283770477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -211,6 +215,10 @@ MonoBehaviour:
   maxJumpHeight: 1
   maxTimeTillJumpApex: 0.45
   maxDashSpeed: 60
+  jumpClip: {fileID: 0}
+  dashClip: {fileID: 0}
+  cantDashClip: {fileID: 0}
+  groundedHitClip: {fileID: 0}
   verticalVelocity: -9.81
   isJumping: 0
   isDashing: 0
@@ -219,6 +227,7 @@ MonoBehaviour:
   dashFastFallReleaseSpeed: 50
   feetCol: {fileID: 9029786445399621185}
   headCol: {fileID: 8763508898524701687}
+  isGrounded: 0
 --- !u!114 &282627812155074048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -239,6 +248,8 @@ MonoBehaviour:
   minForce: 50
   maxForce: 50
   mouseWorldPosition: {x: 0, y: 0, z: 0}
+  shootClip: {fileID: 0}
+  cantShootClip: {fileID: 0}
 --- !u!114 &2167017005889701687
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -410,7 +421,7 @@ LineRenderer:
     numCornerVertices: 0
     numCapVertices: 0
     alignment: 0
-    textureMode: 0
+    textureMode: 1
     textureScale: {x: 1, y: 1}
     shadowBias: 0.5
     generateLightingData: 0
