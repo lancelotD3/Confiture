@@ -194,7 +194,7 @@ MonoBehaviour:
   apexTreshold: 0.75
   apexHangTime: 0.08
   jumpBufferTime: 0.125
-  jumpCoyoteTime: 0.055
+  jumpCoyoteTime: 0.085
   minDashSpeed: 70
   dashAimPrecision: 0.8
   manualDashNumber: 1
@@ -733,7 +733,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &3008551764304547858
 Transform:
   m_ObjectHideFlags: 0
