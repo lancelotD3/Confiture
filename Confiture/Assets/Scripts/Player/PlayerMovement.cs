@@ -95,6 +95,13 @@ public class PlayerMovement : MonoBehaviour
     public float maxDashSpeed = 40f;
     private float dashTime = 1f;
 
+
+    [Header("Sounds")]
+    public AudioClip jumpClip;
+    public AudioClip dashClip;
+    public AudioClip cantDashClip;
+    public AudioClip groundedHitClip;
+
     private float gravity;
     private float initialJumpVelocity;
     private float adjustedJumpHeight;
@@ -166,6 +173,7 @@ public class PlayerMovement : MonoBehaviour
         dashAction = input.actions.FindAction("Dash");
     }
 
+    bool lastGroundedValue = false;
     private void Update()
     {
         UpdateTimer();
@@ -178,6 +186,12 @@ public class PlayerMovement : MonoBehaviour
             blobSavedForDashBuffered = blobInBuffer;
         }
         DashCheck();
+
+        if(isGrounded != lastGroundedValue)
+        {
+            GameManager.instance.PlaySound(groundedHitClip);
+        }
+        lastGroundedValue = isGrounded;
     }
 
     void FixedUpdate()
@@ -447,6 +461,7 @@ public class PlayerMovement : MonoBehaviour
         if (!isJumping)
         {
             isJumping = true;
+            GameManager.instance.PlaySound(jumpClip);
         }
 
         jumpBufferTimer = 0f;
@@ -613,6 +628,10 @@ public class PlayerMovement : MonoBehaviour
         {
             waitForDashRelease = true;
 
+
+            Debug.Log(closestBlob);
+            Debug.Log(blobInBuffer);
+
             if (closestBlob != null)
             {
                 if (!startDashing)
@@ -635,11 +654,19 @@ public class PlayerMovement : MonoBehaviour
 
                     InitiateDash();
                 }
+                else
+                {
+                    GameManager.instance.PlaySound(cantDashClip);
+                }
             }
             else if (blobInBuffer != null)
             {
                 dashBuffered = true;
                 dashBufferTimer = dashBufferTime;
+            }
+            else
+            {
+                GameManager.instance.PlaySound(cantDashClip);
             }
 
         }
@@ -663,6 +690,8 @@ public class PlayerMovement : MonoBehaviour
         
         GameObject splashGo = Instantiate(player.splashPrefabDash, player.feetPos.position, Quaternion.identity);
         splashGo.transform.forward = dashDirection;
+
+        GameManager.instance.PlaySound(dashClip);
 
         Destroy(splashGo, 2f);
 

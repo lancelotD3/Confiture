@@ -28,6 +28,12 @@ public class PlayerEntity : MonoBehaviour
 
     [SerializeField] public bool lockInput = false;
 
+    [Header("Sounds")]
+    public AudioClip diedClip;
+    public AudioClip growthClip;
+    public AudioClip eatEnemyClip;
+    public AudioClip hitWallClip;
+
     private void Awake()
     {
         UpdateBlob();
@@ -46,6 +52,8 @@ public class PlayerEntity : MonoBehaviour
         blobNumber += number;
 
         if(blobNumber > maxBlob) blobNumber = maxBlob;
+
+        GameManager.instance.PlaySound(growthClip);
 
         UpdateBlob();
     }
@@ -87,6 +95,11 @@ public class PlayerEntity : MonoBehaviour
     private void Died()
     {
         GameManager.instance.PlayerDied();
+
+        CameraShake.instance.TriggerShake(.15f, .3f, 1f);
+
+        GameManager.instance.PlaySound(diedClip);
+
         Destroy(gameObject);
     }
 
@@ -102,12 +115,19 @@ public class PlayerEntity : MonoBehaviour
                     blobNumber++;
 
                 UpdateBlob();
+
+                GameManager.instance.PlaySound(eatEnemyClip);
+
                 enemy.AddDamage(99);
             }
             else
             {
                 Died();
             }
+        }
+        else if(!playerMovement.isGrounded && !playerMovement.isDashing)
+        {
+            GameManager.instance.PlaySound(hitWallClip);
         }
     }
 
