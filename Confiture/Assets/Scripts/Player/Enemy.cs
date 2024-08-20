@@ -11,6 +11,13 @@ public class Enemy : MonoBehaviour
 
     public TextMeshProUGUI lifeText;
 
+    public GameObject diedParticle;
+    public Transform diedParticleSpawnPos;
+
+    [Header("Sounds")]
+    public AudioClip damageClip;
+    public AudioClip diedClip;
+
     virtual protected void Awake()
     {
         life = 0;
@@ -24,8 +31,20 @@ public class Enemy : MonoBehaviour
 
         if (life >= maxLife)
         {
+            GameObject particleGo = Instantiate(diedParticle, diedParticleSpawnPos.position, Quaternion.identity);
+            Destroy(particleGo, 5f);
+
+            CameraShake.instance.TriggerShake(.2f, .3f, 1f);
+            GameManager.instance.PlaySound(diedClip);
+
             GameManager.instance.RemoveEnemy();
             Destroy(gameObject);
+        }
+        else
+        {
+            GameManager.instance.PlaySound(damageClip);
+
+            CameraShake.instance.TriggerShake(.15f, .15f, 1f);
         }
     }
 }

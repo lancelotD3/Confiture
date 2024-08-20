@@ -14,6 +14,7 @@ GameObject:
   - component: {fileID: 5208181924707815804}
   - component: {fileID: 3059715227029399693}
   - component: {fileID: 4983252826143027683}
+  - component: {fileID: 4219985629247237546}
   m_Layer: 6
   m_Name: Blob
   m_TagString: Untagged
@@ -64,7 +65,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 9098fcc15f1a75941a3b251125e62218, type: 2}
+  - {fileID: 2100000, guid: aa6e9eb4cd1d26448ba6b70439ab2792, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -106,6 +107,7 @@ MonoBehaviour:
   sizePerBlob: 0.5
   minSize: 0
   allreadySpawn: 0
+  staticBlob: 0
   collisionOn: 0
   rb: {fileID: 0}
   dashable: 0
@@ -114,6 +116,8 @@ MonoBehaviour:
   decalPrefab: {fileID: 0}
   splashPrefab: {fileID: 8581612494898097516, guid: e627bc1ef5490264ca0d03dde2a5d11c,
     type: 3}
+  hitSurfaceClip: {fileID: 8300000, guid: 33d0056ec0fdcde4ba5fec0930e4ce22, type: 3}
+  finishDashClip: {fileID: 8300000, guid: 66574d4218b0e9e488768b164849fd45, type: 3}
 --- !u!135 &3059715227029399693
 SphereCollider:
   m_ObjectHideFlags: 0
@@ -162,3 +166,19 @@ Rigidbody:
   m_Interpolate: 0
   m_Constraints: 0
   m_CollisionDetection: 1
+--- !u!114 &4219985629247237546
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8551917852034994916}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 78a8f78d000628644aa8d533c9c9c517, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  intensity: 1
+  mass: 1
+  stiffness: 1
+  damping: 0.75

@@ -44,7 +44,7 @@ public class EndMenu : MonoBehaviour
             animator.Play("Gold");
         }
 
-        chronoText.text = GameManager.instance.gameTimer.ToString();
+        chronoText.text = GameManager.instance.gameTimer.ToString("0.00");
     }
 
     private void Update()

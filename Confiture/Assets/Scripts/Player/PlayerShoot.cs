@@ -23,6 +23,10 @@ public class PlayerShoot : MonoBehaviour
 
     public Vector3 mouseWorldPosition = Vector3.zero;
 
+    [Header("Sounds")]
+    public AudioClip shootClip;
+    public AudioClip cantShootClip;
+
     void Start()
     {
         input = GetComponent<PlayerInput>();
@@ -63,7 +67,14 @@ public class PlayerShoot : MonoBehaviour
 
     private void TryShoot()
     {
-        if(player.blobNumber > player.minBlob) Shoot();
+        if (player.blobNumber > player.minBlob)
+        {
+            Shoot();
+        }
+        else
+        {
+            GameManager.instance.PlaySound(cantShootClip);
+        }
     }
 
     private void Shoot()
@@ -75,6 +86,9 @@ public class PlayerShoot : MonoBehaviour
         Vector3 force = (mouseWorldPosition - transform.position).normalized * Mathf.Lerp(minForce, maxForce, player.blobRatio);
 
         blob.SpawnByShoot(force);
+
+        GameManager.instance.PlaySound(shootClip);
+        CameraShake.instance.TriggerShake(.1f, .1f, 1f);
 
         player.TryRemoveBlobs(1);
     }

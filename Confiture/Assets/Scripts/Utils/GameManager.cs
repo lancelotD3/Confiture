@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text timerText;
     public TMP_Text enemyRemainsText;
     public TMP_Text blobNumberText;
+    public TMP_Text levelNameText;
 
     public List<GameObject> canvas;
 
@@ -37,6 +38,8 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public int enemyRemaining = 0;
 
+    public AudioSource audioSource;
+
     private void Awake()
     {
         if(instance == null)
@@ -50,8 +53,14 @@ public class GameManager : MonoBehaviour
     public void StartLevel()
     {
         player = FindAnyObjectByType<PlayerEntity>();
-        Timer(true);
 
+        if (!(SceneManager.GetActiveScene().name == "MainMenu"))
+        {
+            Timer(true);
+        }
+
+
+        levelNameText.text = SceneManager.GetActiveScene().name.Replace("_", " ");
         enemyRemaining = FindObjectsByType<Enemy>(FindObjectsSortMode.None).Count();
 
         enemyRemainsText.text = enemyRemaining.ToString();
@@ -63,6 +72,8 @@ public class GameManager : MonoBehaviour
 
         if(!active) timerActivate = false;
     }
+
+    private bool resetStats = false;
 
     private void Update()
     {
@@ -83,19 +94,17 @@ public class GameManager : MonoBehaviour
             player.RemoveBlobs(1000);
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.K))
         {
             if(!(SceneManager.GetActiveScene().name == "MainMenu"))
             {
-                SwitchScene(SceneManager.GetActiveScene().name);
-                ResetManagerStats();
+                resetStats = true;
+                SwitchScene("MainMenu");
+                //ResetManagerStats();
             }
         }
 
-        if(player)
-            blobNumberText.text = player.blobNumber.ToString();
-
-        timerText.text = gameTimer.ToString();
+        timerText.text = gameTimer.ToString("0.00");
         enemyRemainsText.text = enemyRemaining.ToString();
     }
 
@@ -105,11 +114,24 @@ public class GameManager : MonoBehaviour
         SwitchScene(SceneManager.GetActiveScene().name);
     }
 
+    bool canSwitch = true;
+
     public void SwitchScene(string sceneName)
     {
+        if (!canSwitch)
+            return;
+
+        canSwitch = false;
+        Invoke(nameof(WaitForNextSwitch), .5f);
+
         Timer(false);
         nextScene = sceneName;
         FadeIn();
+    }
+
+    private void WaitForNextSwitch()
+    {
+        canSwitch = true;
     }
 
     public void FadeIn()
@@ -125,6 +147,10 @@ public class GameManager : MonoBehaviour
     public void OnFadeComplete()
     {
         SceneManager.LoadScene(nextScene);
+
+        if (resetStats)
+            ResetManagerStats();
+
         nextScene = string.Empty;
     }
 
@@ -148,7 +174,13 @@ public class GameManager : MonoBehaviour
 
         foreach (GameObject go in canvas)
         {
-            go.SetActive(true);
+            if(go)
+                go.SetActive(true);
         }
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
     }
 }
