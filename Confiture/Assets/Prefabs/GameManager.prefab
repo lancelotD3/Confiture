@@ -2049,7 +2049,6 @@ MonoBehaviour:
   - {fileID: 2996720367495101583}
   - {fileID: 245716994552299287}
   - {fileID: 3242102095287845225}
-  - {fileID: 0}
   gameTimer: 0
   offset: {x: 0, y: 0, z: 0}
   enemyRemaining: 0
