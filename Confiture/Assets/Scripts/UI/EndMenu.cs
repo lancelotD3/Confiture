@@ -40,7 +40,7 @@ public class EndMenu : MonoBehaviour
         }
         else
         {
-            chronoForNext.text = "Try to beat your hight score";
+            chronoForNext.text = "Excellent time! Well played!";
             animator.Play("Gold");
         }
 
