@@ -1738,7 +1738,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &913708565
 Transform:
   m_ObjectHideFlags: 0
@@ -2054,7 +2054,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &1099527998
 Transform:
   m_ObjectHideFlags: 0
@@ -3439,6 +3439,11 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 3343413475604437051, guid: 504973dd121c3a14ba33ccf4c0bc6dfe,
+        type: 3}
+      propertyPath: nextScene
+      value: Level_01
+      objectReference: {fileID: 0}
     - target: {fileID: 4164989342712050697, guid: 504973dd121c3a14ba33ccf4c0bc6dfe,
         type: 3}
       propertyPath: m_Name
