@@ -2283,17 +2283,9 @@ MonoBehaviour:
   m_Mesh: {fileID: 1045720368}
   m_VersionIndex: 7861
   m_IsSelectable: 1
-  m_SelectedFaces: 03000000
-  m_SelectedEdges:
-  - a: 12
-    b: 13
-  - a: 14
-    b: 12
-  - a: 13
-    b: 15
-  - a: 15
-    b: 14
-  m_SelectedVertices: 0c0000000d0000000e0000000f000000
+  m_SelectedFaces: 
+  m_SelectedEdges: []
+  m_SelectedVertices: 
 --- !u!1001 &474253989
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -9274,12 +9266,12 @@ PrefabInstance:
     - target: {fileID: 2677079033162854298, guid: 1c881cb917dd1a94a806dc3d50baea02,
         type: 3}
       propertyPath: m_LocalPosition.x
-      value: 5
+      value: 4.55
       objectReference: {fileID: 0}
     - target: {fileID: 2677079033162854298, guid: 1c881cb917dd1a94a806dc3d50baea02,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: 1
+      value: 1.46
       objectReference: {fileID: 0}
     - target: {fileID: 2677079033162854298, guid: 1c881cb917dd1a94a806dc3d50baea02,
         type: 3}
@@ -14020,7 +14012,7 @@ PrefabInstance:
     - target: {fileID: 2677079033162854298, guid: 1c881cb917dd1a94a806dc3d50baea02,
         type: 3}
       propertyPath: m_LocalPosition.y
-      value: -11
+      value: -10.54
       objectReference: {fileID: 0}
     - target: {fileID: 2677079033162854298, guid: 1c881cb917dd1a94a806dc3d50baea02,
         type: 3}
@@ -14062,6 +14054,11 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4811281708745984369, guid: 1c881cb917dd1a94a806dc3d50baea02,
+        type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 96fb7a9c99dab8847bff3daeed1c6bab, type: 2}
     - target: {fileID: 5411022989094991690, guid: 1c881cb917dd1a94a806dc3d50baea02,
         type: 3}
       propertyPath: m_Name
