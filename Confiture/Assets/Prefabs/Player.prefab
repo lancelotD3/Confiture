@@ -153,10 +153,10 @@ MonoBehaviour:
   splashPrefabDamage: {fileID: 4899340694063312901}
   feetPos: {fileID: 4610460384787968099}
   lockInput: 0
-  diedClip: {fileID: 0}
-  growthClip: {fileID: 0}
-  eatEnemyClip: {fileID: 0}
-  hitWallClip: {fileID: 0}
+  diedClip: {fileID: 8300000, guid: b34be18f90a66424c950fbf17797497a, type: 3}
+  growthClip: {fileID: 8300000, guid: b34be18f90a66424c950fbf17797497a, type: 3}
+  eatEnemyClip: {fileID: 8300000, guid: b34be18f90a66424c950fbf17797497a, type: 3}
+  hitWallClip: {fileID: 8300000, guid: b34be18f90a66424c950fbf17797497a, type: 3}
 --- !u!114 &1007407965283770477
 MonoBehaviour:
   m_ObjectHideFlags: 0
