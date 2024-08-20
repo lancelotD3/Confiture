@@ -248,7 +248,7 @@ public class PlayerMovement : MonoBehaviour
             if(initialVelocityTime > 0f)
             {
                 rb.velocity = initialDirection;
-                initialVelocityTime -= Time.fixedTime;
+                initialVelocityTime -= Time.deltaTime;
             }
             else
                 addInitialVelocity = true;
