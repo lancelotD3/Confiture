@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text timerText;
     public TMP_Text enemyRemainsText;
     public TMP_Text blobNumberText;
+    public TMP_Text levelNameText;
 
     public List<GameObject> canvas;
 
@@ -52,6 +53,7 @@ public class GameManager : MonoBehaviour
         player = FindAnyObjectByType<PlayerEntity>();
         Timer(true);
 
+        levelNameText.text = SceneManager.GetActiveScene().name;
         enemyRemaining = FindObjectsByType<Enemy>(FindObjectsSortMode.None).Count();
 
         enemyRemainsText.text = enemyRemaining.ToString();

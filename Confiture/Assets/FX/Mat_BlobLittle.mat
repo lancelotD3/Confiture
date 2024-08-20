@@ -43,8 +43,8 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     m_Colors:
-    - _FresnelColor: {r: 0.5432997, g: 5.992158, b: 0, a: 0}
-    - _InteriorColor: {r: 0, g: 0, b: 0, a: 0}
+    - _FresnelColor: {r: 0.33230653, g: 3.688605, b: 0, a: 0}
+    - _InteriorColor: {r: 0, g: 0, b: 0, a: 1}
     - _InteriorColor_1: {r: 0, g: 0, b: 0, a: 1}
   m_BuildTextureStacks: []
 --- !u!114 &1173782780247006870
