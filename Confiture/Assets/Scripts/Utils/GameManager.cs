@@ -23,6 +23,7 @@ public class GameManager : MonoBehaviour
     public TMP_Text timerText;
     public TMP_Text enemyRemainsText;
     public TMP_Text blobNumberText;
+    public TMP_Text levelNameText;
 
     public List<GameObject> canvas;
 
@@ -50,8 +51,14 @@ public class GameManager : MonoBehaviour
     public void StartLevel()
     {
         player = FindAnyObjectByType<PlayerEntity>();
-        Timer(true);
 
+        if (!(SceneManager.GetActiveScene().name == "MainMenu"))
+        {
+            Timer(true);
+        }
+
+
+        levelNameText.text = SceneManager.GetActiveScene().name;
         enemyRemaining = FindObjectsByType<Enemy>(FindObjectsSortMode.None).Count();
 
         enemyRemainsText.text = enemyRemaining.ToString();
@@ -87,7 +94,7 @@ public class GameManager : MonoBehaviour
         {
             if(!(SceneManager.GetActiveScene().name == "MainMenu"))
             {
-                SwitchScene(SceneManager.GetActiveScene().name);
+                SwitchScene("MainMenu");
                 ResetManagerStats();
             }
         }

@@ -144,7 +144,7 @@ public class PlayerMovement : MonoBehaviour
     RaycastHit groundHit;
     RaycastHit headHit;
 
-    bool isGrounded = false;
+    [HideInInspector] public bool isGrounded = false;
     bool bumpedHead = false;
 
     bool willDashWillBuffered = false;
