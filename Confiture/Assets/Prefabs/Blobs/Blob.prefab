@@ -116,8 +116,8 @@ MonoBehaviour:
   decalPrefab: {fileID: 0}
   splashPrefab: {fileID: 8581612494898097516, guid: e627bc1ef5490264ca0d03dde2a5d11c,
     type: 3}
-  hitSurfaceClip: {fileID: 8300000, guid: 33d0056ec0fdcde4ba5fec0930e4ce22, type: 3}
-  finishDashClip: {fileID: 8300000, guid: 66574d4218b0e9e488768b164849fd45, type: 3}
+  hitSurfaceClip: {fileID: 0}
+  finishDashClip: {fileID: 8300000, guid: c3a2166783bc7bc48910b56832d9251b, type: 3}
 --- !u!135 &3059715227029399693
 SphereCollider:
   m_ObjectHideFlags: 0
