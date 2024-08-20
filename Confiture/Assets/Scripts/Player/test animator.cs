@@ -14,22 +14,6 @@ public class testanimator : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.D))
-        {
-            animator.SetTrigger("Dash");
-        }
-        if (Input.GetKeyDown(KeyCode.S))
-        {
-            animator.SetTrigger("Shoot");
-        }
-        if (Input.GetKeyDown(KeyCode.H))
-        {
-            animator.SetTrigger("Hit");
-        }
-        if (Input.GetKeyDown(KeyCode.J))
-        {
-            animator.SetBool("IsJumping", !animator.GetBool("IsJumping"));
-        }
 
     }
 }
