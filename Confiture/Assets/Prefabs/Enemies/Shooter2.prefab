@@ -5402,6 +5402,8 @@ MonoBehaviour:
   diedParticle: {fileID: 1230668901453048903, guid: 02db95576a3164f40b1a96cb484dfd5e,
     type: 3}
   diedParticleSpawnPos: {fileID: 6194841510015569012}
+  damageClip: {fileID: 8300000, guid: 66574d4218b0e9e488768b164849fd45, type: 3}
+  diedClip: {fileID: 8300000, guid: 66574d4218b0e9e488768b164849fd45, type: 3}
   timeBeforeDamage: 3
   canon: {fileID: 3614197102451706938}
   obstruction:
@@ -5416,6 +5418,7 @@ MonoBehaviour:
   lineRendererShoot: {fileID: 5692328586742704049}
   particleStart: {fileID: 1191596498650172379}
   particleEnd: {fileID: 8536147879646495497}
+  shootClip: {fileID: 8300000, guid: fa77a122c6096f8439341113b4ea3ed0, type: 3}
 --- !u!120 &4548230259241623281
 LineRenderer:
   serializedVersion: 2

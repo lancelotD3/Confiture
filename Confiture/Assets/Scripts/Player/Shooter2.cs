@@ -32,6 +32,11 @@ public class Shooter2 : Enemy
     public GameObject particleStart;
     public GameObject particleEnd;
 
+    [Header("Sounds")]
+    public AudioClip shootClip;
+    //public AudioClip warmUpClip;
+    //public AudioClip criticalClip;
+
     protected override void Awake()
     {
         base.Awake();
@@ -114,6 +119,8 @@ public class Shooter2 : Enemy
 
         particleEnd.transform.parent = null;
         particleEnd.transform.position = player.mesh.transform.position;
+
+        GameManager.instance.PlaySound(shootClip);
 
         player.RemoveBlobs(damage);
         
