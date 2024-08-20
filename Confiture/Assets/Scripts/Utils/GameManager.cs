@@ -73,6 +73,8 @@ public class GameManager : MonoBehaviour
         if(!active) timerActivate = false;
     }
 
+    private bool resetStats = false;
+
     private void Update()
     {
         if(!player) player = FindAnyObjectByType<PlayerEntity>();
@@ -92,12 +94,13 @@ public class GameManager : MonoBehaviour
             player.RemoveBlobs(1000);
         }
 
-        if (Input.GetKeyDown(KeyCode.Escape))
+        if (Input.GetKeyDown(KeyCode.Escape) || Input.GetKeyDown(KeyCode.K))
         {
             if(!(SceneManager.GetActiveScene().name == "MainMenu"))
             {
+                resetStats = true;
                 SwitchScene("MainMenu");
-                ResetManagerStats();
+                //ResetManagerStats();
             }
         }
 
@@ -111,11 +114,24 @@ public class GameManager : MonoBehaviour
         SwitchScene(SceneManager.GetActiveScene().name);
     }
 
+    bool canSwitch = true;
+
     public void SwitchScene(string sceneName)
     {
+        if (!canSwitch)
+            return;
+
+        canSwitch = false;
+        Invoke(nameof(WaitForNextSwitch), .5f);
+
         Timer(false);
         nextScene = sceneName;
         FadeIn();
+    }
+
+    private void WaitForNextSwitch()
+    {
+        canSwitch = true;
     }
 
     public void FadeIn()
@@ -131,6 +147,10 @@ public class GameManager : MonoBehaviour
     public void OnFadeComplete()
     {
         SceneManager.LoadScene(nextScene);
+
+        if (resetStats)
+            ResetManagerStats();
+
         nextScene = string.Empty;
     }
 
@@ -154,7 +174,8 @@ public class GameManager : MonoBehaviour
 
         foreach (GameObject go in canvas)
         {
-            go.SetActive(true);
+            if(go)
+                go.SetActive(true);
         }
     }
 
