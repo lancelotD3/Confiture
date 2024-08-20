@@ -29852,6 +29852,16 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7857111574473860775, guid: 2a9263c14e87cb145b140fee5452b1dc,
+        type: 3}
+      propertyPath: diedClip
+      value: 
+      objectReference: {fileID: 8300000, guid: d6e445504f602a5409af4133813ff528, type: 3}
+    - target: {fileID: 7857111574473860775, guid: 2a9263c14e87cb145b140fee5452b1dc,
+        type: 3}
+      propertyPath: damageClip
+      value: 
+      objectReference: {fileID: 8300000, guid: bcfc029d80f635f44b08a4a132ca7e45, type: 3}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -65943,6 +65953,51 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player
       objectReference: {fileID: 0}
+    - target: {fileID: 282627812155074048, guid: f7ae6888f0402a34ba4edd95d35bb040,
+        type: 3}
+      propertyPath: shootClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2885751be4f53a749a7ec29e3a8cf098, type: 3}
+    - target: {fileID: 282627812155074048, guid: f7ae6888f0402a34ba4edd95d35bb040,
+        type: 3}
+      propertyPath: cantShootClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 7c4342ad6e301024ea45fda15f983481, type: 3}
+    - target: {fileID: 1007407965283770477, guid: f7ae6888f0402a34ba4edd95d35bb040,
+        type: 3}
+      propertyPath: dashClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 47f7941bafb466144af1c4f5b3c59a46, type: 3}
+    - target: {fileID: 1007407965283770477, guid: f7ae6888f0402a34ba4edd95d35bb040,
+        type: 3}
+      propertyPath: jumpClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 2123b298b24164144b13ded17a458d97, type: 3}
+    - target: {fileID: 1007407965283770477, guid: f7ae6888f0402a34ba4edd95d35bb040,
+        type: 3}
+      propertyPath: cantDashClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 7bf32082ca2b6834aa41a243644eebeb, type: 3}
+    - target: {fileID: 5085769206348370328, guid: f7ae6888f0402a34ba4edd95d35bb040,
+        type: 3}
+      propertyPath: diedClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 651bc5890db9ed84ab4e3475cf1044cf, type: 3}
+    - target: {fileID: 5085769206348370328, guid: f7ae6888f0402a34ba4edd95d35bb040,
+        type: 3}
+      propertyPath: growthClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 020543e0265d537429f5afd28b2b557f, type: 3}
+    - target: {fileID: 5085769206348370328, guid: f7ae6888f0402a34ba4edd95d35bb040,
+        type: 3}
+      propertyPath: hitWallClip
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5085769206348370328, guid: f7ae6888f0402a34ba4edd95d35bb040,
+        type: 3}
+      propertyPath: eatEnemyClip
+      value: 
+      objectReference: {fileID: 8300000, guid: 67b7ce7ede48d09498bf0ce0201932f4, type: 3}
     - target: {fileID: 6508133771672370142, guid: f7ae6888f0402a34ba4edd95d35bb040,
         type: 3}
       propertyPath: m_LocalPosition.x
