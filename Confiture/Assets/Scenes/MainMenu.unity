@@ -1312,12 +1312,6 @@ MonoBehaviour:
   m_LightCookieSize: {x: 1, y: 1}
   m_LightCookieOffset: {x: 0, y: 0}
   m_SoftShadowQuality: 1
---- !u!1 &439492476 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3242102095287845225, guid: 6020ea3caaf307043a3bffbaae01dd0d,
-    type: 3}
-  m_PrefabInstance: {fileID: 8513287622963667677}
-  m_PrefabAsset: {fileID: 0}
 --- !u!4 &506875555 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: -8679921383154817045, guid: 290eb06599f6d1f41b570afb952bf4dd,
@@ -3107,24 +3101,6 @@ Transform:
     type: 3}
   m_PrefabInstance: {fileID: 80193110}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &1873750604 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 2996720367495101583, guid: 6020ea3caaf307043a3bffbaae01dd0d,
-    type: 3}
-  m_PrefabInstance: {fileID: 8513287622963667677}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1873750606 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 3057721322166803760, guid: 6020ea3caaf307043a3bffbaae01dd0d,
-    type: 3}
-  m_PrefabInstance: {fileID: 8513287622963667677}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1873750604}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1905386512
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -3258,12 +3234,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 290eb06599f6d1f41b570afb952bf4dd, type: 3}
---- !u!1 &2105984920 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 245716994552299287, guid: 6020ea3caaf307043a3bffbaae01dd0d,
-    type: 3}
-  m_PrefabInstance: {fileID: 8513287622963667677}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2145542313
 GameObject:
   m_ObjectHideFlags: 0
@@ -3512,51 +3482,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 4393364060104635420, guid: 6020ea3caaf307043a3bffbaae01dd0d,
-        type: 3}
-      propertyPath: timeForGold
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 4393364060104635420, guid: 6020ea3caaf307043a3bffbaae01dd0d,
-        type: 3}
-      propertyPath: levelNameText
-      value: 
-      objectReference: {fileID: 1873750606}
-    - target: {fileID: 4393364060104635420, guid: 6020ea3caaf307043a3bffbaae01dd0d,
-        type: 3}
-      propertyPath: timeForBronze
-      value: 15
-      objectReference: {fileID: 0}
-    - target: {fileID: 4393364060104635420, guid: 6020ea3caaf307043a3bffbaae01dd0d,
-        type: 3}
-      propertyPath: timeForSilver
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 4393364060104635420, guid: 6020ea3caaf307043a3bffbaae01dd0d,
-        type: 3}
-      propertyPath: canvas.Array.size
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 4393364060104635420, guid: 6020ea3caaf307043a3bffbaae01dd0d,
-        type: 3}
-      propertyPath: canvas.Array.data[0]
-      value: 
-      objectReference: {fileID: 1873750604}
-    - target: {fileID: 4393364060104635420, guid: 6020ea3caaf307043a3bffbaae01dd0d,
-        type: 3}
-      propertyPath: canvas.Array.data[1]
-      value: 
-      objectReference: {fileID: 2105984920}
-    - target: {fileID: 4393364060104635420, guid: 6020ea3caaf307043a3bffbaae01dd0d,
-        type: 3}
-      propertyPath: canvas.Array.data[2]
-      value: 
-      objectReference: {fileID: 439492476}
-    - target: {fileID: 4393364060104635420, guid: 6020ea3caaf307043a3bffbaae01dd0d,
-        type: 3}
-      propertyPath: canvas.Array.data[3]
-      value: 
-      objectReference: {fileID: 0}
     - target: {fileID: 4793467369679380614, guid: 6020ea3caaf307043a3bffbaae01dd0d,
         type: 3}
       propertyPath: m_Name
