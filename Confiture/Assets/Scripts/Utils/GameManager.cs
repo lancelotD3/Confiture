@@ -13,6 +13,7 @@ public class GameManager : MonoBehaviour
     static public GameManager instance;
 
     private string nextScene;
+    [HideInInspector] public string lastScene;
 
     [Header("Timer")]
     public float timeForGold = 10f;
@@ -38,7 +39,13 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public int enemyRemaining = 0;
 
+    [Header("Audio")]
+    public AudioSource musicAudioSource;
     public AudioSource audioSource;
+
+    public AudioClip menuMusic;
+    public AudioClip gameMusic;
+    public AudioClip killAllEnemiesClip;
 
     private void Awake()
     {
@@ -48,6 +55,8 @@ public class GameManager : MonoBehaviour
             Destroy(gameObject);
      
         DontDestroyOnLoad(gameObject);
+
+        lastScene = "MainMenu";
     }
 
     public void StartLevel()
@@ -57,6 +66,19 @@ public class GameManager : MonoBehaviour
         if (!(SceneManager.GetActiveScene().name == "MainMenu"))
         {
             Timer(true);
+        }
+
+        if (!(SceneManager.GetActiveScene().name == "MainMenu") && (lastScene == "MainMenu"))
+        {
+            musicAudioSource.Stop();
+            musicAudioSource.clip = gameMusic;
+            musicAudioSource.Play();
+        }
+        else if((SceneManager.GetActiveScene().name == "MainMenu") && !(lastScene == "EndGame"))
+        {
+            musicAudioSource.Stop();
+            musicAudioSource.clip = menuMusic;
+            musicAudioSource.Play();
         }
 
 
@@ -121,6 +143,8 @@ public class GameManager : MonoBehaviour
         if (!canSwitch)
             return;
 
+        lastScene = SceneManager.GetActiveScene().name;
+
         canSwitch = false;
         Invoke(nameof(WaitForNextSwitch), .5f);
 
@@ -161,6 +185,7 @@ public class GameManager : MonoBehaviour
 
         if(enemyRemaining == 0)
         {
+            audioSource.PlayOneShot(killAllEnemiesClip);
             GameObject.FindGameObjectWithTag("ExitDoor").GetComponent<Door>().UseDoor(true);
         }
     }
