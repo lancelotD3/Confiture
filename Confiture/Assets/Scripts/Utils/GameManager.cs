@@ -38,6 +38,8 @@ public class GameManager : MonoBehaviour
 
     [HideInInspector] public int enemyRemaining = 0;
 
+    public AudioSource audioSource;
+
     private void Awake()
     {
         if(instance == null)
@@ -154,5 +156,10 @@ public class GameManager : MonoBehaviour
         {
             go.SetActive(true);
         }
+    }
+
+    public void PlaySound(AudioClip clip)
+    {
+        audioSource.PlayOneShot(clip);
     }
 }

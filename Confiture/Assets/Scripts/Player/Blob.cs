@@ -30,6 +30,10 @@ public class Blob : MonoBehaviour
     public GameObject decalPrefab;
     public GameObject splashPrefab;
 
+    [Header("Sounds")]
+    public AudioClip hitSurfaceClip;
+    public AudioClip finishDashClip;
+
     private void Awake()
     {
         rb = GetComponent<Rigidbody>();
@@ -58,6 +62,9 @@ public class Blob : MonoBehaviour
             {
                 if(player.playerMovement.isDashing)
                 {
+
+                    GameManager.instance.PlaySound(finishDashClip);
+
                     CameraShake.instance.TriggerShake(.15f, .2f, 1f);
 
                     player.playerMovement.isDashing = false;
@@ -147,6 +154,8 @@ public class Blob : MonoBehaviour
             return;
         }
 
+        GameManager.instance.PlaySound(hitSurfaceClip);
+
         if (!collision.collider.TryGetComponent<Blob>(out Blob blob))
         {
             dashable = true;
@@ -155,6 +164,7 @@ public class Blob : MonoBehaviour
             //decalGo.GetComponent<DecalProjector>().material = decalsMats[Random.Range(1, (decalsMats.Count - 1))];
             return;
         }
+
 
         if (!collision.gameObject.CompareTag("Adhesive"))
         {

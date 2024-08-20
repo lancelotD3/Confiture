@@ -128,6 +128,8 @@ MonoBehaviour:
   diedParticle: {fileID: 1230668901453048903, guid: 02db95576a3164f40b1a96cb484dfd5e,
     type: 3}
   diedParticleSpawnPos: {fileID: 6460210491419536519}
+  damageClip: {fileID: 8300000, guid: 66574d4218b0e9e488768b164849fd45, type: 3}
+  diedClip: {fileID: 8300000, guid: 66574d4218b0e9e488768b164849fd45, type: 3}
 --- !u!1 &2671992602517737376
 GameObject:
   m_ObjectHideFlags: 0
