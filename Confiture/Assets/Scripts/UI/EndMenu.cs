@@ -25,17 +25,17 @@ public class EndMenu : MonoBehaviour
 
         if (chrono > GameManager.instance.timeForBronze)
         {
-            chronoForNext.text = GameManager.instance.timeForBronze.ToString() + " seconds for bronze medal";
+            chronoForNext.text = (chrono - GameManager.instance.timeForBronze).ToString("0.00") + " seconds for bronze medal";
             animator.Play("NoMedal");
         }
         else if (chrono > GameManager.instance.timeForSilver)
         {
-            chronoForNext.text = GameManager.instance.timeForSilver.ToString() + " seconds for silver medal";
+            chronoForNext.text = (chrono - GameManager.instance.timeForSilver).ToString("0.00") + " seconds for silver medal";
             animator.Play("Bronze");
         }
         else if (chrono > GameManager.instance.timeForGold)
         {
-            chronoForNext.text = GameManager.instance.timeForGold.ToString() + " seconds for gold medal";
+            chronoForNext.text = (chrono - GameManager.instance.timeForGold).ToString("0.00") + " seconds for gold medal";
             animator.Play("Silver");
         }
         else

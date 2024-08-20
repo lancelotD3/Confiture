@@ -2057,8 +2057,8 @@ MonoBehaviour:
   enemyRemaining: 0
   musicAudioSource: {fileID: 3250932949645459077}
   audioSource: {fileID: 9033938996934608637}
-  menuMusic: {fileID: 8300000, guid: 033766cc31c97904bae4404b8a079544, type: 3}
-  gameMusic: {fileID: 8300000, guid: fc5af015011ea3745b7f78ea1dd1049f, type: 3}
+  menuMusic: {fileID: 8300000, guid: 8c41acfe7e1aeb14884c705ccd4f5b3b, type: 3}
+  gameMusic: {fileID: 8300000, guid: a4f6d5845f816e845a6fa32aad0a2d13, type: 3}
   killAllEnemiesClip: {fileID: 8300000, guid: 3f090a3e4a384ce4c99333d79a96050f, type: 3}
 --- !u!82 &9033938996934608637
 AudioSource:
