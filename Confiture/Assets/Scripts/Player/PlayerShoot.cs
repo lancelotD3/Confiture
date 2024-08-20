@@ -76,6 +76,8 @@ public class PlayerShoot : MonoBehaviour
 
         blob.SpawnByShoot(force);
 
+        CameraShake.instance.TriggerShake(.1f, .1f, 1f);
+
         player.TryRemoveBlobs(1);
     }
 }
