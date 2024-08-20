@@ -333,6 +333,7 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   blobNumberText: {fileID: 8579852423226109826}
+  openDoorClip: {fileID: 8300000, guid: a692c2c159d33e74d9b6cb873292144d, type: 3}
 --- !u!95 &4894815982871701972
 Animator:
   serializedVersion: 5

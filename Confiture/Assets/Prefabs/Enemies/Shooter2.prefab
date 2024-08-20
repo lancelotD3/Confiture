@@ -5419,6 +5419,7 @@ MonoBehaviour:
   particleStart: {fileID: 1191596498650172379}
   particleEnd: {fileID: 8536147879646495497}
   shootClip: {fileID: 8300000, guid: d8e928a3ab7380b4b894cc61ae6f85f7, type: 3}
+  warmUpClip: {fileID: 8300000, guid: 6e824b7d279725847a4829977157d698, type: 3}
 --- !u!120 &4548230259241623281
 LineRenderer:
   serializedVersion: 2

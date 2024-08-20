@@ -153,10 +153,10 @@ MonoBehaviour:
   splashPrefabDamage: {fileID: 4899340694063312901}
   feetPos: {fileID: 4610460384787968099}
   lockInput: 0
-  diedClip: {fileID: 8300000, guid: b34be18f90a66424c950fbf17797497a, type: 3}
-  growthClip: {fileID: 8300000, guid: b34be18f90a66424c950fbf17797497a, type: 3}
-  eatEnemyClip: {fileID: 8300000, guid: b34be18f90a66424c950fbf17797497a, type: 3}
-  hitWallClip: {fileID: 8300000, guid: b34be18f90a66424c950fbf17797497a, type: 3}
+  diedClip: {fileID: 8300000, guid: 14fd9150211c0f84986a70f1a0ca7424, type: 3}
+  growthClip: {fileID: 8300000, guid: 020543e0265d537429f5afd28b2b557f, type: 3}
+  eatEnemyClip: {fileID: 0}
+  hitWallClip: {fileID: 0}
 --- !u!114 &1007407965283770477
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -215,9 +215,9 @@ MonoBehaviour:
   maxJumpHeight: 1
   maxTimeTillJumpApex: 0.45
   maxDashSpeed: 60
-  jumpClip: {fileID: 0}
-  dashClip: {fileID: 0}
-  cantDashClip: {fileID: 0}
+  jumpClip: {fileID: 8300000, guid: 2123b298b24164144b13ded17a458d97, type: 3}
+  dashClip: {fileID: 8300000, guid: 47f7941bafb466144af1c4f5b3c59a46, type: 3}
+  cantDashClip: {fileID: 8300000, guid: 7bf32082ca2b6834aa41a243644eebeb, type: 3}
   groundedHitClip: {fileID: 0}
   verticalVelocity: -9.81
   isJumping: 0
@@ -248,8 +248,8 @@ MonoBehaviour:
   minForce: 50
   maxForce: 50
   mouseWorldPosition: {x: 0, y: 0, z: 0}
-  shootClip: {fileID: 0}
-  cantShootClip: {fileID: 0}
+  shootClip: {fileID: 8300000, guid: 2885751be4f53a749a7ec29e3a8cf098, type: 3}
+  cantShootClip: {fileID: 8300000, guid: 7c4342ad6e301024ea45fda15f983481, type: 3}
 --- !u!114 &2167017005889701687
 MonoBehaviour:
   m_ObjectHideFlags: 0

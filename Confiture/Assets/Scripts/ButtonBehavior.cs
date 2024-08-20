@@ -15,7 +15,7 @@ public class ButtonBehavior : MonoBehaviour
 
     public TextMeshProUGUI blobNumberText;
 
-    AudioClip openDoorClip;
+    public AudioClip openDoorClip;
 
     private void Awake()
     {

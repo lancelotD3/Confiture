@@ -34,7 +34,9 @@ public class Shooter2 : Enemy
 
     [Header("Sounds")]
     public AudioClip shootClip;
-    //public AudioClip warmUpClip;
+    public AudioClip warmUpClip;
+    bool warmupSound = true;
+
     //public AudioClip criticalClip;
 
     protected override void Awake()
@@ -85,6 +87,15 @@ public class Shooter2 : Enemy
         if(startShoot)
         {
             timerTriggered -= Time.deltaTime;
+
+            if(timerTriggered < .5f && warmupSound)
+            {
+                warmupSound = false;
+                GameManager.instance.PlaySound(warmUpClip);
+
+                Invoke(nameof(WarmUpSoundReset), 1f);
+            }
+
             if(timerTriggered < 0)
             {
                 Shoot();
@@ -104,6 +115,11 @@ public class Shooter2 : Enemy
                 timer = cooldownAfterShoot;
             }
         }
+    }
+
+    private void WarmUpSoundReset()
+    {
+        warmupSound = true;
     }
 
     private void Shoot()
