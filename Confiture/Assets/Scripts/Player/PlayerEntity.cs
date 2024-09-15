@@ -134,6 +134,6 @@ public class PlayerEntity : MonoBehaviour
     public void LockInput(bool locked)
     {
         lockInput = locked;
-        playerShoot.enabled = !locked;
+        //playerShoot.enabled = !locked;
     }
 }
