@@ -47,6 +47,8 @@ public class GameManager : MonoBehaviour
     public AudioClip gameMusic;
     public AudioClip killAllEnemiesClip;
 
+    private bool canReset = true;
+
     private void Awake()
     {
         if(instance == null)
@@ -118,7 +120,7 @@ public class GameManager : MonoBehaviour
             gameTimer += Time.deltaTime;
         }
 
-        if (player && Input.GetKeyDown(KeyCode.R))
+        if (player && Input.GetKeyDown(KeyCode.R) && canReset)
         {
             player.RemoveBlobs(1000);
         }
@@ -141,6 +143,19 @@ public class GameManager : MonoBehaviour
     {
         Timer(false);
         SwitchScene(SceneManager.GetActiveScene().name);
+
+        LockReset();
+        Invoke(nameof(UnlockReset), 2f);
+    }
+
+    private void LockReset()
+    {
+        canReset = false;
+    }
+
+    private void UnlockReset()
+    {
+        canReset = true;
     }
 
     bool canSwitch = true;

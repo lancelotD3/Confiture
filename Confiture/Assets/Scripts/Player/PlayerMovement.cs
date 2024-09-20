@@ -203,7 +203,8 @@ public class PlayerMovement : MonoBehaviour
 
         if(willDashWillBuffered )
         {
-            dashDirection = (blobSavedForDashBuffered.transform.position - transform.position).normalized;
+            dashingBlob = blobSavedForDashBuffered;
+            dashDirection = (dashingBlob.transform.position - transform.position).normalized;
             InitiateDash();
 
             dashBuffered = false;
@@ -556,6 +557,7 @@ public class PlayerMovement : MonoBehaviour
     }
 
     Blob closestBlob;
+    Blob dashingBlob;
 
     private void DashCheck()
     {
@@ -646,8 +648,8 @@ public class PlayerMovement : MonoBehaviour
                     closestBlob.rb.velocity = Vector3.zero;
                     closestBlob.ActiveCollision();
 
-                    dashDirection = (closestBlob.transform.position - transform.position).normalized;
-
+                    dashingBlob = closestBlob;
+                    dashDirection = (dashingBlob.transform.position - transform.position).normalized;
                     InitiateDash();
                 }
                 else
@@ -723,8 +725,7 @@ public class PlayerMovement : MonoBehaviour
                 return;
             }
 
-            if(closestBlob)
-                dashDirection = (closestBlob.transform.position - transform.position).normalized;
+            dashDirection = (dashingBlob.transform.position - transform.position).normalized;
 
             horizontalVelocity = dashSpeed * dashDirection.x;
 
