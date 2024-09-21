@@ -9,6 +9,7 @@ using UnityEditor.Rendering;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.Rendering;
+using UnityEngine.UIElements;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -121,10 +122,6 @@ public class PlayerMovement : MonoBehaviour
     float jumpBufferTimer;
     bool jumpReleaseDuringBuffer;
 
-    float dashBufferTimer;
-    bool dashBuffered;
-    Blob blobInBuffer;
-
     float coyoteTimer;
     bool waitForJumpRelease = false;
 
@@ -154,8 +151,28 @@ public class PlayerMovement : MonoBehaviour
     [HideInInspector] public bool isGrounded = false;
     bool bumpedHead = false;
 
-    bool willDashWillBuffered = false;
-    Blob blobSavedForDashBuffered;
+    [Header("Buffers")]
+    [Range(0f, 1f)] public float blobNotDashableBufferTime = 0.5f;
+    float blobNotDashableBufferTimer = 0;
+    bool blobNotDashableBuffered;
+    Blob blobNotDashableBlob;
+
+    [Range(0f, 1f)] public float dashNotInRangeBufferTime = 0.5f;
+    float dashNotInRangeBufferTimer;
+    bool dashNotInRangeBuffered;
+    Blob dashNotInRangeBlob;
+
+    [Range(0f, 1f)] public float doubleDashBufferTime = 0.5f;
+    float doubleDashBufferTimer;
+    bool doubleDashBuffered;
+    Blob doubleDashBlob;
+
+    //float dashBufferTimer;
+    //bool dashBuffered;
+    //Blob blobInBuffer;
+
+    //bool willDashWillBuffered = false;
+    //Blob blobSavedForDashBuffered;
 
     LineRenderer lineRenderer;
 
@@ -171,6 +188,9 @@ public class PlayerMovement : MonoBehaviour
         moveAction = input.actions.FindAction("Move");
         jumpAction = input.actions.FindAction("Jump");
         dashAction = input.actions.FindAction("Dash");
+
+        blobNotDashableBufferTimer = blobNotDashableBufferTime;
+        dashNotInRangeBufferTimer = blobNotDashableBufferTime;
     }
 
     bool lastGroundedValue = false;
@@ -179,13 +199,23 @@ public class PlayerMovement : MonoBehaviour
         UpdateTimer();
         JumpCheck();
         LandCheck();
-        
-        if(dashBuffered && blobInBuffer && blobInBuffer.dashable)
-        {
-            willDashWillBuffered = true;
-            blobSavedForDashBuffered = blobInBuffer;
-        }
         DashCheck();
+        
+        //if(dashBuffered && blobInBuffer && blobInBuffer.dashable)
+        //{
+        //    willDashWillBuffered = true;
+        //    blobSavedForDashBuffered = blobInBuffer;
+        //}
+
+        //if(dashNotInRangeBuffered)
+        //{
+        //    if(dashNotInRangeBlobs.dashable)
+        //    {
+        //        dashingBlob = dashNotInRangeBlobs;
+        //        InitiateDash();
+        //    }
+        //}
+
 
         if(isGrounded != lastGroundedValue)
         {
@@ -201,17 +231,17 @@ public class PlayerMovement : MonoBehaviour
         Fall();
         Dash();
 
-        if(willDashWillBuffered )
-        {
-            dashingBlob = blobSavedForDashBuffered;
-            dashDirection = (dashingBlob.transform.position - transform.position).normalized;
-            InitiateDash();
+        //if(willDashWillBuffered )
+        //{
+        //    dashingBlob = blobSavedForDashBuffered;
+        //    dashDirection = (dashingBlob.transform.position - transform.position).normalized;++
+        //    InitiateDash();
 
-            dashBuffered = false;
-            blobInBuffer = null;
-            blobSavedForDashBuffered = null;
-            willDashWillBuffered = false;
-        }
+        //    dashBuffered = false;
+        //    blobInBuffer = null;
+        //    blobSavedForDashBuffered = null;
+        //    willDashWillBuffered = false;
+        //}
 
         float input = player.lockInput ? 0 : moveAction.ReadValue<float>();
 
@@ -559,66 +589,78 @@ public class PlayerMovement : MonoBehaviour
     Blob closestBlob;
     Blob dashingBlob;
 
-    private void DashCheck()
+
+    private Blob CanDash()
     {
+        Blob target = null;
+
         Collider[] colliders = Physics.OverlapSphere(transform.position, dashBlobRange, blobMask);
 
-        closestBlob = null;
-        blobInBuffer = null;
-
+        float actualDot = 0f;
         foreach (Collider collider in colliders)
         {
             if (collider.gameObject == gameObject)
                 continue;
 
+
             if (collider.gameObject.TryGetComponent<Blob>(out Blob blob))
             {
+                // Dashable
+                if (!blob.dashable) // Check others blobs in range if not dashable  // TODO Il faudra un buffer ici
+                {
+                    blobNotDashableBlob = blob;
+                    continue;
+                }
+
+                // Aim precision
                 Vector3 direction = (blob.transform.position - transform.position).normalized;
                 float dot = Vector3.Dot((player.playerShoot.mouseWorldPosition - transform.position).normalized, direction);
 
-                float distancePlayerToBlob = Vector3.Distance(blob.transform.position, transform.position);
+                if(dot < dashAimPrecision) // Check others blobs in range if to far to the mouse
+                    continue;
 
+                // Check if there is a wall between player and blob
+                float distancePlayerToBlob = Vector3.Distance(blob.transform.position, transform.position);
                 bool wallBetween = Physics.Raycast(transform.position, direction, distancePlayerToBlob, groundLayer);
 
-                if (closestBlob == null && dot > dashAimPrecision && blob.dashable && !wallBetween)
-                {
-                    closestBlob = collider.GetComponent<Blob>();
-                    blobInBuffer = null;
+                if (wallBetween) // If there is a wall player cannot dash
                     continue;
-                }
-                else if(closestBlob == null && dot > dashAimPrecision && !wallBetween)
+
+
+                // Check if the dot product is closest than actual dot we have
+                if (dot > actualDot) // If yes set new target
                 {
-                    blobInBuffer = blob;
+                    actualDot = dot;
+                    target = blob;
+                }
+                else // Else continue the loop
+                {
                     continue;
-                }
-                else if (closestBlob == null) continue;
-
-
-                float distancePlayerToClosestBlob = Vector3.Distance(closestBlob.transform.position, transform.position);
-
-                if (distancePlayerToClosestBlob > distancePlayerToBlob
-                    && dot > dashAimPrecision
-                    && blob.dashable)
-                {
-                    closestBlob = blob;
-                    blobInBuffer = blob;
-                }
-                else if (distancePlayerToClosestBlob > distancePlayerToBlob
-                    && dot > dashAimPrecision)
-                {
-                    blobInBuffer = blob;
-                }
-                else
-                {
-                    blobInBuffer = null;
                 }
             }
         }
+        return target;
+    }
 
-        if (closestBlob != null)
+    private bool CanDashDistanceWallCheck(Blob blob)
+    {
+        Vector3 direction = (blob.transform.position - transform.position).normalized;
+
+        // Check if there is a wall between player and blob
+        float distancePlayerToBlob = Vector3.Distance(blob.transform.position, transform.position);
+        bool wallBetween = Physics.Raycast(transform.position, direction, distancePlayerToBlob, groundLayer);
+
+        return !wallBetween && distancePlayerToBlob <= dashBlobRange;
+    }
+
+    private void DashCheck()
+    {
+        Blob target = CanDash();
+
+        if (target != null)
         {
             lineRenderer.SetPosition(0, transform.position);
-            lineRenderer.SetPosition(1, closestBlob.transform.position);
+            lineRenderer.SetPosition(1, target.transform.position);
         }
         else
         {
@@ -626,47 +668,71 @@ public class PlayerMovement : MonoBehaviour
             lineRenderer.SetPosition(1, transform.position);
         }
 
+
         if (dashAction.ReadValue<float>() > 0 && !waitForDashRelease && !player.lockInput)
         {
             waitForDashRelease = true;
 
-            if (closestBlob != null)
+            if (target != null)
             {
-                if (!startDashing)
-                {
-                    Invoke(nameof(StartDash), .2f);
+                target.rb.velocity = Vector3.zero;
+                target.ActiveCollision();
 
-                    if(!manualDashNumber)
-                    {
-                        numberOfDashes = player.blobNumber;
-                    }
-                    numberOfDashesUsed = numberOfDashes;
-                }
+                dashDirection = (target.transform.position - transform.position).normalized;
 
-                if (numberOfDashesUsed > 0)
-                {
-                    closestBlob.rb.velocity = Vector3.zero;
-                    closestBlob.ActiveCollision();
-
-                    dashingBlob = closestBlob;
-                    dashDirection = (dashingBlob.transform.position - transform.position).normalized;
-                    InitiateDash();
-                }
-                else
-                {
-                    GameManager.instance.PlaySound(cantDashClip);
-                }
+                InitiateDash(target);
             }
-            else if (blobInBuffer != null)
+            else if(blobNotDashableBlob)
             {
-                dashBuffered = true;
-                dashBufferTimer = dashBufferTime;
+                if (blobNotDashableBlob.dashable)
+                    blobNotDashableBlob = null;
+                else
+                    blobNotDashableBuffered = true;
             }
             else
             {
-                GameManager.instance.PlaySound(cantDashClip);
+                //GameManager.instance.PlaySound(cantDashClip);
+                dashNotInRangeBuffered = true;
             }
 
+        }
+        else if (dashAction.ReadValue<float>() > 0 && waitForDashRelease && isDashing && player.lockInput)
+        {
+            if(target != dashingBlob)
+            {
+                doubleDashBuffered = true;
+                doubleDashBlob = target;
+            }
+        }
+
+        if (dashNotInRangeBuffered && !isDashing)
+        {
+            if(target)
+            {
+                target.rb.velocity = Vector3.zero;
+                target.ActiveCollision();
+
+                dashDirection = (target.transform.position - transform.position).normalized;
+                InitiateDash(target);
+
+                dashNotInRangeBuffered = false;
+                dashNotInRangeBufferTimer = dashNotInRangeBufferTime;
+            }
+        }
+
+        if (doubleDashBuffered && !isDashing)
+        {
+            if (doubleDashBlob)
+            {
+                doubleDashBlob.rb.velocity = Vector3.zero;
+                doubleDashBlob.ActiveCollision();
+
+                dashDirection = (doubleDashBlob.transform.position - transform.position).normalized;
+                InitiateDash(doubleDashBlob);
+
+                doubleDashBuffered = false;
+                doubleDashBufferTimer = doubleDashBufferTime;
+            }
         }
 
         if (dashAction.ReadValue<float>() == 0 && waitForDashRelease && !player.lockInput)
@@ -675,14 +741,132 @@ public class PlayerMovement : MonoBehaviour
         }
     }
 
+    //private void OldDashCheck()
+    //{
+    //    Collider[] colliders = Physics.OverlapSphere(transform.position, dashBlobRange, blobMask);
+
+    //    closestBlob = null;
+    //    blobInBuffer = null;
+
+    //    foreach (Collider collider in colliders)
+    //    {
+    //        if (collider.gameObject == gameObject)
+    //            continue;
+
+    //        if (collider.gameObject.TryGetComponent<Blob>(out Blob blob))
+    //        {
+    //            Vector3 direction = (blob.transform.position - transform.position).normalized;
+    //            float dot = Vector3.Dot((player.playerShoot.mouseWorldPosition - transform.position).normalized, direction);
+
+    //            float distancePlayerToBlob = Vector3.Distance(blob.transform.position, transform.position);
+
+    //            bool wallBetween = Physics.Raycast(transform.position, direction, distancePlayerToBlob, groundLayer);
+
+    //            if (closestBlob == null && dot > dashAimPrecision && blob.dashable && !wallBetween)
+    //            {
+    //                closestBlob = collider.GetComponent<Blob>();
+    //                blobInBuffer = null;
+    //                continue;
+    //            }
+    //            else if(closestBlob == null && dot > dashAimPrecision && !wallBetween)
+    //            {
+    //                blobInBuffer = blob;
+    //                continue;
+    //            }
+    //            else if (closestBlob == null) continue;
+
+
+    //            float distancePlayerToClosestBlob = Vector3.Distance(closestBlob.transform.position, transform.position);
+
+    //            if (distancePlayerToClosestBlob > distancePlayerToBlob
+    //                && dot > dashAimPrecision
+    //                && blob.dashable)
+    //            {
+    //                closestBlob = blob;
+    //                blobInBuffer = blob;
+    //            }
+    //            else if (distancePlayerToClosestBlob > distancePlayerToBlob
+    //                && dot > dashAimPrecision)
+    //            {
+    //                blobInBuffer = blob;
+    //            }
+    //            else
+    //            {
+    //                blobInBuffer = null;
+    //            }
+    //        }
+    //    }
+
+    //    if (closestBlob != null)
+    //    {
+    //        lineRenderer.SetPosition(0, transform.position);
+    //        lineRenderer.SetPosition(1, closestBlob.transform.position);
+    //    }
+    //    else
+    //    {
+    //        lineRenderer.SetPosition(0, transform.position);
+    //        lineRenderer.SetPosition(1, transform.position);
+    //    }
+
+    //    if (dashAction.ReadValue<float>() > 0 && !waitForDashRelease && !player.lockInput)
+    //    {
+    //        waitForDashRelease = true;
+
+    //        if (closestBlob != null)
+    //        {
+    //            if (!startDashing)
+    //            {
+    //                Invoke(nameof(StartDash), .2f);
+
+    //                if(!manualDashNumber)
+    //                {
+    //                    numberOfDashes = player.blobNumber;
+    //                }
+    //                numberOfDashesUsed = numberOfDashes;
+    //            }
+
+    //            if (numberOfDashesUsed > 0)
+    //            {
+    //                closestBlob.rb.velocity = Vector3.zero;
+    //                closestBlob.ActiveCollision();
+
+    //                dashingBlob = closestBlob;
+    //                dashDirection = (dashingBlob.transform.position - transform.position).normalized;
+    //                InitiateDash();
+    //            }
+    //            else
+    //            {
+    //                GameManager.instance.PlaySound(cantDashClip);
+    //            }
+    //        }
+    //        else if (blobInBuffer != null)
+    //        {
+    //            dashBuffered = true;
+    //            dashBufferTimer = dashBufferTime;
+    //        }
+    //        else
+    //        {
+    //            GameManager.instance.PlaySound(cantDashClip);
+    //        }
+
+    //    }
+
+    //    if (dashAction.ReadValue<float>() == 0 && waitForDashRelease && !player.lockInput)
+    //    {
+    //        waitForDashRelease = false;
+    //    }
+    //}
+
     private void StartDash()
     {
         startDashing = true;
     }
 
-    private void InitiateDash()
+    private void InitiateDash(Blob target)
     {
-        numberOfDashesUsed--;
+        dashingBlob = target;
+
+        //numberOfDashesUsed--;
         isDashing = true;
         dashTimer = 0f;
         
@@ -731,6 +915,10 @@ public class PlayerMovement : MonoBehaviour
 
             verticalVelocity = dashSpeed * dashDirection.y;
         }
+        else
+        {
+            dashingBlob = null;
+        }
     }
 
     private void ResetDashValues()
@@ -756,16 +944,50 @@ public class PlayerMovement : MonoBehaviour
             coyoteTimer = jumpCoyoteTime;
         }
 
-        if(dashBuffered)
+        if(blobNotDashableBuffered)
         {
-            dashBufferTimer -= Time.deltaTime;
+            blobNotDashableBufferTimer -= Time.deltaTime;
 
-            if(dashBufferTimer < 0f)
+            if(blobNotDashableBufferTimer < 0f)
             {
-                dashBuffered = false;
-                blobInBuffer = null;
+                blobNotDashableBuffered = false;
+                blobNotDashableBlob = null;
+                blobNotDashableBufferTimer = blobNotDashableBufferTime;
+            }
+
+            if(blobNotDashableBlob.dashable)
+            {
+                if(CanDashDistanceWallCheck(blobNotDashableBlob))
+                {
+                    InitiateDash(blobNotDashableBlob);
+                }
+
+                blobNotDashableBuffered = false;
+                blobNotDashableBlob = null;
+                blobNotDashableBufferTimer = blobNotDashableBufferTime;
             }
         }
-        
+
+        if (dashNotInRangeBuffered)
+        {
+            dashNotInRangeBufferTimer -= Time.deltaTime;
+
+            if (dashNotInRangeBufferTimer < 0f)
+            {
+                dashNotInRangeBuffered = false;
+                dashNotInRangeBufferTimer = dashNotInRangeBufferTime;
+            }
+        }
+
+        if (doubleDashBuffered)
+        {
+            doubleDashBufferTimer -= Time.deltaTime;
+
+            if (dashNotInRangeBufferTimer < 0f)
+            {
+                doubleDashBuffered = false;
+                doubleDashBufferTimer = doubleDashBufferTime;
+            }
+        }
     }
 }

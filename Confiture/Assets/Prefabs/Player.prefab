@@ -228,6 +228,7 @@ MonoBehaviour:
   feetCol: {fileID: 9029786445399621185}
   headCol: {fileID: 8763508898524701687}
   isGrounded: 0
+  blobNotDashableBufferTime: 0.5
 --- !u!114 &282627812155074048
 MonoBehaviour:
   m_ObjectHideFlags: 0
