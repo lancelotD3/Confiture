@@ -208,9 +208,9 @@ MonoBehaviour:
   dashGravityOnReleaseMultiplier: 1
   dashTimeForUpwardsCancel: 0.027
   maxWalkSpeed: 14
-  maxGroundAcceleration: 6.25
-  maxGroundDeceleration: 4.5
-  maxAirAcceleration: 6.25
+  maxGroundAcceleration: 25
+  maxGroundDeceleration: 18
+  maxAirAcceleration: 25
   maxAirDeceleration: 8
   maxJumpHeight: 1
   maxTimeTillJumpApex: 0.45
@@ -229,6 +229,8 @@ MonoBehaviour:
   headCol: {fileID: 8763508898524701687}
   isGrounded: 0
   blobNotDashableBufferTime: 0.5
+  dashNotInRangeBufferTime: 0.5
+  doubleDashBufferTime: 0.5
 --- !u!114 &282627812155074048
 MonoBehaviour:
   m_ObjectHideFlags: 0
