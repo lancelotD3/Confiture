@@ -135,7 +135,7 @@ public class MainMenuUI : MonoBehaviour
 
     public void PlayLevel()
     {
-    
+        GameManagerNG.instance.PlayLevel(chapterIndexSelected, levelIndexSelected);
     }
 
     public void PlayFullRun()

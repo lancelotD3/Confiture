@@ -1,3 +1,4 @@
+using JetBrains.Annotations;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
@@ -96,10 +97,17 @@ public class GameManagerNG : MonoBehaviour
         saveDatas[selectedSaveIndex] = saveData;
     }
 
+    public void PlayLevel(int chapter, int level)
+    {
+        inGameManager = Instantiate(inGameManagerPrefab);
+        inGameManager.mode = InGameManager.E_ModeType.Train;
+        SwitchLevel(chaptersDataBase.chapters[chapter].levels[level]);
+
+        InGameManager.instance.StartLevel(level);
+    }
+
     public void PlayFirstLevelOfChapter(int chapterIndex)
     {
-        
-
         if (InGameManager.instance)
         {
             Destroy(InGameManager.instance);

@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.SceneManagement;
 
 public class SwitchLevel : MonoBehaviour
 {
@@ -30,7 +31,9 @@ public class SwitchLevel : MonoBehaviour
             {
                 if(InGameManager.instance.mode == InGameManager.E_ModeType.Train)
                 {
-
+                    InGameManager.instance.EndLevelTraining();
+                    InGameManager.instance.ResetManagerStats();
+                    //GameManagerNG.instance.SwitchLevel(SceneManager.GetActiveScene().name);
                 }
                 else if (InGameManager.instance.mode == InGameManager.E_ModeType.Run)
                 {

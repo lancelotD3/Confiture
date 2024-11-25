@@ -17,6 +17,7 @@ public class InGameManager : MonoBehaviour
     static public InGameManager instance;
 
     [Header("UI")]
+    public GameObject canvaLevel;
     public TMP_Text timerText;
     public TMP_Text enemyRemainsText;
     public TMP_Text blobNumberText;
@@ -38,7 +39,12 @@ public class InGameManager : MonoBehaviour
     public int chapterId;
     public int levelId;
 
-    public E_ModeType mode = E_ModeType.Run;
+    [HideInInspector] public E_ModeType mode = E_ModeType.Run;
+
+    [Header("UI Training mode")]
+    public GameObject canvaEndLevel;
+    public TMP_Text timerTextEndLevel;
+    bool endedLevel = false;
 
     private void Awake()
     {
@@ -67,6 +73,19 @@ public class InGameManager : MonoBehaviour
         if (player && Input.GetKeyDown(KeyCode.R) && canReset)
         {
             player.RemoveBlobs(1000);
+
+
+            if(mode == E_ModeType.Train)
+            {
+                gameTimer = 0;
+            }
+
+            if (endedLevel)
+            {
+                endedLevel = false;
+                canvaEndLevel.SetActive(false);
+                canvaLevel.SetActive(true);
+            }
         }
 
         timerText.text = gameTimer.ToString("0.00");
@@ -171,5 +190,14 @@ public class InGameManager : MonoBehaviour
         lockTimer = !active;
 
         if (!active) timerActivate = false;
+    }
+
+    public void EndLevelTraining()
+    {
+        timerTextEndLevel.text = gameTimer.ToString();
+
+        endedLevel = true;
+        canvaEndLevel.SetActive(true);
+        canvaLevel.SetActive(false);
     }
 }
