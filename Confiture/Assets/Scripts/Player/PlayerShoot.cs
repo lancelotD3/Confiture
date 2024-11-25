@@ -73,7 +73,7 @@ public class PlayerShoot : MonoBehaviour
         }
         else
         {
-            GameManager.instance.PlaySound(cantShootClip);
+            GameManagerNG.instance.PlaySound(cantShootClip);
         }
     }
 
@@ -87,7 +87,7 @@ public class PlayerShoot : MonoBehaviour
 
         blob.SpawnByShoot(force);
 
-        GameManager.instance.PlaySound(shootClip);
+        GameManagerNG.instance.PlaySound(shootClip);
         CameraShake.instance.TriggerShake(.1f, .1f, 1f);
 
         player.TryRemoveBlobs(1);

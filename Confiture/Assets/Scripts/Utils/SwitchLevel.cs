@@ -14,8 +14,8 @@ public class SwitchLevel : MonoBehaviour
         if (quitGame)
             return;
 
-        GameManager.instance.FadeOut();
-        GameManager.instance.StartLevel();
+        GameManagerNG.instance.FadeOut();
+        GameManagerNG.instance.inGameManager.StartLevel();
     }
 
     private void OnTriggerEnter(Collider other)
@@ -25,7 +25,7 @@ public class SwitchLevel : MonoBehaviour
             if (quitGame)
                 Application.Quit();
             else
-                GameManager.instance.SwitchScene(nextScene);
+                GameManagerNG.instance.SwitchScene(nextScene);
         }
     }
 }

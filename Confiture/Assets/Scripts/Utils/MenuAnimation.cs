@@ -6,6 +6,6 @@ public class MenuAnimation : MonoBehaviour
 {
     public void OnFadeComplete()
     {
-        GameManager.instance.OnFadeComplete();
+        GameManagerNG.instance.OnFadeComplete();
     }
 }

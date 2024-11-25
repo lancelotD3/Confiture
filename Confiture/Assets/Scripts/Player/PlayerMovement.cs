@@ -219,7 +219,7 @@ public class PlayerMovement : MonoBehaviour
 
         if(isGrounded != lastGroundedValue)
         {
-            GameManager.instance.PlaySound(groundedHitClip);
+            GameManagerNG.instance.PlaySound(groundedHitClip);
         }
         lastGroundedValue = isGrounded;
     }
@@ -492,7 +492,7 @@ public class PlayerMovement : MonoBehaviour
         if (!isJumping)
         {
             isJumping = true;
-            GameManager.instance.PlaySound(jumpClip);
+            GameManagerNG.instance.PlaySound(jumpClip);
         }
 
         jumpBufferTimer = 0f;
@@ -873,7 +873,7 @@ public class PlayerMovement : MonoBehaviour
         GameObject splashGo = Instantiate(player.splashPrefabDash, player.feetPos.position, Quaternion.identity);
         splashGo.transform.forward = dashDirection;
 
-        GameManager.instance.PlaySound(dashClip);
+        GameManagerNG.instance.PlaySound(dashClip);
 
         Destroy(splashGo, 2f);
 

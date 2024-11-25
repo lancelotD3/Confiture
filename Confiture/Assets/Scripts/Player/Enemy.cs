@@ -35,14 +35,14 @@ public class Enemy : MonoBehaviour
             Destroy(particleGo, 5f);
 
             CameraShake.instance.TriggerShake(.2f, .3f, 1f);
-            GameManager.instance.PlaySound(diedClip);
+            GameManagerNG.instance.PlaySound(diedClip);
 
-            GameManager.instance.RemoveEnemy();
+            GameManagerNG.instance.inGameManager.RemoveEnemy();
             Destroy(gameObject);
         }
         else
         {
-            GameManager.instance.PlaySound(damageClip);
+            GameManagerNG.instance.PlaySound(damageClip);
 
             CameraShake.instance.TriggerShake(.15f, .15f, 1f);
         }

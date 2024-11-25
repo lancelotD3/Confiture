@@ -53,7 +53,7 @@ public class PlayerEntity : MonoBehaviour
 
         if(blobNumber > maxBlob) blobNumber = maxBlob;
 
-        GameManager.instance.PlaySound(growthClip);
+        GameManagerNG.instance.PlaySound(growthClip);
 
         UpdateBlob();
     }
@@ -94,11 +94,11 @@ public class PlayerEntity : MonoBehaviour
 
     private void Died()
     {
-        GameManager.instance.PlayerDied();
+        GameManagerNG.instance.inGameManager.PlayerDied();
 
         CameraShake.instance.TriggerShake(.15f, .3f, 1f);
 
-        GameManager.instance.PlaySound(diedClip);
+        GameManagerNG.instance.PlaySound(diedClip);
 
         Destroy(gameObject);
     }
@@ -116,7 +116,7 @@ public class PlayerEntity : MonoBehaviour
 
                 UpdateBlob();
 
-                GameManager.instance.PlaySound(eatEnemyClip);
+                GameManagerNG.instance.PlaySound(eatEnemyClip);
 
                 enemy.AddDamage(99);
             }
@@ -127,7 +127,7 @@ public class PlayerEntity : MonoBehaviour
         }
         else if(!playerMovement.isGrounded && !playerMovement.isDashing)
         {
-            GameManager.instance.PlaySound(hitWallClip);
+            GameManagerNG.instance.PlaySound(hitWallClip);
         }
     }
 

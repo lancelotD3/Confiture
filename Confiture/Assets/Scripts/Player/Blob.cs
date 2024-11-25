@@ -63,7 +63,7 @@ public class Blob : MonoBehaviour
                 if(player.playerMovement.isDashing)
                 {
 
-                    GameManager.instance.PlaySound(finishDashClip);
+                    GameManagerNG.instance.PlaySound(finishDashClip);
 
                     CameraShake.instance.TriggerShake(.15f, .2f, 1f);
 
@@ -154,7 +154,7 @@ public class Blob : MonoBehaviour
             return;
         }
 
-        GameManager.instance.PlaySound(hitSurfaceClip);
+        GameManagerNG.instance.PlaySound(hitSurfaceClip);
 
         if (!collision.collider.TryGetComponent<Blob>(out Blob blob))
         {
