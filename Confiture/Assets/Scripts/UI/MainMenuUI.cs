@@ -19,26 +19,30 @@ public class MainMenuUI : MonoBehaviour
     public List<GameObject> chaptersGo;
     public List<Chapter> chapters;
 
+    private int chapterIndexSelected;
+    private int levelIndexSelected;
+
     public void PlaySave(int index)
     {
         GameManagerNG.instance.SelectSave(index);
 
-        Debug.Log(GameManagerNG.instance.saveDatas[index]);
         if (GameManagerNG.instance.saveDatas[index] == null || !GameManagerNG.instance.saveDatas[index].saved)
         {
             Debug.Log("Started for the first time");
 
-            GameManagerNG.instance.PlayFirstLevel();
 
             SaveData saveData = new SaveData();
             saveData.saved = true;
 
             SaveSystem.SaveSave("Save_" + index, saveData);
 
+
             foreach (GameObject go in hideOnSelectSave)
             {
                 go.SetActive(false);
             }
+
+            GameManagerNG.instance.PlayFirstLevel(saveData);
         }
         else
         {
@@ -89,7 +93,7 @@ public class MainMenuUI : MonoBehaviour
         {
             chaptersGo[i].SetActive(visible);
 
-            if(i < GameManagerNG.instance.GetSelectedSave().chapterComplete + 1)
+            if(i <= GameManagerNG.instance.GetSelectedSave().chapter)
             {
                 chaptersGo[i].GetComponentInChildren<Button>().interactable = true;
             }
@@ -102,8 +106,10 @@ public class MainMenuUI : MonoBehaviour
 
     public void PlayChapter(int chapterIndex)
     {
+        chapterIndexSelected = chapterIndex;
+
         // First start
-        if (GameManagerNG.instance.GetSelectedSave().chapterComplete == 0)
+        if (GameManagerNG.instance.GetSelectedSave().levelsCompleteInLastChapter == 0)
         {
             Debug.Log("Started chapter for the first time");
             return;
@@ -111,7 +117,7 @@ public class MainMenuUI : MonoBehaviour
 
         for (int i = 0; i < chapters[chapterIndex].levels.Count; i++)
         {
-            if (i < GameManagerNG.instance.GetSelectedSave().chapterComplete + 1)
+            if (i < GameManagerNG.instance.GetSelectedSave().levelsCompleteInLastChapter + 1)
             {
                 chapters[chapterIndex].levels[i].GetComponentInChildren<Button>().interactable = true;
             }
@@ -120,5 +126,20 @@ public class MainMenuUI : MonoBehaviour
                 chapters[chapterIndex].levels[i].GetComponentInChildren<Button>().interactable = false;
             }
         }
+    }
+
+    public void SelectLevel(int levelIndex)
+    {
+        levelIndexSelected = levelIndex;
+    }
+
+    public void PlayLevel()
+    {
+    
+    }
+
+    public void PlayFullRun()
+    {
+        GameManagerNG.instance.PlayFirstLevelOfChapter(chapterIndexSelected);
     }
 }

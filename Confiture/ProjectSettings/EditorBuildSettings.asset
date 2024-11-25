@@ -71,4 +71,7 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/In Game Levels NG/Level_02_NG.unity
     guid: 9e761d1e3d634eb4aae182d98bcd8ffd
+  - enabled: 1
+    path: Assets/Scenes/In Game Levels NG/Level_03_NG.unity
+    guid: a6f72068df12ba04c91859342a6eb9a9
   m_configObjects: {}

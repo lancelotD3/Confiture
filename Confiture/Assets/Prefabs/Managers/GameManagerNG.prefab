@@ -604,6 +604,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   fadeAnimator: {fileID: 8578954269906445337}
+  mainMenuName: MainMenuNG
+  firstLevel: Level_01_NG
   lastScene: 
   timeForGold: 96
   timeForSilver: 248
@@ -614,6 +616,10 @@ MonoBehaviour:
   menuMusic: {fileID: 8300000, guid: 8c41acfe7e1aeb14884c705ccd4f5b3b, type: 3}
   gameMusic: {fileID: 8300000, guid: a4f6d5845f816e845a6fa32aad0a2d13, type: 3}
   inGameManager: {fileID: 0}
+  inGameManagerPrefab: {fileID: 5909879077774248676, guid: cc3428812b14efd4e80817986feb1e4b,
+    type: 3}
+  saveDatas: []
+  chaptersDataBase: {fileID: 11400000, guid: ac5f0fbcfe8699740ba556996131f6af, type: 2}
 --- !u!82 &9033938996934608637
 AudioSource:
   m_ObjectHideFlags: 0

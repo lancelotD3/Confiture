@@ -15,27 +15,24 @@ public class EndMenu : MonoBehaviour
     {
         animator = GetComponent<Animator>();
 
-        float chrono = GameManager.instance.gameTimer;
+        float chrono = InGameManager.instance.gameTimer;
+        Destroy(InGameManager.instance);
+
         chronoText.text = chrono.ToString();
 
-        foreach(GameObject go in GameManager.instance.canvas)
+        if (chrono > GameManagerNG.instance.timeForBronze)
         {
-            go.SetActive(false);
-        }
-
-        if (chrono > GameManager.instance.timeForBronze)
-        {
-            chronoForNext.text = (chrono - GameManager.instance.timeForBronze).ToString("0.00") + " seconds for bronze medal";
+            chronoForNext.text = (chrono - GameManagerNG.instance.timeForBronze).ToString("0.00") + " seconds for bronze medal";
             animator.Play("NoMedal");
         }
-        else if (chrono > GameManager.instance.timeForSilver)
+        else if (chrono > GameManagerNG.instance.timeForSilver)
         {
-            chronoForNext.text = (chrono - GameManager.instance.timeForSilver).ToString("0.00") + " seconds for silver medal";
+            chronoForNext.text = (chrono - GameManagerNG.instance.timeForSilver).ToString("0.00") + " seconds for silver medal";
             animator.Play("Bronze");
         }
-        else if (chrono > GameManager.instance.timeForGold)
+        else if (chrono > GameManagerNG.instance.timeForGold)
         {
-            chronoForNext.text = (chrono - GameManager.instance.timeForGold).ToString("0.00") + " seconds for gold medal";
+            chronoForNext.text = (chrono - GameManagerNG.instance.timeForGold).ToString("0.00") + " seconds for gold medal";
             animator.Play("Silver");
         }
         else
@@ -44,16 +41,16 @@ public class EndMenu : MonoBehaviour
             animator.Play("Gold");
         }
 
-        chronoText.text = GameManager.instance.gameTimer.ToString("0.00");
+        InGameManager.instance.FinishChapter();
+        Destroy(InGameManager.instance);
     }
 
     private void Update()
     {
         if (Input.GetKeyDown(KeyCode.Space))
         {
-            GameManager.instance.lastScene = "EndGame";
-            SceneManager.LoadScene("MainMenu");
-            GameManager.instance.ResetManagerStats();
+            GameManagerNG.instance.lastScene = "EndGame";
+            SceneManager.LoadScene("MainMenuNG");
         }
     }
 }

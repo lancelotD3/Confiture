@@ -2039,7 +2039,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: d97f17813ec648240826a8f53ee28f44, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timerText: {fileID: 7229497093430946935}
+  timerText: {fileID: 1931937378583592510}
   enemyRemainsText: {fileID: 7229497093430946935}
   blobNumberText: {fileID: 0}
   levelNameText: {fileID: 3057721322166803760}

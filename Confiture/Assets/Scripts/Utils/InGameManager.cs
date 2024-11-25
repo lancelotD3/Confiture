@@ -7,6 +7,12 @@ using UnityEngine.SceneManagement;
 
 public class InGameManager : MonoBehaviour
 {
+    public enum E_ModeType
+    {
+        Run,
+        Train
+    }
+
     private string nextScene;
     static public InGameManager instance;
 
@@ -29,6 +35,10 @@ public class InGameManager : MonoBehaviour
     PlayerEntity player;
 
     public AudioClip killAllEnemiesClip;
+    public int chapterId;
+    public int levelId;
+
+    public E_ModeType mode = E_ModeType.Run;
 
     private void Awake()
     {
@@ -67,6 +77,7 @@ public class InGameManager : MonoBehaviour
             resetStats = true;
             GameManagerNG.instance.SwitchSceneToMainMenu();
 
+            Destroy(instance);
             //if (!(SceneManager.GetActiveScene().name == "MainMenu"))
             //{
             //    resetStats = true;
@@ -76,8 +87,9 @@ public class InGameManager : MonoBehaviour
         }
     }
 
-    public void StartLevel()
+    public void StartLevel(int id)
     {
+        levelId = id;
         player = FindAnyObjectByType<PlayerEntity>();
 
         Timer(true);
@@ -87,6 +99,26 @@ public class InGameManager : MonoBehaviour
         enemyRemaining = FindObjectsByType<Enemy>(FindObjectsSortMode.None).Count();
 
         enemyRemainsText.text = enemyRemaining.ToString();
+    }
+
+    public void FinishLevel()
+    {
+        if (levelId >= GameManagerNG.instance.GetSelectedSave().levelsCompleteInLastChapter)
+        {
+            Debug.Log("FinishNewLevel");
+            GameManagerNG.instance.GetSelectedSave().levelsCompleteInLastChapter += 1;
+            GameManagerNG.instance.SaveSelectedData();
+        }
+    }
+
+    public void FinishChapter()
+    {
+        if (chapterId >= GameManagerNG.instance.GetSelectedSave().chapter)
+        {
+            Debug.Log("FinishNewChapter");
+            GameManagerNG.instance.GetSelectedSave().chapter += 1;
+            GameManagerNG.instance.SaveSelectedData();
+        }
     }
 
     public void PlayerDied()

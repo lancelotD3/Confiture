@@ -9,7 +9,7 @@ public class SaveData
 
 
     // Game
-    public int chapterComplete;
+    public int chapter;
     public int levelsCompleteInLastChapter;
 
     // Stats
@@ -27,9 +27,14 @@ public class SaveData
     public float G;
     public float B;
 
-    public SaveData(int chapterComplete, int levelsCompleteInLastChapter, int death, int kills, int levelsComplete, float overallTime, int runNumber, int openedDoors, int dashNumber, int shootNumber, float r, float g, float b)
+    // Chapter
+
+    float[] chrono_1;
+    float[] chrono_2;
+
+    public SaveData(int chapter, int levelsCompleteInLastChapter, int death, int kills, int levelsComplete, float overallTime, int runNumber, int openedDoors, int dashNumber, int shootNumber, float r, float g, float b)
     {
-        this.chapterComplete = chapterComplete;
+        this.chapter = chapter;
         this.levelsCompleteInLastChapter = levelsCompleteInLastChapter;
         this.death = death;
         this.kills = kills;
@@ -47,7 +52,7 @@ public class SaveData
     public SaveData()
     {
         this.saved = false;
-        this.chapterComplete = 0;
+        this.chapter = 0;
         this.levelsCompleteInLastChapter = 0;
         this.death = 0;
         this.kills = 0;

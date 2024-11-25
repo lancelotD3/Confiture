@@ -39,6 +39,8 @@ public class GameManagerNG : MonoBehaviour
     public SaveData[] saveDatas;
     private int selectedSaveIndex;
 
+    public ChaptersDataBase chaptersDataBase;
+
     private void Awake()
     {
         if (instance == null)
@@ -56,14 +58,17 @@ public class GameManagerNG : MonoBehaviour
         SaveSystem.SaveSave("Save_" + saveIndex, saveDatas[saveIndex]);
     }
 
+    public void SaveSelectedData()
+    {
+        SaveSystem.SaveSave("Save_" + selectedSaveIndex, saveDatas[selectedSaveIndex]);
+    }
+
     public void LoadDatas()
     {
         saveDatas = new SaveData[3];
         for (int i = 0; i < saveDatas.Length; i++)
         {
             saveDatas[i] = SaveSystem.LoadSaveData("Save_" + i);
-            
-            Debug.Log(saveDatas[i]);
         }
     }
 
@@ -82,10 +87,30 @@ public class GameManagerNG : MonoBehaviour
         SaveSystem.DeleteSaveData("Save_" + selectedSaveIndex);
     }
 
-    public void PlayFirstLevel()
+    public void PlayFirstLevel(SaveData saveData)
     {
         inGameManager = Instantiate(inGameManagerPrefab);
         SwitchLevel(firstLevel);
+        InGameManager.instance.StartLevel(-1);
+
+        saveDatas[selectedSaveIndex] = saveData;
+    }
+
+    public void PlayFirstLevelOfChapter(int chapterIndex)
+    {
+        
+
+        if (InGameManager.instance)
+        {
+            Destroy(InGameManager.instance);
+            inGameManager = null;
+        }
+
+        inGameManager = Instantiate(inGameManagerPrefab);
+        SwitchLevel(chaptersDataBase.chapters[chapterIndex].levels[0]);
+
+        InGameManager.instance.chapterId = chapterIndex;
+        InGameManager.instance.StartLevel(-1);
     }
 
     public void SwitchScene(string sceneName)

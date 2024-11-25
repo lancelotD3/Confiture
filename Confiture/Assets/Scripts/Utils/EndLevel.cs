@@ -8,11 +8,11 @@ public class EndLevel : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            GameManager.instance.musicAudioSource.Stop();
-            GameManager.instance.musicAudioSource.clip = GameManager.instance.menuMusic;
-            GameManager.instance.musicAudioSource.Play();
+            GameManagerNG.instance.musicAudioSource.Stop();
+            GameManagerNG.instance.musicAudioSource.clip = GameManagerNG.instance.menuMusic;
+            GameManagerNG.instance.musicAudioSource.Play();
 
-            GameManager.instance.SwitchScene("EndGame");
+            GameManagerNG.instance.SwitchScene("EndGame");
         }
     }
 }

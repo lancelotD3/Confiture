@@ -48,7 +48,7 @@ public class Followcursor : MonoBehaviour
                 BN3.gameObject.SetActive(false);
                 break;
             default:
-                Debug.LogWarning("currentValue doit être entre 1 et 3 !");
+                //Debug.LogWarning("currentValue doit être entre 1 et 3 !");
                 break;
         }
     }
