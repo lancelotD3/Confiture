@@ -49,9 +49,11 @@ public class ButtonBehavior : MonoBehaviour
                 ButtonAnimator.SetTrigger("ButtonActivated");
 
                 // SFX
-                GameManager.instance.PlaySound(openDoorClip);
+                GameManagerNG.instance.PlaySound(openDoorClip);
 
                 // VFX
+
+                GameManagerNG.instance.AddDoorUsed();
             }
         }
     }

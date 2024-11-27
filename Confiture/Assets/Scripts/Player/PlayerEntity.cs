@@ -99,7 +99,7 @@ public class PlayerEntity : MonoBehaviour
         CameraShake.instance.TriggerShake(.15f, .3f, 1f);
 
         GameManagerNG.instance.PlaySound(diedClip);
-
+        GameManagerNG.instance.AddDeath();
         Destroy(gameObject);
     }
 

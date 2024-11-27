@@ -250,4 +250,48 @@ public class GameManagerNG : MonoBehaviour
         lastChapterOpenedId = inGameManager.chapterId;
         lastLevelOpenedId = inGameManager.levelId;
     }
+
+
+
+
+    ///////
+    public void AddDeath()
+    {
+        GetSelectedSave().death += 1;
+    }
+
+    public void AddKill()
+    {
+        GetSelectedSave().kills += 1;
+    }
+
+    public void AddLevelsComplete()
+    {
+        GetSelectedSave().levelsComplete += 1;
+    }
+
+    public void AddRun()
+    {
+        GetSelectedSave().runNumber += 1;
+    }
+
+    public void AddDoorUsed()
+    {
+        GetSelectedSave().openedDoors += 1;
+    }
+
+    public void AddDash()
+    {
+        GetSelectedSave().dashNumber += 1;
+    }
+
+    public void AddShoot()
+    {
+        GetSelectedSave().shootNumber += 1;
+    }
+
+    public void AddJump()
+    {
+        GetSelectedSave().jumpNumber += 1;
+    }
 }

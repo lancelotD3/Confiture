@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using TMPro;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -14,6 +15,8 @@ public class MainMenuUI : MonoBehaviour
     }
 
     public List<Image> saveButtons;
+    public GameObject saveButtonsGo;
+    public GameObject selectChaptersGo;
 
     public List<GameObject> hideOnSelectSave;
     public List<GameObject> showOnSelectSave;
@@ -24,6 +27,19 @@ public class MainMenuUI : MonoBehaviour
     private int levelIndexSelected;
 
     public MenuReference menuRef;
+
+    [Space]
+
+    [Header("Stats refs")]
+    public TMP_Text deathsText;
+    public TMP_Text killsText;
+    public TMP_Text levelsCompleteText;
+    public TMP_Text overallTimeText;
+    public TMP_Text runsText;
+    public TMP_Text doorsUsedText;
+    public TMP_Text dashesUsedText;
+    public TMP_Text shootsText;
+    public TMP_Text jumpsText;
 
     private void Start()
     {
@@ -76,6 +92,7 @@ public class MainMenuUI : MonoBehaviour
             }
 
             GameManagerNG.instance.PlayFirstLevel(saveData);
+            Invoke(nameof(SelectChapterMenu), .2f);
         }
         else
         {
@@ -87,8 +104,24 @@ public class MainMenuUI : MonoBehaviour
             foreach (GameObject go in showOnSelectSave)
             {
                 go.SetActive(true);
+
             }
+
+            deathsText.text = GameManagerNG.instance.GetSelectedSave().death.ToString();
+            killsText.text = GameManagerNG.instance.GetSelectedSave().kills.ToString();
+            levelsCompleteText.text = GameManagerNG.instance.GetSelectedSave().levelsComplete.ToString();
+            overallTimeText.text = GameManagerNG.instance.GetSelectedSave().overallTime.ToString();
+            runsText.text = GameManagerNG.instance.GetSelectedSave().runNumber.ToString();
+            doorsUsedText.text = GameManagerNG.instance.GetSelectedSave().openedDoors.ToString();
+            dashesUsedText.text = GameManagerNG.instance.GetSelectedSave().dashNumber.ToString();
+            shootsText.text = GameManagerNG.instance.GetSelectedSave().shootNumber.ToString();
+            jumpsText.text = GameManagerNG.instance.GetSelectedSave().jumpNumber.ToString();
         }
+    }
+
+    private void SelectChapterMenu()
+    {
+        SetMenuSelected(selectChaptersGo);
     }
 
     public void LoadSaves()
@@ -156,6 +189,7 @@ public class MainMenuUI : MonoBehaviour
         if (chapterIndexSelected >= GameManagerNG.instance.GetSelectedSave().chapter && GameManagerNG.instance.GetSelectedSave().levelsCompleteInLastChapter == 0)
         {
             GameManagerNG.instance.PlayFirstLevelOfChapter(chapterIndexSelected);
+
             return;
         }
 
@@ -215,6 +249,7 @@ public class MainMenuUI : MonoBehaviour
 
     public void PlayFullRun()
     {
+        GameManagerNG.instance.AddRun();
         GameManagerNG.instance.PlayFirstLevelOfChapter(chapterIndexSelected);
     }
 
@@ -235,5 +270,10 @@ public class MainMenuUI : MonoBehaviour
     public void ShowLastMenuSelected()
     {
         menuRef.GetMenu(GameManagerNG.instance.lastMenuOpenedId).SetActive(true);
+
+        if (GameManagerNG.instance.lastMenuOpenedId == menuRef.GetIdOfMenu(selectChaptersGo))
+        {
+            SetMenuSelected(saveButtonsGo);
+        }
     }
 }

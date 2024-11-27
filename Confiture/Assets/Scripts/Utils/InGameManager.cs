@@ -99,6 +99,7 @@ public class InGameManager : MonoBehaviour
 
             resetStats = true;
             GameManagerNG.instance.SwitchSceneToMainMenu();
+            GameManagerNG.instance.SaveSelectedData();
 
             Destroy(instance.gameObject);
             //if (!(SceneManager.GetActiveScene().name == "MainMenu"))
@@ -132,6 +133,7 @@ public class InGameManager : MonoBehaviour
         {
             if (levelId >= GameManagerNG.instance.GetSelectedSave().levelsCompleteInLastChapter)
             {
+                GameManagerNG.instance.AddLevelsComplete();
                 GameManagerNG.instance.GetSelectedSave().levelsCompleteInLastChapter += 1;
                 GameManagerNG.instance.SaveSelectedData();
             }
@@ -150,7 +152,7 @@ public class InGameManager : MonoBehaviour
     {
         if (chapterId >= GameManagerNG.instance.GetSelectedSave().chapter)
         {
-            Debug.Log("FinishNewChapter");
+            GameManagerNG.instance.AddLevelsComplete();
             GameManagerNG.instance.GetSelectedSave().chapter += 1;
             GameManagerNG.instance.GetSelectedSave().levelsCompleteInLastChapter = 0;
             GameManagerNG.instance.SaveSelectedData();
@@ -200,6 +202,8 @@ public class InGameManager : MonoBehaviour
         enemyRemaining--;
         enemyRemainsText.text = enemyRemaining.ToString();
 
+        GameManagerNG.instance.AddKill();
+
         if (enemyRemaining == 0)
         {
             GameManagerNG.instance.PlaySound(killAllEnemiesClip);
@@ -228,5 +232,10 @@ public class InGameManager : MonoBehaviour
         {
             GameManagerNG.instance.SetSelectedChronoLevel(chapterId, levelId, chrono);
         }
+        else
+        {
+            GameManagerNG.instance.SaveSelectedData();
+        }
+
     }
 }

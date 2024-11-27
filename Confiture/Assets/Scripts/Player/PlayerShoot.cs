@@ -87,6 +87,7 @@ public class PlayerShoot : MonoBehaviour
 
         blob.SpawnByShoot(force);
 
+        GameManagerNG.instance.AddShoot();
         GameManagerNG.instance.PlaySound(shootClip);
         CameraShake.instance.TriggerShake(.1f, .1f, 1f);
 

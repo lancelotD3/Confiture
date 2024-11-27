@@ -21,6 +21,7 @@ public class SaveData
     public int openedDoors;
     public int dashNumber;
     public int shootNumber;
+    public int jumpNumber;
 
     // Cosmetics
     public float R;
@@ -44,6 +45,7 @@ public class SaveData
         this.openedDoors = 0;
         this.dashNumber = 0;
         this.shootNumber = 0;
+        this.jumpNumber = 0;
         R = 0;
         G = 0;
         B = 0;

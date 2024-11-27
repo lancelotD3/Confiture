@@ -493,6 +493,7 @@ public class PlayerMovement : MonoBehaviour
         {
             isJumping = true;
             GameManagerNG.instance.PlaySound(jumpClip);
+            GameManagerNG.instance.AddJump();
         }
 
         jumpBufferTimer = 0f;
@@ -874,6 +875,7 @@ public class PlayerMovement : MonoBehaviour
         splashGo.transform.forward = dashDirection;
 
         GameManagerNG.instance.PlaySound(dashClip);
+        GameManagerNG.instance.AddDash();
 
         Destroy(splashGo, 2f);
 
