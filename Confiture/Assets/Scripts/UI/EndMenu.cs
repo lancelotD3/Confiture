@@ -16,7 +16,6 @@ public class EndMenu : MonoBehaviour
         animator = GetComponent<Animator>();
 
         float chrono = InGameManager.instance.gameTimer;
-        Destroy(InGameManager.instance);
 
         chronoText.text = chrono.ToString();
 
@@ -41,8 +40,7 @@ public class EndMenu : MonoBehaviour
             animator.Play("Gold");
         }
 
-        InGameManager.instance.FinishChapter();
-        Destroy(InGameManager.instance);
+        InGameManager.instance.FinishChapter(chrono);
     }
 
     private void Update()
@@ -50,7 +48,10 @@ public class EndMenu : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Space))
         {
             GameManagerNG.instance.lastScene = "EndGame";
+            GameManagerNG.instance.canSwitch = true;
             SceneManager.LoadScene("MainMenuNG");
+
+            //GameManagerNG.instance.SwitchScene("MainMenuNG");
         }
     }
 }

@@ -17,13 +17,23 @@ public class SwitchLevel : MonoBehaviour
             return;
 
         GameManagerNG.instance.FadeOut();
-        GameManagerNG.instance.inGameManager.StartLevel(InGameManager.instance.levelId + 1);
+
+        if (InGameManager.instance.mode == InGameManager.E_ModeType.Train)
+        {
+            GameManagerNG.instance.inGameManager.StartLevel(InGameManager.instance.levelId);
+        }
+        else if (InGameManager.instance.mode == InGameManager.E_ModeType.Run)
+        {
+            GameManagerNG.instance.inGameManager.StartLevel(InGameManager.instance.levelId + 1);
+        }
     }
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.CompareTag("Player") && !doOnce)
         {
+            GameManagerNG.instance.SetLastChapterAndLevel();
+
             doOnce = true;
             if (quitGame)
                 Application.Quit();

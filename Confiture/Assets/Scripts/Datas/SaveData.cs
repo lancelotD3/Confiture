@@ -28,26 +28,8 @@ public class SaveData
     public float B;
 
     // Chapter
-
-    float[] chrono_1;
-    float[] chrono_2;
-
-    public SaveData(int chapter, int levelsCompleteInLastChapter, int death, int kills, int levelsComplete, float overallTime, int runNumber, int openedDoors, int dashNumber, int shootNumber, float r, float g, float b)
-    {
-        this.chapter = chapter;
-        this.levelsCompleteInLastChapter = levelsCompleteInLastChapter;
-        this.death = death;
-        this.kills = kills;
-        this.levelsComplete = levelsComplete;
-        this.overallTime = overallTime;
-        this.runNumber = runNumber;
-        this.openedDoors = openedDoors;
-        this.dashNumber = dashNumber;
-        this.shootNumber = shootNumber;
-        R = r;
-        G = g;
-        B = b;
-    }
+    public float[] chronoChapter;
+    public float[,] chronos;
 
     public SaveData()
     {
@@ -65,6 +47,9 @@ public class SaveData
         R = 0;
         G = 0;
         B = 0;
+
+        chronos = new float[10, 10];
+        chronoChapter = new float[10];
     }
 }
 

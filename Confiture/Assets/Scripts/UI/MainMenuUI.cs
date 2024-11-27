@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -22,15 +23,47 @@ public class MainMenuUI : MonoBehaviour
     private int chapterIndexSelected;
     private int levelIndexSelected;
 
+    public MenuReference menuRef;
+
+    private void Start()
+    {
+        if(InGameManager.instance != null)
+        {
+            Destroy(InGameManager.instance.gameObject);
+        }
+
+        GameManagerNG.instance.FadeOut();
+
+        if(GameManagerNG.instance.lastMenuOpenedId != -1 )
+        {
+            LoadSaves();
+            PlaySave(GameManagerNG.instance.selectedSaveIndex);
+
+            foreach (GameObject go in hideOnSelectSave)
+            {
+                go.SetActive(false);
+            }
+            foreach (GameObject go in showOnSelectSave)
+            {
+                go.SetActive(false);
+            }
+
+            SetChapterVisible(true);
+            PlayChapter(GameManagerNG.instance.lastChapterOpenedId);
+
+            ShowLastMenuSelected();
+
+            // 0 = defaults buttons
+            menuRef.GetMenu(0).SetActive(false);
+        }
+    }
+
     public void PlaySave(int index)
     {
         GameManagerNG.instance.SelectSave(index);
 
         if (GameManagerNG.instance.saveDatas[index] == null || !GameManagerNG.instance.saveDatas[index].saved)
         {
-            Debug.Log("Started for the first time");
-
-
             SaveData saveData = new SaveData();
             saveData.saved = true;
 
@@ -96,10 +129,21 @@ public class MainMenuUI : MonoBehaviour
             if(i <= GameManagerNG.instance.GetSelectedSave().chapter)
             {
                 chaptersGo[i].GetComponentInChildren<Button>().interactable = true;
+
+                TMP_Text chronoText = GetTextChild(chaptersGo[i], "Chrono");
+                chronoText.gameObject.SetActive(true);
+
+                if(GameManagerNG.instance.GetSelectedSave().chronoChapter[i] > 0.01f)
+                {
+                    chronoText.text = GameManagerNG.instance.GetSelectedSave().chronoChapter[i].ToString();
+                }
             }
             else
             {
                 chaptersGo[i].GetComponentInChildren<Button>().interactable = false;
+
+                TMP_Text chronoText = GetTextChild(chaptersGo[i], "Chrono");
+                chronoText.gameObject.SetActive(false);
             }
         }
     }
@@ -109,21 +153,51 @@ public class MainMenuUI : MonoBehaviour
         chapterIndexSelected = chapterIndex;
 
         // First start
-        if (GameManagerNG.instance.GetSelectedSave().levelsCompleteInLastChapter == 0)
+        if (chapterIndexSelected >= GameManagerNG.instance.GetSelectedSave().chapter && GameManagerNG.instance.GetSelectedSave().levelsCompleteInLastChapter == 0)
         {
-            Debug.Log("Started chapter for the first time");
+            GameManagerNG.instance.PlayFirstLevelOfChapter(chapterIndexSelected);
             return;
         }
 
-        for (int i = 0; i < chapters[chapterIndex].levels.Count; i++)
+        // Chapter allready finish
+        if(chapterIndexSelected < GameManagerNG.instance.GetSelectedSave().chapter)
         {
-            if (i < GameManagerNG.instance.GetSelectedSave().levelsCompleteInLastChapter + 1)
+            for (int i = 0; i < chapters[chapterIndexSelected].levels.Count; i++)
             {
-                chapters[chapterIndex].levels[i].GetComponentInChildren<Button>().interactable = true;
+                TMP_Text chronoText = GetTextChild(chapters[chapterIndexSelected].levels[i], "Chrono");
+                chronoText.gameObject.SetActive(true);
+
+                if (GameManagerNG.instance.GetSelectedChronoLevel(chapterIndexSelected, i) > 0.01f)
+                {
+                    chronoText.text = GameManagerNG.instance.GetSelectedChronoLevel(chapterIndexSelected, i).ToString();
+                }
+
+                chapters[chapterIndexSelected].levels[i].GetComponentInChildren<Button>().interactable = true;
             }
-            else
+        }
+        else // Chapter not finish
+        {
+            for (int i = 0; i < chapters[chapterIndexSelected].levels.Count; i++)
             {
-                chapters[chapterIndex].levels[i].GetComponentInChildren<Button>().interactable = false;
+                if (i < GameManagerNG.instance.GetSelectedSave().levelsCompleteInLastChapter + 1)
+                {
+                    chapters[chapterIndexSelected].levels[i].GetComponentInChildren<Button>().interactable = true;
+
+                    TMP_Text chronoText = GetTextChild(chapters[chapterIndexSelected].levels[i], "Chrono");
+                    chronoText.gameObject.SetActive(true);
+
+                    if (GameManagerNG.instance.GetSelectedChronoLevel(chapterIndexSelected, i) > 0.01f)
+                    {
+                        chronoText.text = GameManagerNG.instance.GetSelectedChronoLevel(chapterIndexSelected, i).ToString();
+                    }
+                }
+                else
+                {
+                    TMP_Text chronoText = GetTextChild(chapters[chapterIndexSelected].levels[i], "Chrono");
+                    chronoText.gameObject.SetActive(false);
+
+                    chapters[chapterIndexSelected].levels[i].GetComponentInChildren<Button>().interactable = false;
+                }
             }
         }
     }
@@ -133,13 +207,33 @@ public class MainMenuUI : MonoBehaviour
         levelIndexSelected = levelIndex;
     }
 
-    public void PlayLevel()
+    public void PlayLevel(int levelIndex)
     {
+        levelIndexSelected = levelIndex;
         GameManagerNG.instance.PlayLevel(chapterIndexSelected, levelIndexSelected);
     }
 
     public void PlayFullRun()
     {
         GameManagerNG.instance.PlayFirstLevelOfChapter(chapterIndexSelected);
+    }
+
+    private TMP_Text GetTextChild(GameObject go,  string name)
+    {
+        if (go != null)
+        {
+            return go.transform.Find(name).GetComponent<TMP_Text>();
+        }
+        return null;
+    }
+
+    public void SetMenuSelected(GameObject menuGo)
+    {
+        GameManagerNG.instance.lastMenuOpenedId = menuRef.GetIdOfMenu(menuGo);
+    }
+
+    public void ShowLastMenuSelected()
+    {
+        menuRef.GetMenu(GameManagerNG.instance.lastMenuOpenedId).SetActive(true);
     }
 }

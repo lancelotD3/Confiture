@@ -91,7 +91,7 @@ public class Shooter2 : Enemy
             if(timerTriggered < .5f && warmupSound)
             {
                 warmupSound = false;
-                GameManager.instance.PlaySound(warmUpClip);
+                GameManagerNG.instance.PlaySound(warmUpClip);
 
                 Invoke(nameof(WarmUpSoundReset), 1f);
             }
@@ -136,7 +136,7 @@ public class Shooter2 : Enemy
         particleEnd.transform.parent = null;
         particleEnd.transform.position = player.mesh.transform.position;
 
-        GameManager.instance.PlaySound(shootClip);
+        GameManagerNG.instance.PlaySound(shootClip);
 
         player.RemoveBlobs(damage);
         

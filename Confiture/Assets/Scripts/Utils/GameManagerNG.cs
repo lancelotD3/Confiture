@@ -25,7 +25,7 @@ public class GameManagerNG : MonoBehaviour
     public Vector3 offset;
     int BN_number;
 
-    bool canSwitch = true;
+    public bool canSwitch = true;
     
     [Header("Audio")]
     public AudioSource musicAudioSource;
@@ -38,9 +38,13 @@ public class GameManagerNG : MonoBehaviour
     public InGameManager inGameManagerPrefab;
 
     public SaveData[] saveDatas;
-    private int selectedSaveIndex;
+    public int selectedSaveIndex;
 
     public ChaptersDataBase chaptersDataBase;
+
+    public int lastMenuOpenedId = -1;
+    public int lastChapterOpenedId = -1;
+    public int lastLevelOpenedId = -1;
 
     private void Awake()
     {
@@ -83,6 +87,28 @@ public class GameManagerNG : MonoBehaviour
         return saveDatas[selectedSaveIndex];
     }
 
+    public float GetSelectedChronoChapter(int index)
+    {
+        return GetSelectedSave().chronoChapter[index];
+    }
+
+    public void SetSelectedChronoChapter(int index, float value)
+    {
+        GetSelectedSave().chronoChapter[index] = value;
+        SaveSelectedData();
+    }
+
+    public float GetSelectedChronoLevel(int indexChapter, int indexLevel)
+    {
+        return GetSelectedSave().chronos[indexChapter, indexLevel];
+    }
+
+    public void SetSelectedChronoLevel(int indexChapter, int indexLevel, float value)
+    {
+        GetSelectedSave().chronos[indexChapter, indexLevel] = value;
+        SaveSelectedData();
+    }
+
     public void DeleteSelectedSave()
     {
         SaveSystem.DeleteSaveData("Save_" + selectedSaveIndex);
@@ -103,6 +129,7 @@ public class GameManagerNG : MonoBehaviour
         inGameManager.mode = InGameManager.E_ModeType.Train;
         SwitchLevel(chaptersDataBase.chapters[chapter].levels[level]);
 
+        InGameManager.instance.chapterId = chapter;
         InGameManager.instance.StartLevel(level);
     }
 
@@ -139,6 +166,7 @@ public class GameManagerNG : MonoBehaviour
         Invoke(nameof(WaitForNextSwitch), .5f);
 
         nextScene = sceneName;
+
         FadeIn();
     }
 
@@ -161,6 +189,7 @@ public class GameManagerNG : MonoBehaviour
 
         inGameManager.Timer(false);
         nextScene = sceneName;
+        
         FadeIn();
     }
 
@@ -214,5 +243,11 @@ public class GameManagerNG : MonoBehaviour
     public void PlaySound(AudioClip clip)
     {
         audioSource.PlayOneShot(clip);
+    }
+
+    public void SetLastChapterAndLevel()
+    {
+        lastChapterOpenedId = inGameManager.chapterId;
+        lastLevelOpenedId = inGameManager.levelId;
     }
 }

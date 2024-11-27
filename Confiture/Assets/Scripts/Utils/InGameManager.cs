@@ -26,6 +26,7 @@ public class InGameManager : MonoBehaviour
     public List<GameObject> canvas;
 
     public float gameTimer = 0f;
+    //public float levelTimer = 0f;
     private bool lockTimer = true;
     private bool timerActivate = false;
 
@@ -68,6 +69,7 @@ public class InGameManager : MonoBehaviour
         if (timerActivate)
         {
             gameTimer += Time.deltaTime;
+            //levelTimer += Time.deltaTime;
         }
 
         if (player && Input.GetKeyDown(KeyCode.R) && canReset)
@@ -93,10 +95,12 @@ public class InGameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
+            GameManagerNG.instance.SetLastChapterAndLevel();
+
             resetStats = true;
             GameManagerNG.instance.SwitchSceneToMainMenu();
 
-            Destroy(instance);
+            Destroy(instance.gameObject);
             //if (!(SceneManager.GetActiveScene().name == "MainMenu"))
             //{
             //    resetStats = true;
@@ -122,21 +126,39 @@ public class InGameManager : MonoBehaviour
 
     public void FinishLevel()
     {
-        if (levelId >= GameManagerNG.instance.GetSelectedSave().levelsCompleteInLastChapter)
+        float chrono = gameTimer;
+
+        if (chapterId == GameManagerNG.instance.GetSelectedSave().chapter)
         {
-            Debug.Log("FinishNewLevel");
-            GameManagerNG.instance.GetSelectedSave().levelsCompleteInLastChapter += 1;
-            GameManagerNG.instance.SaveSelectedData();
+            if (levelId >= GameManagerNG.instance.GetSelectedSave().levelsCompleteInLastChapter)
+            {
+                GameManagerNG.instance.GetSelectedSave().levelsCompleteInLastChapter += 1;
+                GameManagerNG.instance.SaveSelectedData();
+            }
         }
+
+        //if (mode == E_ModeType.Train)
+        //{
+        //    if (chrono < GameManagerNG.instance.GetSelectedChronoLevel(chapterId, levelId) || GameManagerNG.instance.GetSelectedChronoLevel(chapterId, levelId) == 0)
+        //    {
+        //        GameManagerNG.instance.SetSelectedChronoLevel(chapterId, levelId, chrono);
+        //    }
+        //}
     }
 
-    public void FinishChapter()
+    public void FinishChapter(float chrono)
     {
         if (chapterId >= GameManagerNG.instance.GetSelectedSave().chapter)
         {
             Debug.Log("FinishNewChapter");
             GameManagerNG.instance.GetSelectedSave().chapter += 1;
+            GameManagerNG.instance.GetSelectedSave().levelsCompleteInLastChapter = 0;
             GameManagerNG.instance.SaveSelectedData();
+        }
+
+        if (chrono < GameManagerNG.instance.GetSelectedChronoChapter(chapterId) || GameManagerNG.instance.GetSelectedChronoChapter(chapterId) == 0)
+        {
+            GameManagerNG.instance.SetSelectedChronoChapter(chapterId, chrono);
         }
     }
 
@@ -199,5 +221,12 @@ public class InGameManager : MonoBehaviour
         endedLevel = true;
         canvaEndLevel.SetActive(true);
         canvaLevel.SetActive(false);
+
+        float chrono = gameTimer;
+
+        if (chrono < GameManagerNG.instance.GetSelectedChronoLevel(chapterId, levelId) || GameManagerNG.instance.GetSelectedChronoLevel(chapterId, levelId) == 0)
+        {
+            GameManagerNG.instance.SetSelectedChronoLevel(chapterId, levelId, chrono);
+        }
     }
 }
