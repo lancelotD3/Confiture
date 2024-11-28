@@ -41,6 +41,12 @@ public class MainMenuUI : MonoBehaviour
     public TMP_Text shootsText;
     public TMP_Text jumpsText;
 
+    [Header("Cosmetics")]
+    public Slider R;
+    public Slider G;
+    public Slider B;
+    public Image exampleTexture;
+
     private void Start()
     {
         if(InGameManager.instance != null)
@@ -275,5 +281,28 @@ public class MainMenuUI : MonoBehaviour
         {
             SetMenuSelected(saveButtonsGo);
         }
+    }
+
+    public void OpenCosmetics()
+    {
+        R.value = GameManagerNG.instance.GetSelectedSave().RGB[0];
+        G.value = GameManagerNG.instance.GetSelectedSave().RGB[1];
+        B.value = GameManagerNG.instance.GetSelectedSave().RGB[2];
+
+        exampleTexture.color = new Color(R.value, G.value, B.value, 1f);
+    }
+
+    public void ChangeColor()
+    {
+        exampleTexture.color = new Color(R.value, G.value, B.value, 1f);
+
+        GameManagerNG.instance.GetSelectedSave().RGB[0] = R.value;
+        GameManagerNG.instance.GetSelectedSave().RGB[1] = G.value;
+        GameManagerNG.instance.GetSelectedSave().RGB[2] = B.value;
+    }
+
+    public void ExitCosmetics()
+    {
+        GameManagerNG.instance.SaveSelectedData();
     }
 }

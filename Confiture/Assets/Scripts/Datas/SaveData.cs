@@ -24,9 +24,7 @@ public class SaveData
     public int jumpNumber;
 
     // Cosmetics
-    public float R;
-    public float G;
-    public float B;
+    public float[] RGB;
 
     // Chapter
     public float[] chronoChapter;
@@ -46,9 +44,11 @@ public class SaveData
         this.dashNumber = 0;
         this.shootNumber = 0;
         this.jumpNumber = 0;
-        R = 0;
-        G = 0;
-        B = 0;
+
+        RGB = new float[3];
+        RGB[0] = 18;
+        RGB[1] = 191;
+        RGB[2] = 0;
 
         chronos = new float[10, 10];
         chronoChapter = new float[10];
