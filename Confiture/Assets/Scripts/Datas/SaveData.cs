@@ -46,9 +46,9 @@ public class SaveData
         this.jumpNumber = 0;
 
         RGB = new float[3];
-        RGB[0] = 18;
-        RGB[1] = 191;
-        RGB[2] = 0;
+        RGB[0] = 0f;
+        RGB[1] = 1f;
+        RGB[2] = 0.38f;
 
         chronos = new float[10, 10];
         chronoChapter = new float[10];

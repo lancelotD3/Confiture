@@ -34,11 +34,17 @@ public class PlayerEntity : MonoBehaviour
     public AudioClip eatEnemyClip;
     public AudioClip hitWallClip;
 
+    [Header("Material")]
+    public Material playerMat;
+
     private void Awake()
     {
         UpdateBlob();
         playerShoot = GetComponent<PlayerShoot>();
         playerMovement = GetComponent<PlayerMovement>();
+
+        //playerMat.SetColor("FresnelColor", new Color(GameManagerNG.instance.GetSelectedSave().RGB[0] / 255f, GameManagerNG.instance.GetSelectedSave().RGB[1] / 255f, GameManagerNG.instance.GetSelectedSave().RGB[2] / 255f, 1f));
+        playerMat.color = new Color(GameManagerNG.instance.GetSelectedSave().RGB[0], GameManagerNG.instance.GetSelectedSave().RGB[1], GameManagerNG.instance.GetSelectedSave().RGB[2], 1f);
     }
 
     private void Update()
